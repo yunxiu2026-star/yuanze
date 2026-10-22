@@ -1,0 +1,636 @@
+{
+  "site": {
+    "slug": "yuanze",
+    "domain": "yuanzebeauty.com",
+    "baseUrl": "https://yuanzebeauty.com",
+    "lang": "en",
+    "languages": [
+      {
+        "code": "en",
+        "label": "English",
+        "href": "index.html"
+      }
+    ],
+    "title": "Cosmetic Development & Manufacturing | Yuanze",
+    "description": "Private label cosmetics manufacturer in Guangzhou. ISO 22716 and GMPC certified production covering formula, packaging and manufacturing.",
+    "ogImage": "",
+    "favicon": "assets/favicon.svg"
+  },
+  "brand": {
+    "name": "YUANZE",
+    "legalName": "Guangzhou Yuanze Pharmaceutical Co., Ltd.",
+    "tagline": "Beauty · Science · Manufacturing",
+    "logo": "",
+    "copyright": "YUANZE"
+  },
+  "theme": {
+    "colors": {
+      "primary": "#1f4e46",
+      "primaryContrast": "#ffffff",
+      "accent": "#b8925a",
+      "ink": "#1c1f1e",
+      "muted": "#5f6866",
+      "bg": "#ffffff",
+      "surface": "#f5f3ee",
+      "border": "#e3e0d8"
+    },
+    "fonts": {
+      "heading": "\"Cormorant Garamond\", Georgia, serif",
+      "body": "Inter, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+      "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    },
+    "radius": "14px"
+  },
+  "contact": {
+    "email": "info@yuanzebeauty.com",
+    "phone": "+86 18028677248",
+    "whatsapp": "+86 18028677248",
+    "wechat": "",
+    "address": "No. 1 Building, Zone 5, No. 88 Zhenhua North Road, Jianggao Town, Baiyun District, Guangzhou City, China"
+  },
+  "social": [],
+  "analytics": {
+    "gaId": ""
+  },
+  "labels": {
+    "pauseMotion": "Pause motion"
+  },
+  "nav": [
+    {
+      "label": "Home",
+      "href": "index.html"
+    },
+    {
+      "label": "Products",
+      "href": "index.html#products",
+      "children": [
+        {
+          "label": "Head Series · Hair & Scalp",
+          "href": "index.html#products"
+        },
+        {
+          "label": "Face Series · Facial Care",
+          "href": "index.html#products"
+        },
+        {
+          "label": "Body Series · Body Care",
+          "href": "index.html#products"
+        }
+      ]
+    },
+    {
+      "label": "Packaging",
+      "href": "index.html#packaging"
+    },
+    {
+      "label": "Product Development",
+      "href": "index.html#process"
+    },
+    {
+      "label": "Quality Control",
+      "href": "index.html#quality"
+    },
+    {
+      "label": "Manufacturing",
+      "href": "index.html#manufacturing"
+    },
+    {
+      "label": "About",
+      "href": "index.html#about"
+    },
+    {
+      "label": "Contact",
+      "href": "contact.html"
+    }
+  ],
+  "navCta": {
+    "label": "Start a Product Brief",
+    "href": "contact.html"
+  },
+  "footer": {
+    "groups": [
+      {
+        "title": "Explore",
+        "links": [
+          {
+            "label": "Products",
+            "href": "index.html#products"
+          },
+          {
+            "label": "Packaging",
+            "href": "index.html#packaging"
+          },
+          {
+            "label": "Product Development",
+            "href": "index.html#process"
+          },
+          {
+            "label": "Quality Control",
+            "href": "index.html#quality"
+          }
+        ]
+      },
+      {
+        "title": "Connect",
+        "links": [
+          {
+            "label": "Contact",
+            "href": "contact.html"
+          },
+          {
+            "label": "info@yuanzebeauty.com",
+            "href": "mailto:info@yuanzebeauty.com"
+          },
+          {
+            "label": "WhatsApp",
+            "href": "https://wa.me/8618028677248"
+          }
+        ]
+      }
+    ],
+    "legal": [
+      {
+        "label": "Privacy Policy",
+        "href": "privacy.html"
+      },
+      {
+        "label": "Terms of Use",
+        "href": "terms.html"
+      }
+    ],
+    "note": "Project scope, timelines and deliverables are confirmed in the applicable quotation or agreement."
+  },
+  "pages": [
+    {
+      "path": "index.html",
+      "sections": [
+        {
+          "type": "hero",
+          "eyebrow": "Beauty · Science · Manufacturing",
+          "title": "Beauty for a brighter tomorrow.",
+          "subtitle": "Private label cosmetics manufacturer in Guangzhou with ISO 22716 and GMPC certified production. Formula, packaging and manufacturing under one roof.",
+          "image": "",
+          "imageAlt": "Yuanze laboratory and product lineup",
+          "buttons": [
+            {
+              "label": "Request free samples",
+              "href": "contact.html"
+            },
+            {
+              "label": "Get a quote",
+              "href": "contact.html"
+            }
+          ],
+          "badges": [
+            {
+              "label": "GMPC"
+            },
+            {
+              "label": "ISO 22716"
+            },
+            {
+              "label": "HALAL"
+            },
+            {
+              "label": "Intertek ISO 22716"
+            }
+          ]
+        },
+        {
+          "type": "facts",
+          "items": [
+            {
+              "value": "1,000",
+              "label": "units MOQ",
+              "text": "Starting point for most projects, set mainly by packaging."
+            },
+            {
+              "value": "Free",
+              "label": "sampling",
+              "text": "Full product samples or formula-only samples."
+            },
+            {
+              "value": "15–40",
+              "label": "days lead time",
+              "text": "From deposit to factory delivery."
+            },
+            {
+              "value": "20",
+              "label": "person QC team",
+              "text": "Dedicated quality control across every stage."
+            }
+          ]
+        },
+        {
+          "type": "categories",
+          "id": "products",
+          "background": "alt",
+          "eyebrow": "Products",
+          "title": "17 categories across three series",
+          "intro": "Hair, face and body care developed and filled in our own facility.",
+          "groups": [
+            {
+              "title": "Head Series",
+              "subtitle": "Hair & Scalp Care",
+              "items": [
+                "Shampoo",
+                "Conditioner",
+                "Hair Mask",
+                "Hair Serum",
+                "Hair Oil"
+              ]
+            },
+            {
+              "title": "Face Series",
+              "subtitle": "Facial Care & Beauty",
+              "items": [
+                "Serum",
+                "Cleanser",
+                "Toner",
+                "Lotion",
+                "Cream",
+                "Mask",
+                "Sunscreen"
+              ]
+            },
+            {
+              "title": "Body Series",
+              "subtitle": "Body Care",
+              "items": [
+                "Body Wash",
+                "Body Lotion",
+                "Body Cream",
+                "Body Scrub",
+                "Body Oil"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "split",
+          "id": "about",
+          "eyebrow": "About Yuanze",
+          "title": "One partner from formula to finished goods",
+          "text": [
+            "Yuanze is an integrated cosmetics manufacturer covering formula development, packaging design, production and brand planning.",
+            "Brands work with a single team instead of coordinating separate labs, packaging suppliers and factories."
+          ],
+          "bullets": [
+            "Formula development",
+            "Packaging design",
+            "Production",
+            "Brand planning"
+          ],
+          "image": "",
+          "imageAlt": "Integrated development concept illustration"
+        },
+        {
+          "type": "logos",
+          "eyebrow": "Selected brands",
+          "title": "Trusted by brands in 30+ countries",
+          "items": [
+            {
+              "name": "北京同仁堂 MIRAHI"
+            },
+            {
+              "name": "赫拉"
+            },
+            {
+              "name": "COBOR"
+            },
+            {
+              "name": "JOVISSE"
+            },
+            {
+              "name": "HOLA CEUTICALS"
+            },
+            {
+              "name": "Honey & Beauty"
+            }
+          ]
+        },
+        {
+          "type": "markets",
+          "background": "alt",
+          "eyebrow": "Global markets",
+          "title": "Documentation ready for your target market",
+          "items": [
+            {
+              "name": "United States",
+              "tags": [
+                "FDA Registered",
+                "MSDS"
+              ]
+            },
+            {
+              "name": "European Union",
+              "tags": [
+                "CPNP",
+                "CPSR"
+              ]
+            },
+            {
+              "name": "Middle East (UAE, Saudi Arabia)",
+              "tags": [
+                "HALAL"
+              ]
+            },
+            {
+              "name": "South Korea",
+              "tags": [
+                "ISO 22716",
+                "GMPC",
+                "MSDS"
+              ]
+            },
+            {
+              "name": "Indonesia",
+              "tags": [
+                "BPOM"
+              ]
+            },
+            {
+              "name": "Australia",
+              "tags": [
+                "ISO 22716",
+                "GMPC",
+                "MSDS"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "facts",
+          "id": "manufacturing",
+          "variant": "stats",
+          "background": "dark",
+          "eyebrow": "Manufacturing",
+          "title": "Built for scale",
+          "items": [
+            {
+              "value": "15",
+              "label": "years",
+              "text": "of OEM, ODM and OBM work"
+            },
+            {
+              "value": "15,000 m²",
+              "label": "factory",
+              "text": "with a Class 100,000 clean workshop"
+            },
+            {
+              "value": "300M",
+              "label": "pieces per year",
+              "text": "across 12 production lines"
+            },
+            {
+              "value": "1,000+",
+              "label": "clients",
+              "text": "in 30+ countries"
+            }
+          ]
+        },
+        {
+          "type": "logos",
+          "eyebrow": "Supplier network",
+          "title": "Ingredients from established suppliers",
+          "items": [
+            {
+              "name": "BASF"
+            },
+            {
+              "name": "Evonik"
+            },
+            {
+              "name": "Croda"
+            },
+            {
+              "name": "Clariant"
+            },
+            {
+              "name": "SEPPIC"
+            },
+            {
+              "name": "Sensient"
+            },
+            {
+              "name": "Bloomage Biotech"
+            }
+          ]
+        },
+        {
+          "type": "gallery",
+          "id": "packaging",
+          "background": "alt",
+          "eyebrow": "Packaging",
+          "title": "Four packaging directions",
+          "intro": "Glass, plastic and metal components with color, printing, carton and gift-box finishes.",
+          "items": [
+            {
+              "title": "Pump & Airless",
+              "text": "Plastic",
+              "image": ""
+            },
+            {
+              "title": "Dropper Systems",
+              "text": "Glass",
+              "image": ""
+            },
+            {
+              "title": "Tube Formats",
+              "text": "Plastic and laminate tubes",
+              "image": ""
+            },
+            {
+              "title": "Carton & Presentation",
+              "text": "Gift boxes and outer cartons",
+              "image": ""
+            }
+          ],
+          "note": "Final components are confirmed per project."
+        },
+        {
+          "type": "steps",
+          "id": "process",
+          "eyebrow": "Product development",
+          "title": "Seven stages from brief to production",
+          "items": [
+            {
+              "title": "Product Brief",
+              "text": "Define the product, market, positioning and budget."
+            },
+            {
+              "title": "Formula Development",
+              "text": "Our lab builds a formula around your brief."
+            },
+            {
+              "title": "Sampling & Iteration",
+              "text": "Review samples and refine until approved."
+            },
+            {
+              "title": "Packaging Development",
+              "text": "Select components, decoration and cartons."
+            },
+            {
+              "title": "Testing & Quality Review",
+              "text": "Stability, compatibility and quality checks."
+            },
+            {
+              "title": "Production Preparation",
+              "text": "Materials sourcing and line scheduling."
+            },
+            {
+              "title": "Manufacturing Handoff",
+              "text": "Filling, packing and delivery from the factory."
+            }
+          ]
+        },
+        {
+          "type": "steps",
+          "id": "quality",
+          "background": "alt",
+          "eyebrow": "Quality control",
+          "title": "Four review stages, one 20-person QC team",
+          "items": [
+            {
+              "title": "Development Review"
+            },
+            {
+              "title": "Incoming Review"
+            },
+            {
+              "title": "In-Process Control"
+            },
+            {
+              "title": "Final Product Review"
+            }
+          ]
+        },
+        {
+          "type": "cards",
+          "eyebrow": "Service routes",
+          "title": "Choose how we work together",
+          "items": [
+            {
+              "eyebrow": "OEM",
+              "title": "Produce Your Product",
+              "text": "You bring the formula and design. We manufacture to spec."
+            },
+            {
+              "eyebrow": "ODM",
+              "title": "Create Your Product",
+              "text": "We develop the formula and packaging around your brief."
+            },
+            {
+              "eyebrow": "OBM",
+              "title": "Build Your Brand",
+              "text": "Full support from brand planning to finished goods."
+            }
+          ]
+        },
+        {
+          "type": "faq",
+          "background": "alt",
+          "eyebrow": "FAQ",
+          "title": "Common questions",
+          "items": [
+            {
+              "q": "What is your MOQ?",
+              "a": "MOQ is confirmed per quotation and typically starts around 1,000 units, depending mainly on packaging."
+            },
+            {
+              "q": "What should a quote inquiry include?",
+              "a": "Your trademark, target market and its regulations, product positioning, formula requirements and brand authorization."
+            },
+            {
+              "q": "When does an order start?",
+              "a": "Once the contract is signed and the deposit is received."
+            }
+          ]
+        },
+        {
+          "type": "cta",
+          "title": "Ready to start your product?",
+          "text": "Send us a product brief or request free samples.",
+          "buttons": [
+            {
+              "label": "Start a product brief",
+              "href": "contact.html"
+            },
+            {
+              "label": "Request samples",
+              "href": "contact.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "contact.html",
+      "title": "Contact | Yuanze",
+      "description": "Contact Yuanze to start a product brief, request samples or get a quote.",
+      "sections": [
+        {
+          "type": "contact",
+          "eyebrow": "Contact",
+          "title": "Start a product brief",
+          "intro": "Tell us about your product and target market. We usually reply within one business day.",
+          "form": {
+            "action": "",
+            "submitLabel": "Send inquiry",
+            "fields": [
+              {
+                "name": "name",
+                "label": "Name",
+                "required": true
+              },
+              {
+                "name": "email",
+                "label": "Email",
+                "type": "email",
+                "required": true
+              },
+              {
+                "name": "company",
+                "label": "Company / Brand"
+              },
+              {
+                "name": "market",
+                "label": "Target market"
+              },
+              {
+                "name": "message",
+                "label": "Product brief",
+                "type": "textarea",
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "privacy.html",
+      "title": "Privacy Policy | Yuanze",
+      "description": "Yuanze privacy policy.",
+      "sections": [
+        {
+          "type": "richtext",
+          "title": "Privacy Policy",
+          "html": "<p>We collect the information you send through our contact form or by email only to answer your inquiry and prepare quotations. We do not sell personal data.</p><p>To ask about or delete your data, email <a href=\"mailto:info@yuanzebeauty.com\">info@yuanzebeauty.com</a>.</p>"
+        }
+      ]
+    },
+    {
+      "path": "terms.html",
+      "title": "Terms of Use | Yuanze",
+      "description": "Yuanze terms of use.",
+      "sections": [
+        {
+          "type": "richtext",
+          "title": "Terms of Use",
+          "html": "<p>Information on this website is for general reference. Project scope, pricing, timelines and deliverables are confirmed in the applicable quotation or agreement.</p>"
+        }
+      ]
+    }
+  ]
+}
