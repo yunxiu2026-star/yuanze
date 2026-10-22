@@ -1,0 +1,188 @@
+{
+  "site": {
+    "slug": "_starter",
+    "domain": "【请填写：域名，如 example.com】",
+    "baseUrl": "https://【请填写：域名】",
+    "lang": "zh-CN",
+    "languages": [
+      { "code": "zh-CN", "label": "中文", "href": "index.html" }
+    ],
+    "title": "【请填写：首页标题，如 公司名 | 一句话定位】",
+    "description": "【请填写：搜索引擎描述，80 字以内】",
+    "ogImage": "",
+    "favicon": "assets/favicon.svg"
+  },
+  "brand": {
+    "name": "【请填写：品牌名】",
+    "legalName": "【请填写：公司全称】",
+    "tagline": "【请填写：品牌标语】",
+    "logo": "",
+    "copyright": "【请填写：版权署名】"
+  },
+  "theme": {
+    "colors": {
+      "primary": "#1f4e46",
+      "primaryContrast": "#ffffff",
+      "accent": "#b8925a",
+      "ink": "#1c1f1e",
+      "muted": "#5f6866",
+      "bg": "#ffffff",
+      "surface": "#f5f3ee",
+      "border": "#e3e0d8"
+    },
+    "fonts": {
+      "heading": "\"Noto Serif SC\", Georgia, serif",
+      "body": "system-ui, -apple-system, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "googleFontsUrl": ""
+    },
+    "radius": "14px"
+  },
+  "contact": {
+    "email": "【请填写：邮箱】",
+    "phone": "【请填写：电话】",
+    "whatsapp": "",
+    "wechat": "",
+    "address": "【请填写：地址】",
+    "phoneLabel": "电话",
+    "wechatLabel": "微信",
+    "addressLabel": "地址"
+  },
+  "social": [],
+  "analytics": { "gaId": "" },
+  "labels": { "pauseMotion": "暂停动效" },
+  "nav": [
+    { "label": "首页", "href": "index.html" },
+    { "label": "产品与服务", "href": "index.html#services" },
+    { "label": "合作流程", "href": "index.html#process" },
+    { "label": "关于我们", "href": "index.html#about" },
+    { "label": "联系我们", "href": "contact.html" }
+  ],
+  "navCta": { "label": "立即咨询", "href": "contact.html" },
+  "footer": {
+    "groups": [
+      { "title": "浏览", "links": [
+        { "label": "产品与服务", "href": "index.html#services" },
+        { "label": "合作流程", "href": "index.html#process" },
+        { "label": "关于我们", "href": "index.html#about" }
+      ] },
+      { "title": "联系", "links": [
+        { "label": "联系我们", "href": "contact.html" }
+      ] }
+    ],
+    "legal": [
+      { "label": "隐私政策", "href": "privacy.html" }
+    ],
+    "note": ""
+  },
+  "pages": [
+    {
+      "path": "index.html",
+      "sections": [
+        {
+          "type": "hero",
+          "eyebrow": "【请填写：眉标题】",
+          "title": "【请填写：首屏主标题】",
+          "subtitle": "【请填写：首屏副标题，一两句话说明你是谁、为谁提供什么】",
+          "image": "",
+          "imageAlt": "首屏主图",
+          "buttons": [
+            { "label": "立即咨询", "href": "contact.html" },
+            { "label": "了解服务", "href": "#services" }
+          ],
+          "badges": []
+        },
+        {
+          "type": "facts",
+          "items": [
+            { "value": "【请填写：数字】", "label": "【请填写：卖点 1】", "text": "【请填写：说明】" },
+            { "value": "【请填写：数字】", "label": "【请填写：卖点 2】", "text": "【请填写：说明】" },
+            { "value": "【请填写：数字】", "label": "【请填写：卖点 3】", "text": "【请填写：说明】" }
+          ]
+        },
+        {
+          "type": "cards",
+          "id": "services",
+          "background": "alt",
+          "eyebrow": "产品与服务",
+          "title": "【请填写：服务板块标题】",
+          "items": [
+            { "title": "【请填写：服务 1】", "text": "【请填写：说明】" },
+            { "title": "【请填写：服务 2】", "text": "【请填写：说明】" },
+            { "title": "【请填写：服务 3】", "text": "【请填写：说明】" }
+          ]
+        },
+        {
+          "type": "split",
+          "id": "about",
+          "eyebrow": "关于我们",
+          "title": "【请填写：关于我们标题】",
+          "text": ["【请填写：公司介绍第一段】", "【请填写：公司介绍第二段】"],
+          "bullets": [],
+          "image": "",
+          "imageAlt": "公司介绍配图"
+        },
+        {
+          "type": "steps",
+          "id": "process",
+          "background": "alt",
+          "eyebrow": "合作流程",
+          "title": "【请填写：流程标题】",
+          "items": [
+            { "title": "需求沟通", "text": "【请填写】" },
+            { "title": "方案确认", "text": "【请填写】" },
+            { "title": "执行交付", "text": "【请填写】" },
+            { "title": "售后支持", "text": "【请填写】" }
+          ]
+        },
+        {
+          "type": "faq",
+          "eyebrow": "常见问题",
+          "title": "常见问题",
+          "items": [
+            { "q": "【请填写：问题 1】", "a": "【请填写：回答】" },
+            { "q": "【请填写：问题 2】", "a": "【请填写：回答】" }
+          ]
+        },
+        {
+          "type": "cta",
+          "title": "【请填写：收尾号召标题】",
+          "text": "【请填写：一句话说明】",
+          "buttons": [
+            { "label": "立即咨询", "href": "contact.html" }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "contact.html",
+      "title": "联系我们",
+      "description": "【请填写：联系页描述】",
+      "sections": [
+        {
+          "type": "contact",
+          "eyebrow": "联系我们",
+          "title": "【请填写：联系页标题】",
+          "intro": "【请填写：一句引导语】",
+          "form": {
+            "action": "",
+            "submitLabel": "提交",
+            "fields": [
+              { "name": "name", "label": "姓名", "required": true },
+              { "name": "email", "label": "邮箱", "type": "email", "required": true },
+              { "name": "phone", "label": "电话" },
+              { "name": "message", "label": "需求描述", "type": "textarea", "required": true }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "privacy.html",
+      "title": "隐私政策",
+      "description": "隐私政策",
+      "sections": [
+        { "type": "richtext", "title": "隐私政策", "html": "<p>【请填写：隐私政策正文】</p>" }
+      ]
+    }
+  ]
+}

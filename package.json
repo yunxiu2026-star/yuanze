@@ -1,0 +1,14 @@
+{
+  "name": "yunxiu-site-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "云岫建站模版：配置驱动的静态企业官网生成器（首个实例：yuanzebeauty.com）",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/serve.mjs",
+    "new": "node scripts/new-site.mjs",
+    "check": "node scripts/build.mjs --all --check"
+  }
+}
