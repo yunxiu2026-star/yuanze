@@ -98,6 +98,43 @@ p { margin: 0 0 1em; }
 .facts-stats .fact-value { font-size: clamp(2.2rem, 4vw, 3.2rem); }
 .section-dark .fact-value { color: var(--c-accent); }
 .section-dark .facts li p { color: inherit; opacity: .8; }
+.fact-link { display: block; height: 100%; color: inherit; text-decoration: none; }
+/* facts · path：一条金线把各项串成先后顺序。默认浅色底，与下方同为 alt 底色的区块连成一体；
+   滚动到这里时金线从左向右画出，节点和数字随金线依次亮起（site.js 加 .in-view）。 */
+.facts-wrap-path { --gold-ink: color-mix(in srgb, var(--c-accent) 72%, #000); position: relative; padding-top: clamp(32px, 4vw, 56px); }
+.facts-wrap-path.section-alt { background: linear-gradient(var(--c-bg), var(--c-surface) 45%); }
+.facts-wrap-path.section-alt + .section-alt { padding-top: 0; }
+.facts-wrap-path .section-head { margin-bottom: 52px; }
+.facts-wrap-path h2 { font-weight: 500; max-width: 24ch; color: var(--c-primary); }
+.facts-path { list-style: none; margin: 0; padding: 0 0 clamp(56px, 7vw, 88px); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); position: relative; }
+/* 底部一条极淡的金色细线，把这块和下方模块衔接起来 */
+.facts-path::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--c-accent) 45%, transparent) 30%, color-mix(in srgb, var(--c-accent) 45%, transparent) 70%, transparent); }
+.facts-path::before { content: ""; position: absolute; left: 0; right: 0; top: 108px; height: 1px;
+  background: linear-gradient(90deg, var(--c-accent), color-mix(in srgb, var(--c-accent) 60%, transparent) 75%, transparent);
+  transform-origin: left; transition: transform 1.8s cubic-bezier(.3,.7,.2,1); }
+.facts-path li { position: relative; padding-right: 36px; }
+.facts-path .fact-link { display: block; color: inherit; text-decoration: none; }
+.facts-path .fact-value { display: block; height: 92px; font-weight: 500; font-size: 4.6rem; line-height: 92px; color: var(--c-primary); font-variant-numeric: lining-nums; white-space: nowrap; }
+.fact-value small { font-size: 1.4rem; margin-left: 6px; font-style: italic; font-weight: 500; color: var(--gold-ink); }
+.fact-dot { display: block; width: 11px; height: 11px; border-radius: 50%; background: var(--c-surface); border: 1px solid var(--c-accent); margin: 11px 0 26px -5px; position: relative; transition: background .3s, box-shadow .3s; }
+.facts-path .fact-link:hover .fact-dot, .facts-path .fact-link:focus-visible .fact-dot { background: var(--c-accent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--c-accent) 18%, transparent); }
+.facts-path .fact-label { font-family: var(--f-heading); font-size: 1.35rem; font-weight: 600; color: var(--c-ink); margin-bottom: 8px; }
+.facts-path li p { font-size: .92rem; line-height: 1.65; color: var(--c-muted); margin: 0 0 14px; max-width: 30ch; }
+.fact-more { font-size: .85rem; font-weight: 600; color: var(--gold-ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, var(--c-accent) 50%, transparent); }
+.facts-path .fact-link:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 6px; border-radius: 4px; }
+/* 滚动入场：金线画出，各项按顺序淡入 */
+.facts-path > li { transition: opacity .7s ease, transform .7s ease; transition-delay: calc(var(--i, 0) * .35s + .3s); }
+.js .facts-path:not(.in-view)::before { transform: scaleX(0); }
+.js .facts-path:not(.in-view) > li { opacity: 0; transform: translateY(14px); }
+@media (prefers-reduced-motion: reduce) { .facts-path::before, .facts-path > li { transition: none; } .js .facts-path:not(.in-view)::before { transform: none; } .js .facts-path:not(.in-view) > li { opacity: 1; transform: none; } }
+@media (max-width: 900px) {
+  .facts-path { grid-template-columns: 1fr; padding-left: 28px; }
+  .facts-path::before { top: 8px; bottom: 96px; left: 0; right: auto; width: 1px; height: auto; transform-origin: top; background: linear-gradient(var(--c-accent), color-mix(in srgb, var(--c-accent) 25%, transparent)); }
+  .js .facts-path:not(.in-view)::before { transform: scaleY(0); }
+  .facts-path li { padding: 0 0 40px; }
+  .fact-dot { position: absolute; left: -33px; top: 30px; margin: 0; }
+  .facts-path .fact-value { font-size: 3.4rem; height: 72px; line-height: 72px; }
+}
 
 /* categories / cards / markets */
 .cat-grid, .cards, .markets { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
