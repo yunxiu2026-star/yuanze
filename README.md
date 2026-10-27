@@ -67,7 +67,7 @@ npm run build -- acme --check
 | type | 用途 | 主要字段 |
 | --- | --- | --- |
 | `hero` | 首屏 | `title` `subtitle` `image` `buttons[]` `badges[]` |
-| `facts` | 卖点卡片 / 数字统计 | `items[{value,label,text,href?}]`；`variant: "panel"` 为首屏下方上浮的深色品牌面板（自动编号，配 `href` 显示“了解更多”，文案用 `linkLabel` 改），`"stats"` 为大数字条 |
+| `facts` | 卖点卡片 / 数字统计 | `items[{value,label,text,href?,image?}]`；`variant: "panel"` 为首屏下方上浮的深色质感面板（自动编号，`image` 可给每格加背景照片，配 `href` 显示“了解更多”，文案用 `linkLabel` 改），`"stats"` 为大数字条 |
 | `categories` | 产品系列与品类 | `groups[{title,subtitle,image,items[]}]` |
 | `split` | 图文分栏 | `text` `bullets[]` `image` `reverse` `buttons[]` |
 | `logos` | 客户/供应商 Logo 滚动墙 | `items[{name,image}]`，无图时显示名称 |

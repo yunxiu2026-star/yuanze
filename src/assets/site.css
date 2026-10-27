@@ -100,27 +100,52 @@ p { margin: 0 0 1em; }
 .section-dark .facts li p { color: inherit; opacity: .8; }
 .fact-link { display: block; height: 100%; color: inherit; text-decoration: none; }
 
-/* facts · panel：深色品牌面板，上浮压在首屏底部 */
+/* facts · panel：深色品牌面板，上浮压在首屏底部。
+   背景由多层叠成：金色/翠绿光晕 + 深色渐变 + 细斜纹 + 颗粒噪点，外框为金色渐变描边。 */
 .hero:has(+ .facts-wrap-panel) { padding-bottom: calc(clamp(48px, 7vw, 96px) + 64px); }
 .facts-wrap-panel { padding-top: 0; position: relative; z-index: 2; }
 .facts-panel {
-  --line: color-mix(in srgb, var(--c-accent) 26%, transparent);
+  --line: color-mix(in srgb, var(--c-accent) 22%, transparent);
+  --deep: color-mix(in srgb, var(--c-primary) 55%, #000);
+  position: relative; isolation: isolate;
   margin-top: -64px; gap: 0; grid-template-columns: repeat(4, 1fr);
   color: var(--c-primary-contrast);
-  background:
-    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--c-accent) 16%, transparent), transparent 55%),
-    linear-gradient(135deg, var(--c-primary), color-mix(in srgb, var(--c-primary) 72%, #000));
+  border: 1px solid transparent;
   border-radius: calc(var(--radius) * 1.4);
-  border: 1px solid var(--line);
-  box-shadow: 0 30px 60px -28px color-mix(in srgb, var(--c-primary) 70%, #000);
+  background:
+    radial-gradient(60% 120% at 100% 0%, color-mix(in srgb, var(--c-accent) 32%, transparent), transparent 60%) padding-box,
+    radial-gradient(50% 90% at 0% 100%, color-mix(in srgb, var(--c-primary) 80%, #6fb59f) , transparent 70%) padding-box,
+    linear-gradient(120deg, color-mix(in srgb, var(--c-primary) 92%, #fff) 0%, var(--c-primary) 35%, var(--deep) 100%) padding-box,
+    linear-gradient(120deg, color-mix(in srgb, var(--c-accent) 80%, #fff), color-mix(in srgb, var(--c-accent) 15%, transparent) 35%, color-mix(in srgb, var(--c-accent) 15%, transparent) 65%, var(--c-accent)) border-box;
+  box-shadow: 0 40px 80px -40px color-mix(in srgb, var(--c-primary) 80%, #000), 0 2px 0 rgba(255,255,255,.06) inset;
   overflow: hidden;
 }
-.facts-panel li { position: relative; display: flex; flex-direction: column; border-left: 1px solid var(--line); }
+/* 细斜纹 + 颗粒噪点 */
+.facts-panel::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--c-accent) 11%, transparent) 0 1px, transparent 1px 12px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light; opacity: .8;
+  -webkit-mask-image: linear-gradient(100deg, transparent 0%, #000 40%, #000 100%); mask-image: linear-gradient(100deg, transparent 0%, #000 40%, #000 100%); }
+/* 顶部高光线 */
+.facts-panel::after { content: ""; position: absolute; left: 6%; right: 6%; top: 0; height: 1px; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--c-accent) 90%, #fff), transparent); opacity: .8; }
+/* 可选配图：每格背后的照片 + 深绿遮罩 */
+.fact-bg { position: absolute !important; inset: 0; z-index: -1; background-size: cover; background-position: center; transform: scale(1.02); transition: transform .8s ease; }
+.fact-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--c-primary) 78%, transparent), color-mix(in srgb, var(--deep) 94%, transparent)); }
+.facts-panel li:hover .fact-bg { transform: scale(1.08); }
+/* 大号描边序号水印 */
+.fact-mark { position: absolute !important; right: 14px; bottom: -18px; z-index: 0; pointer-events: none;
+  font-family: var(--f-heading); font-size: 7.5rem; font-weight: 700; line-height: 1; font-variant-numeric: lining-nums;
+  color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--c-accent) 30%, transparent);
+  transition: transform .5s ease, -webkit-text-stroke-color .5s; }
+.facts-panel li:hover .fact-mark { transform: translateY(-6px); -webkit-text-stroke-color: color-mix(in srgb, var(--c-accent) 55%, transparent); }
+.facts-panel li { position: relative; isolation: isolate; display: flex; flex-direction: column; border-left: 1px solid var(--line); }
 .facts-panel li:first-child { border-left: 0; }
 .facts-panel li > * { position: relative; }
 .facts-panel .fact-link { display: flex; flex-direction: column; }
 .facts-panel .fact-link, .facts-panel li:not(:has(.fact-link)) { padding: 34px 30px 30px; }
-.facts-panel li::before { content: ""; position: absolute; inset: 0; background: rgba(255,255,255,.04); opacity: 0; transition: opacity .25s; }
+.facts-panel li::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(90% 60% at 50% 0%, color-mix(in srgb, var(--c-accent) 14%, transparent), transparent 70%), rgba(255,255,255,.03); opacity: 0; transition: opacity .25s; }
 .facts-panel li::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform .35s ease; }
 .facts-panel li:hover::before, .facts-panel li:focus-within::before { opacity: 1; }
 .facts-panel li:hover::after, .facts-panel li:focus-within::after { transform: scaleX(1); }
