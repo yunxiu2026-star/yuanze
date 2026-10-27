@@ -98,6 +98,55 @@ p { margin: 0 0 1em; }
 .facts-stats .fact-value { font-size: clamp(2.2rem, 4vw, 3.2rem); }
 .section-dark .fact-value { color: var(--c-accent); }
 .section-dark .facts li p { color: inherit; opacity: .8; }
+.fact-link { display: block; height: 100%; color: inherit; text-decoration: none; }
+
+/* facts · panel：深色品牌面板，上浮压在首屏底部 */
+.hero:has(+ .facts-wrap-panel) { padding-bottom: calc(clamp(48px, 7vw, 96px) + 64px); }
+.facts-wrap-panel { padding-top: 0; position: relative; z-index: 2; }
+.facts-panel {
+  --line: color-mix(in srgb, var(--c-accent) 26%, transparent);
+  margin-top: -64px; gap: 0; grid-template-columns: repeat(4, 1fr);
+  color: var(--c-primary-contrast);
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--c-accent) 16%, transparent), transparent 55%),
+    linear-gradient(135deg, var(--c-primary), color-mix(in srgb, var(--c-primary) 72%, #000));
+  border-radius: calc(var(--radius) * 1.4);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -28px color-mix(in srgb, var(--c-primary) 70%, #000);
+  overflow: hidden;
+}
+.facts-panel li { position: relative; display: flex; flex-direction: column; border-left: 1px solid var(--line); }
+.facts-panel li:first-child { border-left: 0; }
+.facts-panel li > * { position: relative; }
+.facts-panel .fact-link { display: flex; flex-direction: column; }
+.facts-panel .fact-link, .facts-panel li:not(:has(.fact-link)) { padding: 34px 30px 30px; }
+.facts-panel li::before { content: ""; position: absolute; inset: 0; background: rgba(255,255,255,.04); opacity: 0; transition: opacity .25s; }
+.facts-panel li::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform .35s ease; }
+.facts-panel li:hover::before, .facts-panel li:focus-within::before { opacity: 1; }
+.facts-panel li:hover::after, .facts-panel li:focus-within::after { transform: scaleX(1); }
+.fact-index { display: flex; align-items: center; gap: 12px; font-size: .8rem; font-weight: 600; letter-spacing: .16em; font-variant-numeric: lining-nums tabular-nums; color: var(--c-accent); margin-bottom: 22px; }
+.fact-index::after { content: ""; width: 28px; height: 1px; background: currentColor; opacity: .7; transition: width .35s ease; }
+.facts-panel li:hover .fact-index::after, .facts-panel li:focus-within .fact-index::after { width: 52px; }
+.facts-panel .fact-value { color: var(--c-primary-contrast); font-variant-numeric: lining-nums; font-size: clamp(2.3rem, 3.4vw, 3rem); line-height: 1; letter-spacing: -.01em; margin-bottom: 10px; }
+.facts-panel .fact-label { color: var(--c-accent); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; margin-bottom: 16px; }
+.facts-panel li p { color: inherit; opacity: .78; font-size: .93rem; line-height: 1.65; margin: 0 0 22px; }
+.fact-more { margin-top: auto; display: inline-flex; gap: 6px; font-size: .9rem; font-weight: 600; color: var(--c-accent); }
+.fact-more span { transition: transform .25s; }
+.facts-panel li:hover .fact-more span { transform: translateX(4px); }
+.facts-panel .fact-link:focus-visible { outline: 2px solid var(--c-accent); outline-offset: -4px; }
+@media (max-width: 1000px) {
+  .facts-panel { grid-template-columns: repeat(2, 1fr); }
+  .facts-panel li:nth-child(odd) { border-left: 0; }
+  .facts-panel li:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 600px) {
+  .hero:has(+ .facts-wrap-panel) { padding-bottom: 88px; }
+  .facts-panel { grid-template-columns: 1fr; margin-top: -40px; }
+  .facts-panel li { border-left: 0; }
+  .facts-panel li:nth-child(n+2) { border-top: 1px solid var(--line); }
+  .facts-panel .fact-link, .facts-panel li:not(:has(.fact-link)) { padding: 26px 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .facts-panel *, .facts-panel li::before, .facts-panel li::after { transition: none !important; } }
 
 /* categories / cards / markets */
 .cat-grid, .cards, .markets { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }

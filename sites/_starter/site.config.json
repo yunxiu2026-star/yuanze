@@ -93,6 +93,7 @@
         },
         {
           "type": "facts",
+          "variant": "panel",
           "items": [
             { "value": "【请填写：数字】", "label": "【请填写：卖点 1】", "text": "【请填写：说明】" },
             { "value": "【请填写：数字】", "label": "【请填写：卖点 2】", "text": "【请填写：说明】" },

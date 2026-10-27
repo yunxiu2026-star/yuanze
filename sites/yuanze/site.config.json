@@ -198,26 +198,32 @@
         },
         {
           "type": "facts",
+          "variant": "panel",
+          "linkLabel": "Learn more",
           "items": [
             {
-              "value": "1,000",
-              "label": "units MOQ",
-              "text": "Starting point for most projects, set mainly by packaging."
+              "value": "~1,000",
+              "label": "units to start",
+              "text": "MOQ is confirmed in each quotation and depends mainly on the packaging chosen.",
+              "href": "index.html#packaging"
             },
             {
-              "value": "Free",
-              "label": "sampling",
-              "text": "Full product samples or formula-only samples."
+              "value": "Samples",
+              "label": "fee credited to bulk",
+              "text": "Sampling fee is credited against your bulk order.",
+              "href": "contact.html"
             },
             {
-              "value": "15–40",
-              "label": "days lead time",
-              "text": "From deposit to factory delivery."
+              "value": "15–45",
+              "label": "days to deliver",
+              "text": "Bulk production usually takes 15–45 days, counted from deposit received and sample approval.",
+              "href": "index.html#manufacturing"
             },
             {
               "value": "20",
               "label": "person QC team",
-              "text": "Dedicated quality control across every stage."
+              "text": "Raw materials, packaging, production and finished products are inspected in house.",
+              "href": "index.html#quality"
             }
           ]
         },
