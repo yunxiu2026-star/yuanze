@@ -199,6 +199,7 @@
         {
           "type": "facts",
           "variant": "path",
+          "background": "alt",
           "title": "From first brief to inspected bulk order",
           "items": [
             {
