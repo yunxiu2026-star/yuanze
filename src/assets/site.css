@@ -99,126 +99,42 @@ p { margin: 0 0 1em; }
 .section-dark .fact-value { color: var(--c-accent); }
 .section-dark .facts li p { color: inherit; opacity: .8; }
 .fact-link { display: block; height: 100%; color: inherit; text-decoration: none; }
-
-/* facts · panel：错落的便当格，上浮压在首屏底部。
-   首张为 2×2 主卡（带金色同心纹样），第二张为宽卡，其余为小卡；
-   卡面分 dark（深绿质感）/ light（香槟浅色）/ gold（金色）三种。 */
-.hero:has(+ .facts-wrap-panel) { padding-bottom: calc(clamp(48px, 7vw, 96px) + 72px); }
-.facts-wrap-panel { padding-top: 0; position: relative; z-index: 2; }
-.facts-panel {
-  --deep: color-mix(in srgb, var(--c-primary) 55%, #000);
-  --gold-ink: color-mix(in srgb, var(--c-accent) 62%, #000);
-  margin-top: -72px; gap: 18px;
-  grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(230px, auto);
-}
-.facts-panel > li:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-.facts-panel > li:nth-child(2), .facts-panel > li:nth-child(3):last-child { grid-column: span 2; }
-
-/* 卡片基础 */
-.facts-panel > li {
-  position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
-  border-radius: calc(var(--radius) * 1.3); border: 1px solid transparent;
-  box-shadow: 0 24px 50px -30px color-mix(in srgb, var(--c-primary) 75%, #000);
-  transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s;
-}
-.facts-panel > li:hover, .facts-panel > li:focus-within { transform: translateY(-5px); box-shadow: 0 34px 60px -30px color-mix(in srgb, var(--c-primary) 85%, #000); }
-.facts-panel li > * { position: relative; }
-.facts-panel .fact-link { display: flex; flex-direction: column; flex: 1; }
-.facts-panel .fact-link, .facts-panel li:not(:has(.fact-link)) { padding: 28px 28px 26px; }
-.facts-panel .fact-link:focus-visible { outline: 2px solid var(--c-accent); outline-offset: -5px; border-radius: inherit; }
-
-/* 顶部：图标圆章 + 序号 */
-.fact-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: auto; padding-bottom: 26px; }
-.fact-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; border: 1px solid currentColor; color: var(--c-accent); transition: background .35s, color .35s, transform .5s; }
-.fact-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
-.facts-panel li:hover .fact-icon { transform: rotate(-8deg); }
-.fact-index { display: flex; align-items: center; gap: 10px; font-size: .78rem; font-weight: 600; letter-spacing: .18em; font-variant-numeric: lining-nums tabular-nums; color: var(--c-accent); }
-.fact-index::before { content: ""; width: 26px; height: 1px; background: currentColor; opacity: .6; transition: width .35s ease; }
-.facts-panel li:hover .fact-index::before { width: 48px; }
-
-/* 文字 */
-.facts-panel .fact-value { font-size: clamp(2.2rem, 3vw, 2.8rem); line-height: 1; letter-spacing: -.01em; font-variant-numeric: lining-nums; margin-bottom: 10px; }
-.facts-panel .fact-label { font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 12px; }
-.facts-panel li p { color: inherit; opacity: .8; font-size: .92rem; line-height: 1.6; margin: 0 0 18px; max-width: 34ch; }
-.fact-more { display: inline-flex; gap: 6px; font-size: .88rem; font-weight: 600; }
-.fact-more span { transition: transform .25s; }
-.facts-panel li:hover .fact-more span { transform: translateX(5px); }
-
-/* 主卡：更大的数字 + 金色同心纹样 */
-.facts-panel > li:nth-child(1) .fact-link, .facts-panel > li:nth-child(1):not(:has(.fact-link)) { padding: 38px 38px 34px; }
-.facts-panel > li:nth-child(1) .fact-value { font-size: clamp(3.4rem, 6vw, 5.6rem); margin-bottom: 14px; }
-.facts-panel > li:nth-child(1) .fact-label { font-size: .84rem; }
-.facts-panel > li:nth-child(1) p { font-size: 1rem; }
-.fact-art { position: absolute !important; right: -90px; top: -90px; width: 440px; height: 440px; z-index: -1; pointer-events: none;
-  fill: none; stroke: var(--c-accent); stroke-width: .6; opacity: .28; transition: transform 1.6s cubic-bezier(.2,.7,.2,1), opacity .6s; }
-.facts-panel li:hover .fact-art { transform: rotate(30deg) scale(1.04); opacity: .4; }
-
-/* 可选配图 */
-.fact-bg { position: absolute !important; inset: 0; z-index: -1; background-size: cover; background-position: center; transition: transform .9s ease; }
-.fact-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--c-primary) 70%, transparent), color-mix(in srgb, var(--deep) 94%, transparent)); }
-.facts-panel li:hover .fact-bg { transform: scale(1.07); }
-
-/* 卡面 · dark：深绿渐变 + 金色光晕 + 细斜纹颗粒 + 金色渐变描边 */
-.facts-panel .tone-dark {
-  color: var(--c-primary-contrast);
+/* facts · path：深色底，一条金线把各项串成先后顺序；页面打开时金线从左向右画出 */
+.facts-wrap-path {
+  --deep: color-mix(in srgb, var(--c-primary) 72%, #000);
+  --gold-soft: color-mix(in srgb, var(--c-accent) 70%, #fff);
+  position: relative; overflow: hidden; color: var(--c-primary-contrast);
   background:
-    radial-gradient(70% 90% at 100% 0%, color-mix(in srgb, var(--c-accent) 28%, transparent), transparent 60%) padding-box,
-    radial-gradient(60% 80% at 0% 100%, color-mix(in srgb, var(--c-primary) 75%, #7cc0a8), transparent 70%) padding-box,
-    linear-gradient(140deg, color-mix(in srgb, var(--c-primary) 90%, #fff), var(--c-primary) 40%, var(--deep)) padding-box,
-    linear-gradient(140deg, color-mix(in srgb, var(--c-accent) 85%, #fff), color-mix(in srgb, var(--c-accent) 12%, transparent) 40%, color-mix(in srgb, var(--c-accent) 12%, transparent) 70%, var(--c-accent)) border-box;
+    radial-gradient(60% 120% at 85% 0%, color-mix(in srgb, var(--c-accent) 18%, transparent), transparent 60%),
+    radial-gradient(50% 100% at 0% 100%, color-mix(in srgb, var(--c-primary) 70%, #4f9b86 30%), transparent 70%),
+    var(--deep);
 }
-.facts-panel .tone-dark::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background:
-    repeating-linear-gradient(135deg, color-mix(in srgb, var(--c-accent) 11%, transparent) 0 1px, transparent 1px 12px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
-  mix-blend-mode: soft-light; opacity: .8;
-  -webkit-mask-image: linear-gradient(110deg, transparent 10%, #000 60%); mask-image: linear-gradient(110deg, transparent 10%, #000 60%); }
-.facts-panel .tone-dark .fact-value { color: var(--c-primary-contrast); }
-.facts-panel .tone-dark .fact-label, .facts-panel .tone-dark .fact-more { color: var(--c-accent); }
-.facts-panel .tone-dark:hover .fact-icon { background: var(--c-accent); color: var(--deep); }
-
-/* 卡面 · light：香槟浅色 + 金色细描边 */
-.facts-panel .tone-light {
-  color: var(--c-ink);
-  background:
-    radial-gradient(80% 100% at 100% 100%, color-mix(in srgb, var(--c-accent) 22%, transparent), transparent 65%) padding-box,
-    linear-gradient(160deg, #fffdf8, color-mix(in srgb, var(--c-accent) 14%, #f7f2e8)) padding-box,
-    linear-gradient(160deg, color-mix(in srgb, var(--c-accent) 70%, #fff), color-mix(in srgb, var(--c-accent) 25%, transparent)) border-box;
+.facts-wrap-path .section-head { margin-bottom: 56px; }
+.facts-wrap-path h2 { font-weight: 500; max-width: 22ch; color: var(--c-primary-contrast); }
+.facts-wrap-path .eyebrow { color: var(--gold-soft); }
+.facts-path { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); position: relative; }
+.facts-path::before { content: ""; position: absolute; left: 0; right: 0; top: 108px; height: 1px;
+  background: linear-gradient(90deg, var(--c-accent), var(--gold-soft) 50%, transparent);
+  transform-origin: left; animation: fact-path-draw 1.6s cubic-bezier(.3,.7,.2,1) both .2s; }
+@keyframes fact-path-draw { from { transform: scaleX(0); } }
+.facts-path li { position: relative; padding-right: 36px; }
+.facts-path .fact-link { display: block; color: inherit; text-decoration: none; }
+.facts-path .fact-value { display: block; height: 92px; font-weight: 500; font-size: 4.6rem; line-height: 92px; color: var(--gold-soft); font-variant-numeric: lining-nums; white-space: nowrap; }
+.fact-value small { font-size: 1.4rem; margin-left: 6px; font-style: italic; font-weight: 500; color: color-mix(in srgb, var(--c-accent) 85%, #fff); }
+.fact-dot { display: block; width: 11px; height: 11px; border-radius: 50%; background: var(--deep); border: 1px solid var(--gold-soft); margin: 11px 0 26px -5px; position: relative; transition: background .3s, box-shadow .3s; }
+.facts-path .fact-link:hover .fact-dot, .facts-path .fact-link:focus-visible .fact-dot { background: var(--gold-soft); box-shadow: 0 0 0 6px color-mix(in srgb, var(--gold-soft) 15%, transparent); }
+.facts-path .fact-label { font-family: var(--f-heading); font-size: 1.35rem; font-weight: 600; margin-bottom: 8px; }
+.facts-path li p { font-size: .92rem; line-height: 1.65; color: inherit; opacity: .78; margin: 0 0 14px; max-width: 30ch; }
+.fact-more { font-size: .85rem; color: var(--gold-soft); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, var(--gold-soft) 40%, transparent); }
+.facts-path .fact-link:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 6px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { .facts-path::before { animation: none; } }
+@media (max-width: 900px) {
+  .facts-path { grid-template-columns: 1fr; padding-left: 28px; }
+  .facts-path::before { top: 8px; bottom: 8px; left: 0; right: auto; width: 1px; height: auto; background: linear-gradient(var(--c-accent), color-mix(in srgb, var(--c-accent) 20%, transparent)); animation: none; }
+  .facts-path li { padding: 0 0 40px; }
+  .fact-dot { position: absolute; left: -33px; top: 30px; margin: 0; }
+  .facts-path .fact-value { font-size: 3.4rem; height: 72px; line-height: 72px; }
 }
-.facts-panel .tone-light .fact-value { color: var(--c-primary); }
-.facts-panel .tone-light .fact-label, .facts-panel .tone-light .fact-more, .facts-panel .tone-light .fact-index { color: var(--gold-ink); }
-.facts-panel .tone-light .fact-icon { color: var(--c-primary); border-color: color-mix(in srgb, var(--c-primary) 35%, transparent); }
-.facts-panel .tone-light:hover .fact-icon { background: var(--c-primary); color: var(--c-primary-contrast); }
-
-/* 卡面 · gold：金色渐变 + 悬停扫光 */
-.facts-panel .tone-gold {
-  color: var(--deep);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--c-accent) 55%, #fff) 0%, var(--c-accent) 45%, color-mix(in srgb, var(--c-accent) 72%, #000) 100%) padding-box,
-    linear-gradient(135deg, color-mix(in srgb, var(--c-accent) 30%, #fff), color-mix(in srgb, var(--c-accent) 70%, #000)) border-box;
-}
-.facts-panel .tone-gold::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.45) 48%, transparent 66%);
-  transform: translateX(-110%); transition: transform 1s ease; }
-.facts-panel .tone-gold:hover::before { transform: translateX(110%); }
-.facts-panel .tone-gold .fact-value { color: var(--deep); }
-.facts-panel .tone-gold .fact-label, .facts-panel .tone-gold .fact-more, .facts-panel .tone-gold .fact-index { color: var(--deep); }
-.facts-panel .tone-gold .fact-icon { color: var(--deep); border-color: color-mix(in srgb, var(--deep) 40%, transparent); }
-.facts-panel .tone-gold:hover .fact-icon { background: var(--deep); color: var(--c-accent); }
-
-@media (max-width: 1000px) {
-  .facts-panel { grid-template-columns: repeat(2, 1fr); }
-  .facts-panel > li:nth-child(1) { grid-row: auto; }
-}
-@media (max-width: 600px) {
-  .hero:has(+ .facts-wrap-panel) { padding-bottom: 88px; }
-  .facts-panel { grid-template-columns: 1fr; margin-top: -40px; gap: 14px; grid-auto-rows: auto; }
-  .facts-panel > li:nth-child(n) { grid-column: auto; }
-  .facts-panel .fact-link, .facts-panel li:not(:has(.fact-link)) { padding: 24px 22px; }
-  .facts-panel > li:nth-child(1) .fact-link { padding: 28px 24px; }
-  .fact-art { width: 260px; height: 260px; right: -70px; top: -70px; }
-}
-@media (prefers-reduced-motion: reduce) { .facts-panel *, .facts-panel > li, .facts-panel > li::before { transition: none !important; } }
 
 /* categories / cards / markets */
 .cat-grid, .cards, .markets { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
