@@ -1,0 +1,23 @@
+{
+  "hero":{"en":"Build a product range with a clearer brief.","ar":"طوّر مجموعة منتجات بموجز أوضح"},
+  "hero_description":{"en":"Explore development directions, compare packaging and send a focused request. This demonstration site is ready for your own approved brand and product content.","ar":"استكشف خيارات التطوير والعبوات وأرسل طلباً واضحاً. استبدل هذا المثال بمحتوى علامتك ومنتجاتك المعتمد."},
+  "pillars":[
+    {"title":{"en":"Product direction","ar":"اتجاه المنتج"},"value":{"en":"Your approved range","ar":"مجموعة منتجاتك"},"text":{"en":"Replace these examples with your actual capabilities.","ar":"استبدل الأمثلة بقدراتك الفعلية"}},
+    {"title":{"en":"Packaging choices","ar":"خيارات العبوات"},"value":{"en":"Format & dispensing","ar":"الشكل والاستخدام"},"text":{"en":"Confirm the right component for the project.","ar":"أكد المكونات المناسبة للمشروع"}},
+    {"title":{"en":"Documentation","ar":"المستندات"},"value":{"en":"Market by market","ar":"حسب كل سوق"},"text":{"en":"List only documents and certifications you can verify.","ar":"اعرض فقط المستندات والشهادات التي يمكن التحقق منها"}},
+    {"title":{"en":"Project planning","ar":"تخطيط المشروع"},"value":{"en":"Sample to quotation","ar":"من العينة إلى العرض"},"text":{"en":"Agree on scope, quantities and timing.","ar":"اتفق على النطاق والكميات والجدول"}}
+  ],
+  "stages":[
+    {"title":{"en":"Product brief","ar":"موجز المنتج"},"text":{"en":"Define the range, target market and project priorities.","ar":"حدد المنتجات والسوق والأولويات"}},
+    {"title":{"en":"Development direction","ar":"اتجاه التطوير"},"text":{"en":"Discuss a reference, existing option or custom direction.","ar":"ناقش المرجع والخيارات واتجاه التطوير"}},
+    {"title":{"en":"Sampling","ar":"العينات"},"text":{"en":"Review and refine the sample against the brief.","ar":"راجع العينة وحسّنها وفق الموجز"}},
+    {"title":{"en":"Packaging","ar":"العبوات"},"text":{"en":"Match components, finish and dispensing.","ar":"حدد المكونات والتشطيب وطريقة الاستخدام"}},
+    {"title":{"en":"Validation","ar":"التحقق"},"text":{"en":"Confirm the agreed compatibility and testing plan.","ar":"أكد خطة التوافق والاختبارات المتفق عليها"}},
+    {"title":{"en":"Preparation","ar":"التحضير"},"text":{"en":"Approve specifications, artwork and commercial terms.","ar":"اعتمد المواصفات والتصميم والشروط"}},
+    {"title":{"en":"Production handoff","ar":"تسليم الإنتاج"},"text":{"en":"Move approved requirements into a controlled handoff.","ar":"انقل المتطلبات المعتمدة إلى مرحلة الإنتاج"}}
+  ],
+  "faq":[
+    {"q":{"en":"What should a new brand prepare?","ar":"ما المطلوب من علامة جديدة؟"},"a":{"en":"Start with your product category, market, packaging reference and preferred quantity.","ar":"ابدأ بفئة المنتج والسوق ومرجع العبوة والكمية المطلوبة"}},
+    {"q":{"en":"What should an established brand include?","ar":"ماذا تتضمن طلبات العلامات القائمة؟"},"a":{"en":"Include your product brief, specifications, reference samples and required documentation.","ar":"أضف موجز المنتج والمواصفات والعينات المرجعية والمستندات المطلوبة"}}
+  ]
+}

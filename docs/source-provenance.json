@@ -1,0 +1,551 @@
+{
+  "origin_snapshot": "2026-11-05 readonly production export",
+  "source_main_release_date": "2026-11-03",
+  "source_geo_release_date": "2026-11-02",
+  "export_sha256": "7af267f41970306dad174552718da434eb01e5bf3b7712d63b1abb4efbcb6c19",
+  "modules": [
+    {
+      "path": "backend/app.py",
+      "source_sha256": "7f36efa6532feca4a3ed94eaac2f8079112ba6818116b5f15de99c49a8ca5b6f"
+    },
+    {
+      "path": "backend/notification_worker.py",
+      "source_sha256": "ce56a6ec83b21fe1ed08a3e6dabcdc9233a636da313a9b5ff1ff97b7191e62bf"
+    },
+    {
+      "path": "backend/migrations/001_runtime_foundation.sql",
+      "source_sha256": "cfb09fde2103042b4bed1285f4cc64559870c7a549fc09836736c2f1c48f6cf8"
+    },
+    {
+      "path": "backend/migrations/002_security_invariants.sql",
+      "source_sha256": "07ee3f3e2ac15851721f49a56759179e16b2a6c06cfd88a565b429017cfbf000"
+    },
+    {
+      "path": "backend/migrations/003_notification_delivery.sql",
+      "source_sha256": "26b2db23cd8222fb6d92d9a5e7663322e462675e24197d1640aa8298fa4e9ecc"
+    },
+    {
+      "path": "backend/runtime_foundation/api.py",
+      "source_sha256": "264a69b3a22d76785915c96b73c7a1602623b51430b93e02862487e3e08aafff"
+    },
+    {
+      "path": "backend/runtime_foundation/attachments.py",
+      "source_sha256": "c547925f4e49ff219f2406147977bf48b67bfae6a5d0f1a6900fe250dfa0217f"
+    },
+    {
+      "path": "backend/runtime_foundation/baseline.py",
+      "source_sha256": "b5896b53ce1618156830e8bfd4472beeddbcdffc5c74b4e9e482c46008343201"
+    },
+    {
+      "path": "backend/runtime_foundation/configuration.py",
+      "source_sha256": "38e35995d047cfc12ca113829e4ce9fa619e361793b7e575084f94283620314a"
+    },
+    {
+      "path": "backend/runtime_foundation/migrations.py",
+      "source_sha256": "0ebb6ff1f6eb622524f77181316c8d5510d1085c7d1b3592fe3ebf903b852ffa"
+    },
+    {
+      "path": "backend/runtime_foundation/models.py",
+      "source_sha256": "0f7fd9f0f821c1aa2ac7328cd3c5680f36acb0e7db7484830e3fcafc68af2a66"
+    },
+    {
+      "path": "backend/runtime_foundation/notifications.py",
+      "source_sha256": "6dca3d2f4206565e3b286e2488884c3cde2b033e26b545b99736656590a2c028"
+    },
+    {
+      "path": "backend/runtime_foundation/operations.py",
+      "source_sha256": "f50cd3a6157effd37ee0b01360a2f450ddc540bad8e118d3573ca2f70670f2f4"
+    },
+    {
+      "path": "backend/runtime_foundation/repository.py",
+      "source_sha256": "f04027dfab8f661df6b79471c43a78121a0aff5dbaa379e1599381c531a6aa86"
+    },
+    {
+      "path": "backend/runtime_foundation/security.py",
+      "source_sha256": "b4a99cddd0119325445820b209d605eb7fb7a814eb3ea39b80998a66fc676f1a"
+    },
+    {
+      "path": "backend/runtime_foundation/service.py",
+      "source_sha256": "32ac70f8996c971de2b0b6e4c8f342ddb2874399140f6a2742f370e585ba1416"
+    },
+    {
+      "path": "backend/runtime_foundation/storage.py",
+      "source_sha256": "a6a264d77f5ca509f2e72d607f95ae79becbd5eee22c8b87a7e8d38971c40f6c"
+    },
+    {
+      "path": "backend/runtime_foundation/validation.py",
+      "source_sha256": "757a661f561ceead5951102a3c4ecee0c515b08b450d480fc805e01acd0d550f"
+    },
+    {
+      "path": "backend/runtime_foundation/__init__.py",
+      "source_sha256": "bbb328cb84b3ec71cba9269ca324595802f475b7fcf13bfab5277414e6494b48"
+    },
+    {
+      "path": "geo/geo_monitor/analyzer.py",
+      "source_sha256": "a524a6c9908d0dec9591b49c12cf4b228eeb6fccf1e33308c66d5596134bf7f4"
+    },
+    {
+      "path": "geo/geo_monitor/cli.py",
+      "source_sha256": "15dbeaaf5ce1412a228bf28d0713b17a3bc7244e471ed6a771110d28c70c2c39"
+    },
+    {
+      "path": "geo/geo_monitor/config.py",
+      "source_sha256": "f3eb501875b11f76fcc57ec46fd09d84d9883f79c15581f79674d60e5388a311"
+    },
+    {
+      "path": "geo/geo_monitor/db.py",
+      "source_sha256": "11de43c0744bee6531de4b5b89bfacfba77b9d49fa05d32d83492534d0186448"
+    },
+    {
+      "path": "geo/geo_monitor/mailer.py",
+      "source_sha256": "b80521a8348141c2c0e80e8b540c4d0e046d8cc19a1ce9e38b800a350ae2ee4a"
+    },
+    {
+      "path": "geo/geo_monitor/nginx_logs.py",
+      "source_sha256": "6d8b9c59e7306f467db9f3df57cd5fd5c98846885884c2d542a2f6870d833a57"
+    },
+    {
+      "path": "geo/geo_monitor/questions.py",
+      "source_sha256": "e6305c6a2de7b645c28775016c65adc228e02b2666aca20ad6c549e4219b38d1"
+    },
+    {
+      "path": "geo/geo_monitor/report.py",
+      "source_sha256": "6bb5a8ee653f0dd0e4936305877e439a28a7cd936f31bb1e44709499f9ea5c65"
+    },
+    {
+      "path": "geo/geo_monitor/runner.py",
+      "source_sha256": "a5de235c0db2f94dad9d93dab4ef5f4cba6d00836946b2f5381eba4d57250ca3"
+    },
+    {
+      "path": "geo/geo_monitor/scheduler.py",
+      "source_sha256": "24493ccf9d3c3747bc73a91fdff52b6c3e219dc61114a2b38d8c65688ff6cea1"
+    },
+    {
+      "path": "geo/geo_monitor/__init__.py",
+      "source_sha256": "2a1bfa8610dc10b53f43ce6a015bc8b466f218f594f352ead18564a560b935f6"
+    },
+    {
+      "path": "geo/geo_monitor/__main__.py",
+      "source_sha256": "13a1a5b340cdcfc1902b62be90e508c7c71886000d5bf087e7854aadf09fb35e"
+    },
+    {
+      "path": "geo/geo_monitor/engines/base.py",
+      "source_sha256": "7d992d17d393a25fbbe962ef6cfde33547bfaaa984d36d317f6740c02f88234b"
+    },
+    {
+      "path": "geo/geo_monitor/engines/gemini_engine.py",
+      "source_sha256": "22c68315ce743a35cc4a1744d1020037d5b7489e04f67912b488de1d1ca84759"
+    },
+    {
+      "path": "geo/geo_monitor/engines/mock_engine.py",
+      "source_sha256": "b42c87ea700b4f18b2d29abfa54887f15377691c475b1db7aa46200013977a59"
+    },
+    {
+      "path": "geo/geo_monitor/engines/openai_engine.py",
+      "source_sha256": "a50f6739e9011354912f0826fbaddc6e47c0373f36dc9d8f44657a592464c4a7"
+    },
+    {
+      "path": "geo/geo_monitor/engines/perplexity_engine.py",
+      "source_sha256": "f83bfa689ac367989116798bce8b6ba9910baecb9ca7dae1f8fb5d71b79c1c07"
+    },
+    {
+      "path": "geo/geo_monitor/engines/__init__.py",
+      "source_sha256": "d782fda956745381690d1eeedcda42de464c3bca29c0ecd8bed46c21c747d4be"
+    },
+    {
+      "path": "geo/geo_monitor/web/aeo_export.py",
+      "source_sha256": "617fdcc58d077792659e78ed6e88d8653ab2343da23bdb7e9e730ccce4160b39"
+    },
+    {
+      "path": "geo/geo_monitor/web/ai_monitor.py",
+      "source_sha256": "66256bf1b076a924f8ab07fbbc13ff259f9e53a93d1dce316300a3d40a06041e"
+    },
+    {
+      "path": "geo/geo_monitor/web/app.py",
+      "source_sha256": "1935c24f6f06cfc757ced90473b03ab396b322f348209751e4dd599cdda1e45b"
+    },
+    {
+      "path": "geo/geo_monitor/web/auth.py",
+      "source_sha256": "177a32a6e9fbfa196e62e1d25499d2bfd3b34a953c2e8b831e35b964186f21a4"
+    },
+    {
+      "path": "geo/geo_monitor/web/charts.py",
+      "source_sha256": "0bb5b0bfafdf572f81cda76fdb69d1aaf4eb4fc602cc8c73674a8e33d70e11cc"
+    },
+    {
+      "path": "geo/geo_monitor/web/content_optimization.py",
+      "source_sha256": "067ef2e08066c84b9b8c9f13174e5325041d5f6ed21e285fc06b53dc1d61a55b"
+    },
+    {
+      "path": "geo/geo_monitor/web/content_routes.py",
+      "source_sha256": "bd0e58b794409c5e3a19a3c0a24541a15642edae492f569c878478bea126fe05"
+    },
+    {
+      "path": "geo/geo_monitor/web/google_data.py",
+      "source_sha256": "89c4b261b308566ab3588e6013551a14f7c0a2f533800344afdc0aba5cc89c56"
+    },
+    {
+      "path": "geo/geo_monitor/web/google_imports.py",
+      "source_sha256": "c43a28cb86b2b5eb8a56de7880f4aadfae099c02ec739e4df1f2681ea1504f2d"
+    },
+    {
+      "path": "geo/geo_monitor/web/growth_routes.py",
+      "source_sha256": "558e556733fda6e8bd7a91cd4676376a4b45f5a56d4f3d8c211acfd5abec7a87"
+    },
+    {
+      "path": "geo/geo_monitor/web/indexing.py",
+      "source_sha256": "76da8b290a6bd9ac69a1e49170c35521e3505ade765c05871fd54b3afb8683c7"
+    },
+    {
+      "path": "geo/geo_monitor/web/inquiries.py",
+      "source_sha256": "ef4e5996a90a1efdf2d5c89a38f46b578bd8e9916cad0be7589e4e1b5ef4a8d9"
+    },
+    {
+      "path": "geo/geo_monitor/web/knowledge.py",
+      "source_sha256": "2f505bf930c49e13deda6166827d0bcaed06dc7b3ba251b8f171f22f33ae2007"
+    },
+    {
+      "path": "geo/geo_monitor/web/knowledge_extract.py",
+      "source_sha256": "c98ccf97953242cffec7433bd67edf6f6a948f9e050f78ee5bdb7bed174ebdd1"
+    },
+    {
+      "path": "geo/geo_monitor/web/knowledge_routes.py",
+      "source_sha256": "6e4c963bb77e68b8e9d0101b480cc4f8fbeba571d8995d3dae2ff19225a8db2d"
+    },
+    {
+      "path": "geo/geo_monitor/web/leads.py",
+      "source_sha256": "ebd0364830bbf636a85fb72eb85e5802d7fda33ce255f6eb886fd721280220e2"
+    },
+    {
+      "path": "geo/geo_monitor/web/lead_notifications.py",
+      "source_sha256": "8798d50bbcff44266e4d42f560627d04b73e8d446f91102fc41dfd62d68d8271"
+    },
+    {
+      "path": "geo/geo_monitor/web/lead_routes.py",
+      "source_sha256": "48197154010f88d11c477ca917737838d1ea210e8ce0a8f9bd9a03d7adb6efee"
+    },
+    {
+      "path": "geo/geo_monitor/web/meta_data.py",
+      "source_sha256": "7ae4c652f1978a22accd8bffdb639a222080d4cacff35ed7621b29d96af3e669"
+    },
+    {
+      "path": "geo/geo_monitor/web/operations_routes.py",
+      "source_sha256": "f3e5ab7de34eec2ab93cdadf5ad868bf6244a9f37b0520639ca29963ded454fa"
+    },
+    {
+      "path": "geo/geo_monitor/web/operations_store.py",
+      "source_sha256": "0318893cc41a70d95f85814777f4a258df5f047066d1f85b9a14b0b331bbfe7e"
+    },
+    {
+      "path": "geo/geo_monitor/web/password_routes.py",
+      "source_sha256": "ce13105965a67d6ac45f114f99b4d432f8cd00ada9b09ccdd9cfcb0e10638de3"
+    },
+    {
+      "path": "geo/geo_monitor/web/password_store.py",
+      "source_sha256": "6dbe442e04ed480140b6fd139b35d56b9777877cc2acd4d2083c169b02b837ab"
+    },
+    {
+      "path": "geo/geo_monitor/web/queries.py",
+      "source_sha256": "d4fa714cf7b76ca491a4abceb2d3e30128cbc5d473e90c1be143cc817f6b7953"
+    },
+    {
+      "path": "geo/geo_monitor/web/release.py",
+      "source_sha256": "9cb39a3032dec30cb2e9024cfa304cc7f141aaa709088b54f647143d7814a3d8"
+    },
+    {
+      "path": "geo/geo_monitor/web/sitemap_sync.py",
+      "source_sha256": "debd7cd22ce356be6fca4d4a22283e4ade193a422167d3ae78ad8319dd0bf3ab"
+    },
+    {
+      "path": "geo/geo_monitor/web/social.py",
+      "source_sha256": "c39dc433f283492641580e358e8f0c239a379622f1c4a7092deaf2dadce7faf6"
+    },
+    {
+      "path": "geo/geo_monitor/web/website_inquiries.py",
+      "source_sha256": "80fea5c11e5547f0a1ea6c984eefb8325f5d53049d14ce787cdcbc57eb7d6f48"
+    },
+    {
+      "path": "geo/geo_monitor/web/workspace.py",
+      "source_sha256": "40c384666cf0e1900af24a79366f447863d7d09915772c5264d5ed48835eed68"
+    },
+    {
+      "path": "geo/geo_monitor/web/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/ai-monitor.css",
+      "source_sha256": "2af33441dcda98a111892df9b34ea131895ac63533a87eed9b2d2982729a45f5"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/analytics.css",
+      "source_sha256": "5380d94f18616a4478a10e7bed7b86e0b2d8fad4c80175d721ceafb07e018d3a"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/app.css",
+      "source_sha256": "215d947b2ff5d602dfee01826e7ed1b05acdde98543ff6bfaaeb00931eaaf807"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/app.js",
+      "source_sha256": "3e5f5222aa54945e45bdca5f9017098166964e2cc7f9fc412cd1797596880bcd"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/content.css",
+      "source_sha256": "ef3907fff3b9cf9bbb86b354f7c7dfebacaf7a90642fd7386a465a8162137146"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/content.js",
+      "source_sha256": "b4cbc1472ba2166c05052f5100baddc7f1d96aa888b16fc2cc7cd37a1c840b78"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/growth-workspace.css",
+      "source_sha256": "9ece5616b1152cb9a71f97b61c1e187d0c28b3cbf321512cdb3aa3a1ce3e02fc"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/knowledge.css",
+      "source_sha256": "095936f282646d304ba8ca547fcf671df7455eb738abff79c5cd295fa994b5cf"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/leads.css",
+      "source_sha256": "56b2b88e158dea94ce3e3542049ecbaa3b4928312d96065c21b57ef39f8114df"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/official-brand.css",
+      "source_sha256": "4667d687ae83f41241f23a265425464bc42abe11c48d05010b62613ceb81ec81"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/operations.css",
+      "source_sha256": "e5c7f617288a311007ce8a28947d35b1686b5bc1e744a9e4ccae315830e54c7b"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/operations.js",
+      "source_sha256": "6fd782a62f26231c1f82852487a3d73d28e7130855cdd09ff25a687b028c6dcd"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/password-settings.css",
+      "source_sha256": "2bac35b67e11de21ed4d1c8f67c7657433f5b8d2c17801cdbc12fa3c55b56275"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/password-settings.js",
+      "source_sha256": "07ad764fa79527b80bed59bccef98355d57a6739ec40a760a511c9c1090efe37"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/phase1.css",
+      "source_sha256": "9ec018345be375a9a8222adad76c13afdc6ddaa47034de39d1c32351afae2522"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/readability.css",
+      "source_sha256": "456ea3bfd548ea744757b8ba0730876a34090e02a9371fe258123ef4ee8d0758"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/restored-workspace.css",
+      "source_sha256": "bcfdb3358d76fab3021abb80380a8a54d63e1f334999cf3ed2d61b32e4fc963a"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/social.css",
+      "source_sha256": "884d949bfb364559119d105486a330c796291be21873dcd8a6b865c6b48e2a1e"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/social.js",
+      "source_sha256": "93bd688500d596006d9647a23d1ac7270a9b8045ec396c886f5360cd02d7fbd7"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/workspace.css",
+      "source_sha256": "b577e6ce83582c7814f3b2cde3158cfc7309290337ff4b2ce8ef2d032f453f1b"
+    },
+    {
+      "path": "geo/geo_monitor/web/static/workspace.js",
+      "source_sha256": "a7055520e3583383746a0ba484b5c08a3d23e81c8ec8dd7212c62bdd96e2770e"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/ai_monitor.html",
+      "source_sha256": "7f66c0791e4e60bcd63cffe9a05a4d719ba1a275a47d33a44c4d8239f86def01"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/ai_overview.html",
+      "source_sha256": "76a0e8b765abee290ea626426a02e0755e003cf26ec10346344e08bed9370bd3"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/base.html",
+      "source_sha256": "4bae653262ece7913dd6a66bf7d55bfab4daf620d13ef1803275afe6774dbfd5"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/base_full.html",
+      "source_sha256": "bd975dda275180d1d5ca9a929c13fe46ab69d89839fab9f1fd623805106e49aa"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/competitors.html",
+      "source_sha256": "7594d52c4dc0c62ffd6979ab3fec48cb6644aa2f71ae05568c1a50078a18d006"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/content_optimization.html",
+      "source_sha256": "467dfff4a690a82b4b42202e789fba21b6ff1fae3158cdd4265e50a553f9420a"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/error.html",
+      "source_sha256": "529140d864cc3c5155a503858c1a53468960b8cae637ca47029d5ab03357767d"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/gaps.html",
+      "source_sha256": "defa2552ac286abd595cbaeed53d17e4e214485c14cf2c693fe6c10c0dc4e770"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/google_dashboard.html",
+      "source_sha256": "80836d9eeda8d3398936d08445be6e56a3c11ebbb135f18323aadcc225f60699"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/google_imports.html",
+      "source_sha256": "996704f761f863bbd3b516c66545c2fc099be610848a22bb30cd36a18b3233fb"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/google_settings.html",
+      "source_sha256": "057a6878084fdbce8bcc9b041aea4839901d4e095157c36dbf23d9249a61adc9"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/indexing.html",
+      "source_sha256": "41274913c47938bed6eed9c5a0eab84bebd794ad39b12d853eef64a8fbfb72a1"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/indexing_detail.html",
+      "source_sha256": "b140a92859b56b6d169d9d98247a406dacf7954c52b0eb6a27af8289dbb289c3"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/inquiries.html",
+      "source_sha256": "4e372553a867343496087daafb276ca8fa34fc9702ad7994f5e7ea6bd16892ec"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/knowledge.html",
+      "source_sha256": "11926fb43d734f6d71f993c230758aa0cd1968e825b17ca0f7b776538b917ffc"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/knowledge_categories.html",
+      "source_sha256": "1e3b52e550b1f233f04759e4de969de1a07edd55d92e4c7131ffe9bc2a2ca60c"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/knowledge_detail.html",
+      "source_sha256": "6f168626c55a87df16acf3b50cff3fa8958c22591238cfe293099fe9cff74620"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/knowledge_edit.html",
+      "source_sha256": "660741322acca0ca028323704d5f13bab583819e502ce97db079045a725bba7d"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/knowledge_revision.html",
+      "source_sha256": "711f8ed48ba2f709943f6c8728a9394bef8262bfd8e0a7ca23e5e06830426547"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/leads.html",
+      "source_sha256": "e2bfa142fe745d6425fdb5a34280347c2b262f60bcb4414d6845bf5bad99aa0b"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/lead_detail.html",
+      "source_sha256": "da999710cf736fc09dddc22a78fbfb1201c0268b254af21810300d17f0ad443d"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/lead_import.html",
+      "source_sha256": "3dcf197c7b3139a4f4e8b3a8a3fa67dfd230d578eed489c7844081d419b0918b"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/lead_new.html",
+      "source_sha256": "038d3b125313001208f96a9cf9c2a0795be92dc5790f0077b8d81898ad922737"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/login.html",
+      "source_sha256": "dee5121edc1bd2ff38f406a0109c8d098b080168bec7befbb6f5007c7e5029e3"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/meta_dashboard.html",
+      "source_sha256": "ea2efa78666efc41f40137b6e74bc47d445cc3fc4650bc2b9ccf93a2c44c457f"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/overview.html",
+      "source_sha256": "7125bd7437e7869d2f4c661dc173d3fb4e9b01cb4f364c316bcc552f686a7459"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/password_settings.html",
+      "source_sha256": "67b2da3b7a1265d37c46704fd0a7f7a808f3ab4764f8ab32c86fdd55f0ae8d46"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/phase1_base.html",
+      "source_sha256": "540557eef99b5e90b0f1645e3014e7298fa5bc9442ea11647a7ec280e1802e8c"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/phase1_events.html",
+      "source_sha256": "830d09d350b93d0c66c21358a3231b7b0d717b37f6a99d7bf008d53d48ef43f0"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/phase1_overview.html",
+      "source_sha256": "815278626a4bbf212c0cf8a61aa34ba21ada5bff9209231698ec62e02757e75a"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/questions.html",
+      "source_sha256": "e76227ca4eeb049e2e955f85bd7409df8e2b67df0b72934c93be1555116c066c"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/question_detail.html",
+      "source_sha256": "0b9220eccf504b936e8c530e118d29f89f50c48c497755427c1b9e015e6bc4cd"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/reports.html",
+      "source_sha256": "213b930d02430683a2f30f080ad0830987d800e7ace8c93a2e71fe8a8b7ed392"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/results.html",
+      "source_sha256": "946b72008b9cf3fbf35c1950ac5ddc1d3e0bccd030a3f7a81617a6fb3381d59b"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/result_detail.html",
+      "source_sha256": "974760928c2ad3778ac0c57db3cc80796b05ce2d0576b9d6eaeee1b7b290093f"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/runs.html",
+      "source_sha256": "6bd9944b8f70b078f97e2a49ec568d0ee8c07fbb17044cb550ce18e7fb934c0f"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/settings.html",
+      "source_sha256": "38681a7180d0d37c0f0918ba532c1d2be7fbeaac3d793245e5a1e1a494f49fbb"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/social.html",
+      "source_sha256": "f3eeff4d38a0a500e11c731a067df392127d441d00bdac21150301dda5f2704e"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/traffic.html",
+      "source_sha256": "6668f1c2a6ecc79a3e042b85419e19db99daf5a70ec092a31cb8d38651b370df"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/_icons.html",
+      "source_sha256": "99d6e4889b8ae8dd35d728b70fa522c20ee8535499b5c56a7ac884fb31070892"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/_inquiry_realtime.html",
+      "source_sha256": "5ff1f25b5057c03fe7efe1fb91003a9333e913457da53493ca1fbf0e9517fbaf"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/_lead_fields.html",
+      "source_sha256": "ed220dbaf15d2ac4bfe4f7edc6631af3d0e6176bfecbed60aa9297268c511264"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/_macros.html",
+      "source_sha256": "e08bfec63497e336522ebeefdb63e9f450eb785ecf69d4b0487b7c6dd0dd8f86"
+    },
+    {
+      "path": "geo/geo_monitor/web/templates/_website_receipt.html",
+      "source_sha256": "5118130a935b6ebff55cb44127351bce313e078ee25d8f8369830b9ef289e6c8"
+    },
+    {
+      "path": "site/static/attribution.js",
+      "source_sha256": "938a30557d3ae696528f72aef73cf6f8de3a1525e843a36d354330b622097676"
+    }
+  ],
+  "adaptations": [
+    "Client activation gates parameterized; local SQLite retained",
+    "Original runtime API, migrations and notification worker retained",
+    "Original GEO app/modules/routes/templates retained with generic defaults",
+    "Front-end content becomes data-driven templates; no original customer content/images or public history shipped",
+    "Original attribution helper reused with configurable follow-up destination"
+  ],
+  "no_production_data": true,
+  "frontend_strategy": "Configuration-driven page templates; sanitized live attribution helper retained. Customer content and images excluded.",
+  "source_database_imported": false,
+  "source_environment_imported": false
+}

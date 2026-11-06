@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% from "_macros.html" import yes_no, empty_state %}
+{% block title %}{{ qid }}{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="/questions">问题清单</a> / {{ qid }}</nav>
+<header class="page-head">
+  <div>
+    <h1 class="prompt-title" dir="auto">{{ prompt }}</h1>
+    {% if meta %}<p class="muted">{{ meta.meaning }} · {{ meta.language }} · {{ meta.market }} · {{ meta.category }} · {{ meta.priority }}{% if not meta.enabled %} · 已停用{% endif %}</p>
+    <p class="muted">期望被引用页面：<span class="path">{{ meta.expected_url }}</span></p>{% endif %}
+  </div>
+</header>
+
+{% if not hist %}
+  {{ empty_state("还没有检测过这个问题", "它会在下次检测时被包含（如果已启用且优先级在检测范围内）。") }}
+{% else %}
+<div class="card flush">
+<div class="table-wrap">
+<table>
+  <thead><tr><th>检测</th><th>时间</th><th>引擎</th><th>结果</th><th class="r">排名</th><th>本站被引用页面</th><th>同时推荐</th><th></th></tr></thead>
+  <tbody>
+  {% for r in hist %}
+    <tr>
+      <td class="nowrap">第 {{ r.run_id }} 次</td>
+      <td class="nowrap muted">{{ r.checked_at|local('%Y-%m-%d') }}</td>
+      <td class="nowrap">{{ r.engine|engine }}</td>
+      <td class="nowrap">{{ yes_no(r) }}</td>
+      <td class="r">{{ r.rank or '—' }}</td>
+      <td class="urls">{% for u in r.target_urls %}<span class="path">{{ u|replace('https://' ~ site, '')|replace('https://www.' ~ site, '') }}</span>{% else %}<span class="muted">—</span>{% endfor %}</td>
+      <td class="comp muted">{{ (r.competitors or [])[:3]|join(', ') or '—' }}</td>
+      <td><a href="/results/{{ r.id }}">看回答</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+{% endif %}
+{% endblock %}

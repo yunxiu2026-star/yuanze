@@ -1,0 +1,44 @@
+# Usage: docker compose --env-file .env.production -f compose.yaml -f compose.production.yaml up -d --build
+# First provision PostgreSQL roles/migrations; see docs/DEPLOYMENT.md.
+x-production: &production
+  B2B_MODE: production
+  B2B_DATA_ROOT: /data
+  MAIN_SITE_INTERNAL_ORIGIN: http://site:8080
+  API_INTERNAL_ORIGIN: http://api:8080
+  PERSISTENCE_BACKEND: postgres
+  DB_HOST: postgres
+  DB_PORT: "5432"
+  DB_NAME: b2b_production
+  DB_SCHEMA: b2b_production
+  DB_USER: b2b_production_app
+  DB_PASSWORD: ${APP_DB_PASSWORD:?Set APP_DB_PASSWORD}
+  DB_SSLMODE: disable
+  PRODUCTION_CHAIN_AUTHORIZATION: B2B-PRODUCTION-MINIMUM-INQUIRY-CHAIN-01
+  PRODUCTION_PUBLIC_INTAKE_ENABLED: "1"
+  PRODUCTION_SYNTHETIC_ONLY: "0"
+  TRUSTED_PROXY_IPS: 172.30.73.1
+services:
+  site:
+    environment: *production
+  api:
+    environment: *production
+    depends_on: {postgres: {condition: service_healthy}}
+  geo:
+    environment: *production
+  sync:
+    environment: *production
+  postgres:
+    image: postgres:18
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: b2b_production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes: ["postgres-state:/var/lib/postgresql"]
+    networks: [app]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d b2b_production"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+volumes:
+  postgres-state:

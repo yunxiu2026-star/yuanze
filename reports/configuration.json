@@ -1,0 +1,34 @@
+[
+  {
+    "name": "New brand replaces heading and canonical",
+    "passed": true
+  },
+  {
+    "name": "New product id generates EN/AR details",
+    "passed": true
+  },
+  {
+    "name": "Collection config drives quote API series",
+    "passed": true
+  },
+  {
+    "name": "Domain drives GEO and WhatsApp config",
+    "passed": true
+  },
+  {
+    "name": "Arabic direction survives rebrand",
+    "passed": true
+  },
+  {
+    "name": "Removed product stale HTML is cleaned",
+    "passed": true
+  },
+  {
+    "name": "Demo indexing activation fails closed",
+    "passed": true
+  },
+  {
+    "name": "Rebrand proof leaves original config and private runtime intact",
+    "passed": true
+  }
+]

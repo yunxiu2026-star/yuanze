@@ -1,0 +1,5 @@
+date,event_name,event_count,is_test,page_path
+,inquiry_start,4,true,/products/
+,inquiry_submit_attempt,2,true,/products/
+,generate_lead,1,true,/products/
+,inquiry_error,1,true,/products/

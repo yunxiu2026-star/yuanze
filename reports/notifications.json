@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Configured local webhook delivers after insertion",
+    "passed": true
+  },
+  {
+    "name": "Notification contains buyer tags, attribution and GEO link",
+    "passed": true
+  },
+  {
+    "name": "Repeat sync suppresses duplicate notifications",
+    "passed": true
+  },
+  {
+    "name": "Test fixture never sends notification",
+    "passed": true
+  },
+  {
+    "name": "Delivery failure queued for retry without losing lead",
+    "passed": true
+  },
+  {
+    "name": "Blank notification config silently disabled",
+    "passed": true
+  }
+]

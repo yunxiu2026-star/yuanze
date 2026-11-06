@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}问题清单{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>问题清单</h1>
+    <p class="muted">共 {{ qs|length }} 个问题 · 启用的 P1 {{ counts.P1 }} / P2 {{ counts.P2 }} / P3 {{ counts.P3 }} ·
+      定时检测范围：{{ active|join(', ') }}</p>
+  </div>
+  <div class="actions">
+    <a class="button" href="/questions/download">下载 Excel</a>
+  </div>
+</header>
+
+{% if msg %}<p class="notice">{{ msg }}</p>{% endif %}
+{% if err %}<p class="alert">{{ err }}</p>{% endif %}
+
+<details class="card upload">
+  <summary>更新问题清单</summary>
+  <p>下载 Excel → 修改（增删问题、改优先级、「启用」列改为 是/否）→ 上传。表头不要改。旧文件会自动备份为 questions.previous.xlsx。</p>
+  <form method="post" action="/questions/upload" enctype="multipart/form-data" class="row">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label for="question-file">选择更新后的问题清单</label><input id="question-file" type="file" name="file" accept=".xlsx" required>
+    <button type="submit" class="primary">上传并替换</button>
+  </form>
+</details>
+
+<div class="card flush">
+<div class="table-wrap">
+<table class="results">
+  <thead><tr>
+    <th>ID</th><th>问题</th><th>语言</th><th>类型</th>
+    {% for e in engines %}<th class="center">{{ e|engine }}</th>{% endfor %}
+    <th>启用</th>
+  </tr></thead>
+  <tbody>
+  {% for q in qs %}
+    <tr class="{{ 'disabled' if not q.enabled }}">
+      <td class="nowrap"><a href="/questions/{{ q.id }}">{{ q.id }}</a> <span class="pri {{ q.priority|lower }}">{{ q.priority }}</span></td>
+      <td class="prompt" dir="auto"><a href="/questions/{{ q.id }}">{{ q.prompt }}</a><span class="meaning">{{ q.meaning }}</span></td>
+      <td class="nowrap muted">{{ q.language }}</td>
+      <td class="nowrap muted">{{ q.category }}</td>
+      {% for e in engines %}
+        {% set x = latest.get(q.id, {}).get(e) %}
+        <td class="center">
+          {% if not x %}<span class="muted" title="还没检测过">·</span>
+          {% elif x.mentioned %}<a href="/results/{{ x.id }}" class="pill yes" title="最近一次：提及">{{ '#' ~ x.rank if x.rank else '✓' }}</a>
+          {% else %}<a href="/results/{{ x.id }}" class="pill no" title="最近一次：未提及">✕</a>{% endif %}
+        </td>
+      {% endfor %}
+      <td class="nowrap">{{ '是' if q.enabled else '否' }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+<p class="foot">引擎列显示每个问题最近一次的结果：#数字 = 被推荐且排第几，✓ = 提到品牌但没有链接，✕ = 未提及，· = 还没检测过。</p>
+{% endblock %}

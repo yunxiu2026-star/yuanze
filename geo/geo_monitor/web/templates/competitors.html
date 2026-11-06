@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% from "_macros.html" import run_picker, empty_state %}
+{% block title %}竞品{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>同时被 AI 推荐的网站</h1>
+    <p class="muted">已排除维基、Reddit、社交媒体等通用网站。</p>
+  </div>
+  {{ run_picker(run, runs, "/competitors") }}
+</header>
+
+{% if not run %}
+  {{ empty_state("还没有检测数据", "完成第一次检测后显示。") }}
+{% elif not items %}
+  {{ empty_state("暂无竞品数据", "这次检测的回答里没有引用其他供应商网站。") }}
+{% else %}
+<div class="card flush">
+<div class="table-wrap">
+<table>
+  <thead><tr><th class="r">#</th><th>网站</th><th>覆盖的问题</th><th class="r">出现次数</th><th class="r">平均位置</th><th>出现的引擎</th></tr></thead>
+  <tbody>
+  {% for c in items %}
+    <tr>
+      <td class="r muted">{{ loop.index }}</td>
+      <td><a href="https://{{ c.domain }}" target="_blank" rel="noopener noreferrer">{{ c.domain }}</a></td>
+      <td><span class="bar-cell wide"><span class="bar" style="--w: {{ (c.share * 100)|round(1) }}%"></span>{{ c.questions }} 题（{{ c.share|pct }}）</span></td>
+      <td class="r">{{ c.hits }}</td>
+      <td class="r">{{ '%.1f'|format(c.avg_pos) }}</td>
+      <td class="muted">{{ c.engines|join('、') }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+<p class="foot">程序按域名统计，可能包含平台类网站（如 B2B 平台、行业目录）。不想统计的域名可以加到 .env 的 IGNORE_DOMAINS。</p>
+{% endif %}
+{% endblock %}

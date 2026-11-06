@@ -1,0 +1,50 @@
+{
+  "checks": [
+    {
+      "name": "Compose YAML parses with service anchors",
+      "passed": true
+    },
+    {
+      "name": "All local service ports bind loopback",
+      "passed": true
+    },
+    {
+      "name": "Sync source database mount is read-only",
+      "passed": true
+    },
+    {
+      "name": "Site has no business database volume",
+      "passed": true
+    },
+    {
+      "name": "Containers use readonly roots and private runtime mounts",
+      "passed": true
+    },
+    {
+      "name": "Production PostgreSQL matches retained version gate",
+      "passed": true
+    },
+    {
+      "name": "Production API requires explicit intake gates",
+      "passed": true
+    },
+    {
+      "name": "No database port published",
+      "passed": true
+    },
+    {
+      "name": "Nginx blocks internal API and checks slash paths",
+      "passed": true
+    },
+    {
+      "name": "Nginx enforces per-IP intake limit",
+      "passed": true
+    },
+    {
+      "name": "Generated redirects retain query strings",
+      "passed": true
+    }
+  ],
+  "runtime_tested": false,
+  "reason": "Docker, PostgreSQL and nginx are not installed on this machine."
+}

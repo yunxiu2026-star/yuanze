@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Full RFQ API retained with configured categories",
+    "passed": true,
+    "detail": "201"
+  },
+  {
+    "name": "Operator login for knowledge workflow",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Knowledge upload extracts and stores source",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Knowledge original download matches uploaded bytes",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Knowledge starts as draft",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Knowledge submit for review",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Knowledge explicit review approval",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Knowledge archive preserves source download",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Knowledge search page and detail remain usable",
+    "passed": true,
+    "detail": ""
+  }
+]

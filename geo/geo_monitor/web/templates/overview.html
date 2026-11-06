@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}首页总览{% endblock %}
+{% block styles %}{% if growth %}<link rel="stylesheet" href="/static/leads.css?v=1">{% endif %}{% endblock %}
+{% block content %}
+<header class="page-head growth-head">
+  <div><h1>网站增长总览</h1><p class="muted">先了解数据，再处理需要你确认的事项。</p></div>
+  <a class="btn" href="/google/imports">{{ icon('download',17) }} 导入最新报表</a>
+</header>
+<section class="growth-metrics" aria-label="网站与搜索关键数据">
+{% for m in home.metrics %}
+  <article class="growth-metric"><h2>{{ m.label }}</h2><p class="growth-value {{ 'growth-value-pending' if m.value=='待核实' }}">{{ m.value }}</p><p class="foot">{{ m.note }}</p><p class="growth-period">{{ m.period }}</p><a href="{{ m.href }}">{{ m.action }} {{ icon('arrow',15) }}</a></article>
+{% endfor %}
+</section>
+{% if growth %}<section class="restored-tools" aria-label="增长工作区">{% for m in home.modules %}<a href="{{ m.href }}">{{ icon(m.icon,22) }}<span><b>{{ m.label }}</b><small>{{ m.detail }}</small></span><span class="growth-badge">{{ m.state }}</span></a>{% endfor %}<a href="/knowledge">{{ icon('book',22) }}<span><b>企业知识库</b><small>上传、分类、全文搜索与资料审核</small></span><span class="growth-badge">{% if knowledge is defined %}已审核 {{ knowledge.approved }} · 待审核 {{ knowledge.pending }}{% else %}可以使用{% endif %}</span></a></section>{% endif %}
+{% if growth and leads is defined %}<section class="card lead-home" aria-labelledby="lead-home-heading"><div class="growth-section-head"><div><h2 id="lead-home-heading">客户询盘与跟进</h2><p class="foot">人工录入 / 文件导入的实际客户记录，独立于 GA4 事件。{{ website_sync.label if website_sync.enabled else "官网自动接入待配置。" }}</p></div><a class="button" href="/leads">打开询盘工作台 →</a></div><div class="lead-home-links"><a href="/leads">真实客户 {{ leads.total }}</a><a href="/leads?stage=pending">待核实 {{ leads.pending }}</a><a href="/leads?due=due">今天及逾期跟进 {{ leads.due }}</a><a href="/leads?due=unknown">来源未知 {{ leads.unattributed }}</a></div></section>{% endif %}
+<div class="growth-columns">
+  <section class="card growth-tasks" aria-labelledby="next-heading">
+    <div class="growth-section-head"><div><h2 id="next-heading">接下来做什么</h2><p class="foot">根据当前数据和草稿自动更新建议。</p></div><span class="growth-count">{{ home.tasks|length }} 项建议</span></div>
+    {% for task in home.tasks %}<article class="growth-task"><span class="growth-task-tag">{{ task.tag }}</span><h3>{{ task.title }}</h3><p>{{ task.description }}</p><a class="button" href="{{ task.href }}">{{ task.action }} {{ icon('arrow',15) }}</a></article>
+    {% else %}<p>暂无需要补充的数据。可打开报告，选择需要优化的内容。</p><a class="button" href="/optimize">打开内容工具</a>{% endfor %}
+  </section>
+  <aside class="card growth-status" id="data-status" aria-labelledby="data-status-heading">
+    <div class="growth-section-head"><div><h2 id="data-status-heading">数据可用状态</h2><p class="foot">文件导入与账号授权分别显示。</p></div></div>
+    {% for s in home.states %}<article class="growth-source"><div class="growth-source-head"><h3>{{ s.label }}</h3><span class="growth-badge {{ 'is-ready' if s.ready }}">{{ s.state }}</span></div><p class="foot">{{ s.detail }}</p><a href="{{ s.href }}">{{ s.action }}</a></article>{% endfor %}
+  </aside>
+</div>
+<section class="card" aria-labelledby="growth-queries-heading">
+  <div class="growth-section-head"><div><h2 id="growth-queries-heading">从真实搜索词开始优化</h2><p class="foot">查看词语依据，再准备标题、页面描述与内容方向。</p></div><a href="/optimize?source=real">查看全部真实词语</a></div>
+  {% if home.queries %}<p class="foot growth-query-period">{{ home.search.import_meta.start }} 至 {{ home.search.import_meta.end }} · Search Console 已保存报表。查询与页面为独立汇总，需人工核对关联。</p>
+  <div class="growth-query-list">{% for q in home.queries %}<article><div><h3 dir="auto">{{ q.text }}</h3><p class="foot">曝光 {{ '{:,.0f}'.format(q.impressions) if q.impressions is not none else '—' }} · 点击 {{ '{:,.0f}'.format(q.clicks) if q.clicks is not none else '—' }} · {{ '小样本先核对相关性' if q.impressions is none or q.impressions < 20 else '先核对相关性与页面语言' }}</p></div><a class="button" href="{{ q.href }}">核对并优化</a></article>{% endfor %}</div>
+  {% else %}<div class="growth-empty"><p>还没有已导入的搜索词。可以先导入 Search Console 报表，或手动准备内容草稿。</p><a class="button" href="/google/imports">导入搜索报表</a><a href="/optimize#generator">手动准备草稿</a></div>{% endif %}
+</section>
+<section class="growth-workflow" aria-label="后台使用顺序"><h2>日常使用顺序</h2><ol><li><a href="/google/imports">确认数据</a><span>导入报表或检查连接状态</span></li><li><a href="/optimize?source=real">核对词语</a><span>查看真实来源与样本量</span></li><li><a href="/optimize#saved-drafts">审核草稿</a><span>核对页面与业务信息</span></li></ol><p class="foot">保存草稿和标记已审核都只影响后台记录；网站发布仍需另行确认。</p></section>
+{% endblock %}

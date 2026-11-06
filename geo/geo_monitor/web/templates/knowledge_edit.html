@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ '编辑资料' if item else '上传资料' }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="/static/knowledge.css?v=2">{% endblock %}
+{% block content %}
+<a href="{{ '/knowledge/'+item.id|string if item else '/knowledge' }}">返回{{ '资料详情' if item else '企业知识库' }}</a><header class="page-head"><div><h1>{{ '编辑资料' if item else '上传企业资料' }}</h1><p class="muted">{{ '保存后生成新版本并回到草稿，原文件与历史记录保留。' if item else '先保存草稿，再核对正文并提交审核。' }}</p></div></header>
+{% if error %}<p class="notice" role="alert">{{ error }} 文件需要重新选择后上传。</p>{% endif %}
+<form method="post" enctype="multipart/form-data" class="card kb-editor"><input type="hidden" name="csrf" value="{{ csrf }}">{% if item %}<input type="hidden" name="version" value="{{ item.version }}">{% endif %}
+<label for="kb-file">{{ '替换原文件（可选）' if item else '资料文件' }}<input id="kb-file" type="file" name="file" accept=".pdf,.docx,.xlsx,.txt,.md,.csv" {{ 'required' if not item }}></label><p class="foot">支持 PDF、Word（DOCX）、Excel（XLSX）、TXT、Markdown、CSV，单个文件不超过 10 MB。自动提取可读取的文字；扫描件需手动补充正文。{% if item %}当前：{{ item.filename }}。替换文件时以新文件重新提取正文，保存后可继续编辑。{% endif %}</p>
+<div class="kb-form-grid"><label for="kb-title">资料标题<input id="kb-title" name="title" value="{{ values.get('title','') }}" maxlength="160" required placeholder="例如：面部护肤产品手册"></label><label for="kb-cat">资料分类<select id="kb-cat" name="category_id" required><option value="">请选择分类</option>{% for c in categories %}<option value="{{ c.id }}" {{ 'selected' if values.get('category_id','')|string==c.id|string }}>{{ c.name }}</option>{% endfor %}</select></label><label for="kb-tags">标签<input id="kb-tags" name="tags" value="{{ values.get('tags','') }}" maxlength="300" placeholder="例如：面部护理、精华、包装"></label><label for="kb-date">资料日期（可选）<input id="kb-date" name="effective_date" type="date" value="{{ values.get('effective_date','') }}"></label></div>
+<label for="kb-source">资料来源 / 负责人（可选）<input id="kb-source" name="source" value="{{ values.get('source','') }}" maxlength="500" placeholder="例如：产品部提供，2026 年产品手册"></label><label for="kb-summary">摘要（可选）<textarea id="kb-summary" name="summary" rows="3" maxlength="2000">{{ values.get('summary','') }}</textarea></label>
+{% if item %}<label for="kb-body">可检索正文<textarea id="kb-body" name="body" rows="18" maxlength="200000">{{ values.get('body','') }}</textarea></label><p class="foot">请核对产品参数、认证有效期、MOQ 和交期。正文按纯文字显示，原文件不会被修改。</p>{% endif %}
+<div class="kb-actions"><button type="submit">{{ '保存新版本' if item else '上传并保存草稿' }}</button><a href="{{ '/knowledge/'+item.id|string if item else '/knowledge' }}">取消</a></div></form>
+{% endblock %}

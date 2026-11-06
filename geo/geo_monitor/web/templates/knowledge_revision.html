@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}历史版本 · {{ revision.title }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="/static/knowledge.css?v=2">{% endblock %}
+{% block content %}<a href="/knowledge/{{ item.id }}">返回当前资料</a><header class="page-head"><div><h1>{{ revision.title }}</h1><p class="muted">历史版本 {{ revision.number }} · 保存于 {{ revision.created_at|local }} · 只读</p></div><a class="button" href="/knowledge/{{ item.id }}/download?revision={{ revision.id }}">下载此版本原文件</a></header><p class="notice">这是保存时的历史内容，当前状态与审核记录请到资料详情查看。</p><section class="card"><h2>版本资料</h2><p>{{ revision.category }}{% if revision.tags %} · {{ revision.tags }}{% endif %}</p><p class="kb-text">{{ revision.summary }}</p><p class="foot">来源：{{ revision.source or '未填写' }} · 文件：{{ revision.filename }}</p><div class="kb-body">{{ revision.body or '此版本没有可检索正文。' }}</div></section>{% endblock %}

@@ -1,0 +1,184 @@
+/* A readable type scale across every report, including the specialist pages. */
+:root {
+  --font-reading: "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  --header-height: 76px;
+  --rail-width: 56px;
+  --text-2: #505862;
+  --text-3: #5e6670;
+}
+:root[data-theme="dark"] { --text-2: #c4c9d0; --text-3: #b6bdc6; }
+body { font-family: var(--font-reading); font-size: 16px; line-height: 1.75; }
+button, input, select, textarea, .button, .btn { font-family: var(--font-reading); }
+* { scroll-margin-top: calc(var(--header-height) + 24px); }
+
+/* The mark is native SVG, so its letters stay crisp at favicon and header sizes. */
+.analytics-header { height: var(--header-height); gap: 18px; }
+.analytics-brand { gap: 11px; color: var(--text); }
+.brand-symbol { display: block; width: 40px; height: 40px; flex-shrink: 0; }
+.brand-wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1.3; }
+.brand-wordmark strong { font-size: 22px; font-weight: 650; letter-spacing: .01em; }
+.brand-wordmark>span { font-size: 14px; color: var(--text-2); font-weight: 500; letter-spacing: .08em; }
+.analytics-property { min-width: 128px; padding-left: 20px; line-height: 1.5; }
+.analytics-property small { font-size: 14px; }
+.analytics-property>span { font-size: 17px; }
+.workspace-search { height: 44px; min-width: 190px; }
+.workspace-search input#workspace-search { font-size: 16px; min-height: 42px; }
+.workspace-search kbd { font-size: 12px; }
+.workspace-search-results { top: 50px; }
+.workspace-search-results a { font-size: 16px; line-height: 1.6; }
+.workspace-search-results small { font-size: 14px; }
+.analytics-tools { gap: 12px; }
+.mode-badge, .theme-toggle { font-size: 14px; }
+.theme-toggle { min-height: 40px; }
+.workspace-account summary { width: 34px; height: 34px; font-size: 16px; background: #1558b0; }
+.workspace-account-panel { min-width: 270px; font-size: 15px; }
+.workspace-account-panel small { font-size: 14px; }
+.workspace-account-panel button { font-size: 15px; min-height: 42px; }
+
+.shell { padding-top: var(--header-height); grid-template-columns: var(--rail-width) minmax(0, 1fr); }
+.analytics-rail { top: var(--header-height); width: var(--rail-width); }
+.rail-label { font-size: 14px; padding: 7px 11px; }
+.side { top: var(--header-height); left: var(--rail-width); height: calc(100dvh - var(--header-height)); width: 292px; }
+.workspace-scrim { inset: var(--header-height) 0 0 var(--rail-width); }
+.navigation-heading { font-size: 17px; }
+.nav a { font-size: 16px; padding: 11px 15px; line-height: 1.5; }
+.nav-label { font-size: 14px; padding-top: 22px; }
+.navigation-footer, .navigation-footer small, .workspace-footer { font-size: 14px; }
+.preview-note { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+.preview-note a { font-size: 14px; }
+.preview-note svg { margin-top: 4px; }
+
+/* Body copy is 16px; dense data is 15px; supporting copy never shrinks below 14px. */
+.main h1 { font-size: 30px; font-weight: 600; line-height: 1.4; }
+.main h2 { font-size: 20px; font-weight: 600; line-height: 1.5; }
+.main h3 { font-size: 18px; font-weight: 600; line-height: 1.5; }
+.main p, .main li { font-size: 16px; line-height: 1.8; }
+.main .page-head .muted { font-size: 15px; line-height: 1.75; }
+.main .foot, .main .sub, .main small, .main .card h2 small { font-size: 14px; line-height: 1.8; }
+.main .notice { font-size: 15px; line-height: 1.8; }
+.main .notice p { font-size: 15px; }
+.main .notice .foot { font-size: 14px; }
+.main td, .main td.prompt { font-size: 15px; line-height: 1.75; padding: 16px 14px; }
+.main th { font-size: 14px; line-height: 1.6; font-weight: 600; padding: 14px; }
+.main .pill, .main .pri, .main .delta, .main .warn-text { font-size: 14px; }
+.main .filters label, .main .run-picker label { font-size: 15px; }
+.main .run-picker { gap: 10px; }
+.main .run-picker select { min-height: 42px; }
+.main input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=file]),
+.main select, .main textarea { font-size: 16px; line-height: 1.6; min-height: 42px; }
+.main input[type=file], .main input[type=file]::file-selector-button { font-size: 15px; }
+.main button, .main .button, .main .btn, .main .seg a { font-size: 15px; min-height: 40px; line-height: 1.5; }
+.main label { font-size: 15px; line-height: 1.6; }
+.main .pagination, .main .results-toolbar { font-size: 15px; }
+.main .empty-title { font-size: 20px; }
+.main .answer { font-size: 16px; line-height: 1.9; }
+.main .crumbs { font-size: 14px; }
+.main .path, .main .meaning, .main code { font-size: 14px; line-height: 1.8; }
+.main legend { font-size: 15px; font-weight: 600; }
+.main .prompt-title { max-width: 58ch; }
+
+.main .kpi { padding: 22px 20px; }
+.main .kpi h2 { font-size: 15px; font-weight: 500; line-height: 1.6; }
+.main .kpi .num, .main .kpi .big-num { font-size: 38px; font-weight: 500; line-height: 1.25; }
+.main .kpi .sub { font-size: 14px; }
+.main .legend, .main .legend li { font-size: 14px; }
+.main .chart-data, .main .chart-data summary { font-size: 15px; }
+.main .chart-wrap svg.trend { min-width: 700px; }
+.main .chart-wrap svg text { font-family: var(--font-reading); font-size: 20px; }
+.main .tooltip, .main .tooltip .row, .main .tooltip b { font-size: 14px; line-height: 1.6; }
+.home-report-grid { grid-template-columns: minmax(0, 1.85fr) minmax(290px, 1fr); }
+.main .home-summary p { font-size: 16px; line-height: 1.85; }
+.main .home-summary-actions { font-size: 15px; gap: 26px; flex-wrap: wrap; }
+.main .report-chart-footer { font-size: 14px; line-height: 1.7; }
+.main .report-status>h2 { font-size: 18px; }
+.main .report-status .status-number { font-size: 40px; line-height: 1.25; }
+.main .report-status dl { font-size: 15px; line-height: 1.65; row-gap: 14px; }
+.main .report-status>a, .main .status-chip { font-size: 14px; }
+.main .quick-report-heading { font-size: 20px; }
+.main .quick-reports a { font-size: 16px; padding: 23px 18px; }
+.main .quick-reports small { font-size: 14px; }
+.main .link-card .num { font-size: 34px; }
+
+/* Specialist screens have their own old type rules, so cover them explicitly. */
+.main .social-summary, .main .social-export, .main .social-name, .main .social-handle,
+.main .social-notes, .main .social-actions-small, .main .social-link-builder>p,
+.main .social-form label, .main .social-archive-row, .main .meta-progress span,
+.main .meta-connection .muted, .main .meta-empty, .main .meta-instructions li,
+.main .meta-report .muted { font-size: 15px; line-height: 1.8; }
+.main .social-status, .main .social-provenance, .main .social-platform-options a,
+.main .social-data-note h2, .main .social-data-note p, .main .social-link-result>label,
+.main .meta-stats .foot, .main .meta-callback, .main .meta-report .notice { font-size: 14px; line-height: 1.8; }
+.main .social-account-actions>.button, .main .social-link-result button { font-size: 15px; }
+.main .social-editor>summary, .main .social-archived>summary, .main .meta-setup>summary { font-size: 17px; }
+.main .social-form textarea, .main .social-link-result textarea { font-size: 16px; }
+.main .meta-stats b { font-size: 40px; }
+.main .meta-setup-grid { gap: 32px; }
+.main .meta-callback { overflow-wrap: anywhere; }
+.main .opt-filters label, .main .opt-form label, .main .opt-basis,
+.main .opt-evidence, .main .opt-review ul, .main .opt-review li,
+.main .opt-status-form button { font-size: 15px; line-height: 1.8; }
+.main .opt-source, .main .opt-variant span, .main .opt-variant small { font-size: 14px; }
+.main .opt-term, .main .opt-original { font-size: 17px; line-height: 1.65; }
+.main .opt-variant b { font-size: 20px; line-height: 1.6; }
+.main .opt-fields #draft-title { font-size: 21px; line-height: 1.6; min-height: 54px; }
+.main .opt-status-form button { min-height: 40px; }
+.main .google-steps code, .main .google-steps li { font-size: 15px; line-height: 1.8; }
+.opt-copy-status, .social-copy-status { font-size: 15px; line-height: 1.6; }
+
+.login-card { max-width: 460px; }
+.login-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.login-brand img { width: 52px; height: 52px; }
+.login-card h1 { font-size: 26px; line-height: 1.45; }
+.login-card .muted { font-size: 15px; }
+.login-card label { font-size: 16px; }
+.login-card input#pw { font-size: 17px; min-height: 48px; }
+.login-card button { font-size: 16px; min-height: 46px; }
+
+@media (max-width: 1400px) {
+  .analytics-property { display: none; }
+  .home-report-grid { grid-template-columns: minmax(0, 1fr); }
+  .main .quick-reports { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .main .report-status { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px 30px; }
+  .main .report-status dl { grid-column: 2; grid-row: 1 / span 4; }
+  .main .report-status>a { grid-column: 2; }
+}
+@media (max-width: 860px) {
+  .analytics-tools .mode-badge { display: none; }
+  .workspace-search { min-width: 140px; }
+  .main .opt-generator { grid-template-columns: minmax(0, 1fr); }
+  .main .opt-variant { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  :root { --header-height: 124px; --rail-width: 48px; }
+  .analytics-header { height: var(--header-height); grid-template-rows: 48px 44px; padding: 12px; gap: 8px; }
+  .brand-symbol { width: 38px; height: 38px; }
+  .brand-wordmark strong { font-size: 20px; }
+  .brand-wordmark>span { font-size: 14px; }
+  .analytics-brand { gap: 9px; }
+  .analytics-tools { gap: 3px; }
+  .theme-toggle { font-size: 14px; padding: 4px; }
+  .workspace-account summary { width: 30px; height: 30px; }
+  .workspace-search { height: 44px; min-width: 0; }
+  .workspace-search input#workspace-search { font-size: 16px; min-height: 42px; }
+  .workspace-search-results { top: 49px; }
+  .side { width: min(292px, calc(100vw - var(--rail-width))); }
+  .main { padding: 22px 16px 38px; }
+  .main h1 { font-size: 27px; }
+  .main h2 { font-size: 20px; }
+  .main .page-head .muted { font-size: 14px; }
+  .main .card { padding: 20px 16px; }
+  .main .card.flush, .main .report-chart-panel { padding: 0; }
+  .main .report-chart-body { padding: 20px 16px; }
+  .main .report-status { display: flex; gap: 0; }
+  .main .report-status dl { width: 100%; }
+  .main .kpi { padding: 20px 14px; }
+  .main .kpi .num, .main .kpi .big-num { font-size: 34px; }
+  .preview-note { flex-wrap: wrap; gap: 8px; }
+  .preview-note span { flex: 1 1 220px; }
+  .preview-note>a { margin-left: 24px; }
+  .main .quick-reports { grid-template-columns: minmax(0, 1fr); }
+  .main .social-tools, .main .meta-setup-grid { display: block; }
+  .main .opt-fields #draft-title { font-size: 20px; }
+  .main .home-summary-actions { gap: 12px 20px; }
+  .workspace-footer { padding: 18px 16px; line-height: 1.8; }
+}

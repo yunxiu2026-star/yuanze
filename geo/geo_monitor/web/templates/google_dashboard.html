@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% set is_search = kind == 'search' %}
+{% set title = 'Google 搜索表现' if is_search else '网站流量' %}
+{% set labels = ['搜索点击', '搜索曝光', '点击率', '平均排名'] if is_search else (['去重活跃用户', '会话数（导入行汇总）', '浏览量（导入行汇总）', '关键事件（导入行汇总）'] if mode == 'import' else ['活跃用户', '会话数', '页面浏览', '关键事件']) %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div><h1>{{ title }}</h1><p class="muted">{{ start }} 至 {{ end }} · {{ '自然搜索（Web）' if is_search else 'Google Analytics 4 · 网站访问与转化' }}</p></div>
+  {% if mode != 'import' %}<nav class="seg" aria-label="时间范围">{% for d in [7,28,90] %}<a href="?source=api&amp;days={{ d }}" class="{{ 'on' if days == d }}">近 {{ d }} 天</a>{% endfor %}</nav>{% endif %}
+</header>
+<div class="results-toolbar"><nav class="seg" aria-label="数据来源"><a href="?source=import" class="{{ 'on' if mode=='import' }}">文件导入</a><a href="?source=api" class="{{ 'on' if mode=='api' }}">API 同步</a></nav><a class="button" href="/google/imports">导入最新报表</a></div>
+<div class="flow-callout"><div><b>{{ '需要检查核心业务页是否被收录？' if is_search else ('查看询盘相关行为？' if phase1 else '需要确认询盘是否接收成功？') }}</b><p class="foot">{{ '搜索曝光与 Google 收录状态分别核对，打开逐页核查清单。' if is_search else ('读取 GA4 事件快照，保留历史批次并核对上报。' if phase1 else '网站接收结果、GA4 成功事件与测试记录分别统计。') }}</p></div><a class="button" href="{{ '/indexing' if is_search else '/inquiries' }}">{{ '打开收录检查' if is_search else ('查看 GA4 询盘事件' if phase1 else '打开询盘统计') }}</a></div>
+{% if mode == 'import' and data %}
+<section class="notice"><b>真实数据 · 文件导入</b><p>资源：{{ data.import_meta.resource }} · 导入于 {{ data.import_meta.imported_at|local }} · 批次 #{{ data.import_meta.id }}</p><p class="foot">此处按原始文件的报表日期展示，不是实时同步。相同资源和日期的已导入报告会组合展示；切换批次可查看当时的导入版本。</p></section>
+<form method="get" class="filters"><input type="hidden" name="source" value="import"><label for="import-batch">导入批次<select id="import-batch" name="batch" data-autosubmit>{% for h in batches %}<option value="{{ h.id }}" {{ 'selected' if h.id == data.import_meta.id }}>#{{ h.id }} · {{ h.start }} 至 {{ h.end }} · {{ h.filename }}</option>{% endfor %}</select></label><noscript><button type="submit">查看批次</button></noscript></form>
+{% endif %}
+{% if (mode != 'import' and not connected) or error %}
+<section class="card connection-card">
+  <div><h2>{{ ('检查导入记录' if mode=='import' else '需要检查连接') if error else '连接 Google，查看真实数据' }}</h2>
+    <p class="muted" {% if error %}role="alert"{% endif %}>{{ error or ('了解哪些关键词带来曝光，以及买家如何找到你的网站。' if is_search else '集中查看访问来源、热门内容和已配置的转化事件。') }}</p>
+    <p class="foot">可使用免费的文件导入；API 同步需另外完成 Google 授权。</p>
+  </div><a class="btn" href="{{ '/google/imports' if mode=='import' else '/google' }}">{{ '导入报表' if mode=='import' else '检查连接设置' }}</a>
+</section>
+{% endif %}
+<section class="card report-chart-panel google-report-panel">
+<div class="kpis small" id="report-metrics">
+{% for label in labels %}
+  <article class="kpi {{ 'hero' if loop.first }}"><h2>{{ label }}</h2><p class="num">
+  {% if data %}{% set v = data.total[loop.index0] %}
+    {% if v is none %}—{% elif is_search and loop.index0 == 2 %}{{ '%.2f'|format(v*100) }}%
+    {% elif is_search and loop.index0 == 3 %}{{ '%.1f'|format(v) if data.total[1] else '—' }}
+    {% else %}{{ '{:,.0f}'.format(v) }}{% endif %}
+  {% else %}—{% endif %}</p><p class="sub">{{ ('官方文件导入' if mode=='import' else 'Google API 报告') if data else '等待数据连接' }}</p></article>
+{% endfor %}
+</div>
+<div class="report-chart-body">
+  <h2>{{ '搜索点击趋势' if is_search else '每日会话趋势' }}</h2>
+  {% if data and data.daily %}
+  <svg viewBox="0 0 800 175" role="img" aria-label="{{ title }}每日趋势，具体数值见下方每日数据" class="google-chart">
+    <path d="M20 20H780M20 65H780M20 110H780M20 150H780" stroke="var(--line)"/><polyline points="{{ points }}" fill="none" stroke="var(--accent)" stroke-width="2"/>
+  </svg>
+  <p class="foot">{{ start }} 至 {{ end }} · {{ '仅绘制 Google 返回的有数据日期。' if is_search else '按日期展示会话数。' }}</p>
+  <details class="chart-data"><summary>查看每日数据（{{ data.daily|length }} 天）</summary><div class="table-wrap"><table>
+    <thead><tr><th>日期</th><th class="r">{{ '搜索点击' if is_search else '会话数' }}</th></tr></thead><tbody>
+    {% for day in data.daily %}<tr><td>{{ day.label }}</td><td class="r">{{ '{:,.0f}'.format(day['values'][0]) }}</td></tr>{% endfor %}
+    </tbody></table></div></details>
+  {% else %}<div class="empty"><p class="muted">{{ ('当前导出文件未包含每日会话数据，可导入带日期和会话数的报表补充趋势。' if mode=='import' and not is_search else '所选日期暂无可用数据。') if data else '获取真实数据后显示每日趋势' }}</p></div>{% endif %}
+</div>
+</section>
+{% if data %}
+<div class="report-tables">
+{% for name, rows in data.tables %}
+<section class="card"><h2>{{ name }} <small class="muted">前 10 项</small></h2><div class="table-wrap"><table>
+  <thead><tr><th>{{ name }}</th>{% if is_search %}{% for h in labels %}<th class="r">{{ h }}</th>{% endfor %}{% else %}<th class="r">{{ '浏览量' if '页面' in name else ('活跃用户' if '国家' in name else '会话数') }}</th>{% endif %}</tr></thead>
+  <tbody>{% for row in rows %}<tr><td style="overflow-wrap:anywhere">{% if row.page_link %}<a href="{{ row.page_link }}" target="_blank" rel="noopener noreferrer">{{ row.label }}</a>{% else %}{{ row.label }}{% endif %}{% if row.optimize_href %}<p class="report-row-action"><a class="button" href="{{ row.optimize_href }}">核对并优化此词</a></p>{% endif %}</td>
+    {% for v in row['values'] %}<td class="r">{% if v is none %}—{% elif is_search and loop.index0 == 2 %}{{ '%.2f'|format(v*100) }}%{% elif is_search and loop.index0 == 3 %}{{ '%.1f'|format(v) }}{% else %}{{ '{:,.0f}'.format(v) }}{% endif %}</td>{% endfor %}
+  </tr>{% else %}<tr><td colspan="5" class="muted">该范围没有数据。</td></tr>{% endfor %}</tbody>
+</table></div></section>
+{% endfor %}
+</div>
+{% else %}
+<div class="grid-2"><section class="card"><h2>{{ '搜索关键词' if is_search else '流量来源 / 媒介' }}</h2><p class="muted">连接后显示{{ '点击、曝光与排名' if is_search else '各来源的会话数' }}。</p></section><section class="card"><h2>{{ '搜索落地页' if is_search else '热门页面与访客国家' }}</h2><p class="muted">连接后显示真实资源数据。</p></section></div>
+{% endif %}
+<p class="foot">{% if mode=='import' %}{% if is_search %}汇总仅使用每日数据，平均排名按曝光加权；查询表可能缺少匿名查询，合计不等于总曝光。实际可用日期以每日表为准。{% else %}会话、浏览和关键事件按已导入行汇总，不保证与 Google 界面的去重总计相同；活跃用户不可跨组相加，缺少去重总数时显示「—」。未提供的字段不会补零。{% endif %}{% else %}{% if is_search %}Search Console 按太平洋时间统计，范围截止到 3 天前。关键词可能省略匿名查询，合计不一定等于总量。{% else %}GA4 按资源时区统计；范围截止到昨天。关键事件取决于网站现有埋点，不自动等于询盘。{% endif %}{% endif %}</p>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}社媒中心{% endblock %}
+{% block styles %}<link rel="stylesheet" href="/static/social.css?v=1">{% endblock %}
+{% block scripts %}<script src="/static/social.js?v=1" defer></script>{% endblock %}
+{% block content %}
+<header class="page-head social-head">
+  <div><h1>社媒中心</h1><p class="muted">从品牌主页到网站访问，在一个地方管理 {{ site_name }} 的社交渠道。</p></div>
+  <a class="btn" href="/social?new=1#account-editor">添加账号</a>
+</header>
+{% if msg %}<div class="notice" role="status">{{ msg }}</div>{% endif %}
+{% if error %}<div class="notice social-error" role="alert">{{ error }}</div>{% endif %}
+<div class="social-summary"><span><b>{{ social_count }}</b> 个社媒账号</span><span><b>{{ contact_count }}</b> 个联系渠道</span><a href="/social/meta">{{ '查看 Facebook / Instagram 数据' if meta.authorized else '连接 Facebook / Instagram 真实数据' }}</a></div>
+
+<div class="social-layout">
+<section class="card social-directory" aria-labelledby="accounts-title">
+  <div class="card-head"><div><h2 id="accounts-title">品牌账号</h2><p class="foot">点击主页可在新标签页访问；账号密码不保存在这里。</p></div><a href="/social/export.csv" class="social-export">导出账号清单</a></div>
+  <div class="social-account-list">
+  {% for a in accounts %}
+    <article class="social-account" aria-label="{{ a.platform_info.name }} · {{ a.name }}">
+      <span class="social-mark platform-{{ a.platform }}" aria-hidden="true">{{ a.platform_info.mark }}</span>
+      <div class="social-account-body"><div class="social-account-title"><h3>{{ a.platform_info.name }}</h3><span class="social-status {{ 'confirmed' if a.confirmed_at }}">{{ '官网已关联' if a.confirmed_at else '手动添加' }}</span></div>
+        <p class="social-name">{{ a.name }}</p><a class="social-handle" href="{{ a.url }}" target="_blank" rel="noopener noreferrer">{{ a.handle }}</a>
+        {% if a.notes %}<p class="social-notes">{{ a.notes }}</p>{% endif %}
+        {% if a.confirmed_at %}<p class="social-provenance"><a href="{{ a.source_url }}" target="_blank" rel="noopener noreferrer">官网链接来源</a> · 核对于 {{ a.confirmed_at|local('%Y-%m-%d') }}</p>{% endif %}
+      </div>
+      <div class="social-account-actions"><a class="button" href="{{ a.url }}" target="_blank" rel="noopener noreferrer" aria-label="打开 {{ a.platform_info.name }} {{ a.name }} 主页（新标签页）">{{ '打开联系页' if a.platform_info.contact else '打开主页' }}</a><div class="social-actions-small"><button type="button" class="link" data-copy="{{ a.url }}" aria-label="复制 {{ a.platform_info.name }} 主页链接">复制链接</button><a href="/social?edit={{ a.id }}#account-editor">管理</a></div></div>
+    </article>
+  {% else %}<div class="empty"><h3>把品牌账号放到这里</h3><p class="muted">添加平台主页后，就可以集中访问和维护。</p><a href="/social?new=1#account-editor">添加第一个账号</a></div>{% endfor %}
+  </div>
+  {% if unused %}<div class="social-add-more"><p class="foot">继续添加其他平台</p><div class="social-platform-options">{% for key in unused %}<a href="/social?new=1&amp;platform={{ key }}#account-editor"><span class="platform-dot platform-{{ key }}" aria-hidden="true"></span>{{ platforms[key].name }}</a>{% endfor %}</div></div>{% endif %}
+</section>
+
+<aside class="social-tools">
+<section class="card social-link-builder" aria-labelledby="link-title">
+  <h2 id="link-title">让每个社媒链接可追踪</h2><p class="muted">生成带 UTM 标签的网站链接，用于主页简介或帖子。生成后不会自动发布。</p>
+  <form method="get" action="/social#tracking-result" class="social-form">
+    <input type="hidden" name="build" value="1">
+    <label for="track-platform">发布平台<select id="track-platform" name="track_platform">{% for key,p in platforms.items() %}<option value="{{ key }}" {{ 'selected' if link_form.track_platform==key }}>{{ p.name }}</option>{% endfor %}</select></label>
+    <label for="track-destination">网站落地页<input id="track-destination" name="destination" type="url" value="{{ link_form.destination }}" required maxlength="1800" spellcheck="false"></label>
+    <label for="track-campaign">活动名称<input id="track-campaign" name="campaign" value="{{ link_form.campaign }}" placeholder="例如：brand_profile_2026" required maxlength="100" spellcheck="false"></label>
+    <label for="track-medium">推广类型<select id="track-medium" name="medium"><option value="organic_social" {{ 'selected' if link_form.medium=='organic_social' }}>自然社交 · organic_social</option><option value="paid_social" {{ 'selected' if link_form.medium=='paid_social' }}>付费社交 · paid_social</option><option value="referral" {{ 'selected' if link_form.medium=='referral' }}>联系 / 推荐 · referral</option></select></label>
+    <button type="submit" class="primary">生成追踪链接</button>
+  </form>
+  {% if generated %}<div class="social-link-result" id="tracking-result" role="status"><label for="generated-link">追踪链接</label><textarea id="generated-link" readonly rows="4" spellcheck="false">{{ generated }}</textarea><button type="button" class="button" data-copy="{{ generated }}">复制追踪链接</button><p class="foot">在对应社媒中使用这个链接，访问产生后再导入 GA4 来源/媒介报表。</p></div>{% endif %}
+</section>
+<section class="social-data-note"><h2>账号集合与数据授权</h2><p>Facebook 和 Instagram 的粉丝与互动可在 Meta 数据页授权后同步；其他平台尚未连接。下方网站访问数据来自已导入的 GA4 文件。</p><p><a href="/social/meta">{{ '查看 Meta 连接与数据' if meta.authorized else '开始 Meta 授权' }}</a></p></section>
+</aside>
+</div>
+
+<section class="card social-traffic" aria-labelledby="social-traffic-title">
+  <div class="card-head"><div><h2 id="social-traffic-title">社媒带来的网站访问</h2><p class="foot">{% if traffic.meta %}{{ traffic.meta.start }} 至 {{ traffic.meta.end }} · GA4 真实文件导入 · 资源 {{ traffic.meta.resource }}{% else %}使用 GA4 已导入报表，查看社媒访问来源。{% endif %}</p></div><a class="button" href="/google/imports">导入 GA4 报表</a></div>
+  {% if traffic.rows or traffic.unattributed is not none %}
+    <div class="table-wrap"><table><thead><tr><th>来源平台</th><th class="r">会话数</th><th>统计说明</th></tr></thead><tbody>
+    {% for r in traffic.rows %}<tr><td>{{ r.name }}</td><td class="r">{{ '{:,.0f}'.format(r.sessions) }}</td><td class="muted">按平台来源汇总，不能区分同平台的多个账号</td></tr>{% endfor %}
+    {% if traffic.unattributed is not none %}<tr><td>社交渠道 · 未细分平台</td><td class="r">{{ '{:,.0f}'.format(traffic.unattributed) }}</td><td class="muted">原始报表只有社交渠道组，没有具体来源</td></tr>{% endif %}
+    </tbody></table></div>
+  {% else %}<div class="social-traffic-empty"><span class="social-empty-symbol" aria-hidden="true">↗</span><div><h3>{{ '当前报表未单列社媒来源' if traffic.meta else '还没有 GA4 来源报表' }}</h3><p class="muted">{% if traffic.meta %}现有文件中没有可识别的社媒来源，不能据此判断社媒没有带来访问。{% else %}导入「流量获取」报告后，可在这里查看社媒来源的会话数。{% endif %}</p><p class="foot">建议从 GA4 导出包含「带来会话的来源/媒介」及「会话数」的报表。直接访问和未分配流量不会被自动归为社媒。</p></div></div>{% endif %}
+  <p class="foot social-traffic-foot">这是网站访问数据，不是社交平台的粉丝或互动数据；报表日期与导入批次沿用原始文件。</p>
+</section>
+
+<details class="card social-editor" id="account-editor" {{ 'open' if editor }}>
+  <summary>{{ '编辑账号' if form.id else '添加社媒账号' }}</summary>
+  <form method="post" action="/social/accounts" class="social-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="account_id" value="{{ form.id or '' }}">
+    <div class="social-form-grid"><label for="social-platform">平台<select id="social-platform" name="platform">{% for key,p in platforms.items() %}<option value="{{ key }}" {{ 'selected' if form.platform==key }}>{{ p.name }}</option>{% endfor %}</select></label><label for="social-name">账号名称<input id="social-name" name="name" value="{{ form.name or '' }}" required maxlength="100" placeholder="例如：{{ site_name }} Cosmetics"></label></div>
+    <label for="social-url">主页链接<input id="social-url" name="url" type="url" value="{{ form.url or '' }}" required maxlength="1000" placeholder="https://…" spellcheck="false"></label>
+    <label for="social-notes">运营备注<textarea id="social-notes" name="notes" maxlength="600" rows="3" placeholder="例如：主要面向海外护肤品牌，发布研发和生产内容">{{ form.notes or '' }}</textarea></label>
+    <div class="row"><button type="submit" class="primary">保存账号</button><a href="/social">取消</a></div>
+  </form>
+  {% if form.id %}<form method="post" action="/social/accounts/{{ form.id }}/status" class="social-archive-form"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="archived" value="1"><button type="submit" class="link">归档此账号</button><span class="foot">归档后可以恢复，账号信息会保留。</span></form>{% endif %}
+</details>
+{% if archived %}<details class="card social-archived"><summary>已归档账号 · {{ archived|length }}</summary>{% for a in archived %}<div class="social-archive-row"><div><b>{{ a.platform_info.name }}</b> · {{ a.name }}<p class="foot">{{ a.url }}</p></div><form method="post" action="/social/accounts/{{ a.id }}/status"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="archived" value="0"><button type="submit">恢复账号</button></form></div>{% endfor %}</details>{% endif %}
+<p id="social-copy-status" class="social-copy-status" role="status" aria-live="polite"></p>
+{% endblock %}

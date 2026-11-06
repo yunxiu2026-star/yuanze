@@ -1,0 +1,8 @@
+{
+  "/knowledge/": "/resources/",
+  "/knowledge": "/resources/",
+  "/ar/knowledge/": "/ar/resources/",
+  "/ar/knowledge": "/ar/resources/",
+  "/rd/": "/product-development/",
+  "/quality/": "/quality-control/"
+}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}登录{% endblock %}
+{% block bare %}
+<form method="post" action="/login" class="login-card">
+  <div class="login-brand"><img class="brand-official" src="/static/brand-logo.svg" width="142" height="90" alt="{{ site_name }}"><span class="brand-workspace-label">增长观察</span></div>
+  <h1>登录增长工作台</h1>
+  <p class="muted">{{ site }}</p>
+  {% if password_changed %}<p class="notice" role="status">密码已更新，请使用新密码重新登录。其他设备也需要重新登录。</p>{% endif %}
+  {% if error %}<p class="alert" role="alert">{{ error }}</p>{% endif %}
+  <label for="pw">密码</label>
+  <input id="pw" type="password" name="password" autocomplete="current-password" required aria-invalid="{{ 'true' if error else 'false' }}">
+  <input type="hidden" name="next" value="{{ next }}">
+  <button type="submit" class="primary">登录</button>
+</form>
+{% endblock %}

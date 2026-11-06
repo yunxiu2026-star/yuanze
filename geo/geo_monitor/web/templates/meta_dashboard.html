@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Facebook / Instagram 数据{% endblock %}
+{% block styles %}<link rel="stylesheet" href="/static/social.css?v=2">{% endblock %}
+{% block scripts %}<script src="/static/social.js?v=1" defer></script>{% endblock %}
+{% macro number(value) -%}{{ '{:,.0f}'.format(value) if value is not none else '—' }}{%- endmacro %}
+{% block content %}
+<header class="page-head"><div><h1>Facebook / Instagram 数据</h1><p class="muted">查看品牌关注人数和内容互动，通过 Meta 官方接口只读同步。</p></div><a class="button" href="/social">返回社媒中心</a></header>
+{% if msg %}<div class="notice" role="status">{{ msg }}</div>{% endif %}
+{% if error %}<div class="notice social-error" role="alert">{{ error }}</div>{% endif %}
+<nav class="meta-progress" aria-label="Meta 连接进度"><span class="{{ 'done' if meta.configured }}">1. 应用配置</span><span class="{{ 'done' if meta.authorized }}">2. 账号授权</span><span class="{{ 'done' if meta.selected_page }}">3. 选择主页</span><span class="{{ 'done' if reports }}">4. 同步数据</span></nav>
+
+<section class="card meta-connection">
+<div><h2>{{ '已选择：'+meta.selected_name if meta.selected_page else '已收到 Meta 授权，请选择主页' if meta.authorized else '应用已配置，下一步授权账号' if meta.configured else '先完成 Meta 应用配置' }}</h2>
+<p class="muted">{% if meta.authorized %}仅使用本次授权中可管理的主页。{% if meta.expires_at %}用户授权有效期至 {{ meta.expires_at|local }}。{% endif %}{% if meta.expired %}<b>授权已到期，请重新连接。</b>{% endif %}{% else %}应用设置完成后，用能管理 {{ site_name }} Cosmetics 主页的 Facebook 账号授权；Instagram 需为关联的专业账号。{% endif %}</p></div>
+{% if meta.configured %}<form method="post" action="/social/meta/{{ 'sync' if meta.selected_page and not meta.expired else 'connect' }}"><input type="hidden" name="csrf" value="{{ csrf }}"><button type="submit" class="primary">{{ '同步真实数据' if meta.selected_page and not meta.expired else '重新连接 Meta' if meta.authorized else '连接 Meta' }}</button></form>{% else %}<a class="btn" href="#meta-setup">填写应用配置</a>{% endif %}
+</section>
+
+{% if meta.authorized %}
+<section class="card"><h2>选择 {{ site_name }} 的 Facebook 主页</h2><p class="foot meta-gap">只展示此次授权返回的主页，不会根据账号名称猜测归属。</p>
+<form method="post" action="/social/meta/page" class="social-form"><input type="hidden" name="csrf" value="{{ csrf }}"><label for="meta-page">Facebook 主页与关联的 Instagram<select id="meta-page" name="page_id" required><option value="">请选择主页</option>{% for p in meta.pages %}<option value="{{ p.id }}" {{ 'selected' if meta.selected_page==p.id }}>{{ p.name }} · {{ p.id }}{{ ' · Instagram: @'+p.instagram_username if p.instagram_id else ' · 未返回 Instagram 专业账号' }}</option>{% endfor %}</select></label><div><button type="submit">保存主页选择</button></div></form>
+{% if meta.selected_page and not meta.instagram_id %}<p class="notice">当前主页未返回 Instagram 专业账号。请在 Meta Business Suite 检查 Instagram 关联，并确认授权包含 Instagram 基础资料和成效分析权限；完成后重新连接 Meta。</p>{% endif %}
+</section>
+{% endif %}
+
+<div class="grid-2 meta-report-grid">
+{% for platform,label in [('facebook','Facebook'),('instagram','Instagram')] %}{% set data=reports.get(platform) %}
+<section class="card meta-report" aria-label="{{ label }} 真实数据"><div class="card-head"><h2><span class="meta-platform-label platform-{{ platform }}">{{ label }}</span></h2><span class="pill">{{ 'Meta API 快照' if data else '等待真实数据' }}</span></div>
+{% if data %}<p class="muted">{{ data.name }} · 采集于 {{ data.collected_at|local }}</p>{% if not meta.authorized %}<p class="foot">当前已断开连接，下面保留的是上次同步快照。</p>{% endif %}
+<div class="meta-stats"><div><p class="foot">当前关注人数</p><b>{{ number(data.followers) }}</b><p class="foot">同步时点的关注人数</p></div><div><p class="foot">{{ '已读取内容累计互动' if platform=='facebook' else '统计期互动次数' }}</p><b>{{ number(data.interactions) }}</b><p class="foot">{{ '回应 + 评论' if platform=='facebook' else 'Meta total_interactions' }}</p></div></div>
+<p class="foot">统计期：{{ data.start }} 至 {{ data.end }}{% if platform=='facebook' %}发布的内容，互动为同步时的累计值{% endif %}。</p>
+{% if data.limited %}<div class="notice">本次最多读取 250 条内容，列表和 Facebook 内容互动可能未覆盖整个统计期。</div>{% endif %}
+{% for warning in data.warnings %}<p class="notice">{{ warning }}</p>{% endfor %}
+{% if data.posts %}<details class="chart-data"><summary>查看已读取的内容与互动（{{ data.posts|length }} 条）</summary><div class="table-wrap"><table><thead><tr><th>内容</th><th class="r">{{ '回应' if platform=='facebook' else '点赞' }}</th><th class="r">评论</th>{% if platform=='facebook' %}<th class="r">分享</th>{% endif %}</tr></thead><tbody>{% for post in data.posts|sort(attribute='date',reverse=true) %}<tr><td class="meta-post-text"><span class="foot">{{ post.date|local('%m-%d') }}</span><p>{{ post.text or '图片 / 视频内容' }}</p>{% if post.url %}<a href="{{ post.url }}" target="_blank" rel="noopener noreferrer">查看原文</a>{% endif %}</td><td class="r">{{ number(post.likes) }}</td><td class="r">{{ number(post.comments) }}</td>{% if platform=='facebook' %}<td class="r">{{ number(post.shares) }}</td>{% endif %}</tr>{% endfor %}</tbody></table></div></details>{% else %}<p class="foot meta-gap">本次读取范围内没有返回该统计期的内容。</p>{% endif %}
+{% else %}<div class="meta-empty"><b>—</b><p>尚未同步{{ label }}的真实粉丝和互动数据。</p><p class="foot">完成上方授权与主页选择后，点击「同步真实数据」。</p></div>{% endif %}
+</section>{% endfor %}
+</div>
+<p class="foot meta-method">Facebook 的内容互动为所读取帖子当前的回应与评论之和，分享数单列；Instagram 的统计期互动来自官方成效分析接口。两者口径不同。统计窗口按 UTC 完整日请求，关注人数是采集时点值；平台未返回的数值显示「—」。</p>
+
+<details class="card meta-setup" id="meta-setup" {{ 'open' if not meta.configured }}><summary>Meta 应用配置与授权步骤</summary>
+<div class="meta-setup-grid"><div><ol class="meta-instructions">
+<li><b>登录 Meta 开发者</b><p>使用能管理 {{ site_name }} 主页的 Facebook 账号。若需开发者注册、验证码或接受条款，请亲自完成。</p><a href="https://developers.facebook.com/apps/" target="_blank" rel="noopener noreferrer">打开 Meta 开发者应用</a></li>
+<li><b>创建或使用自己的 Meta 应用</b><p>按当前 Meta 界面配置 Facebook 登录和 Instagram 数据用例。应用只申请列出主页、读取主页和成效分析的权限。</p></li>
+<li><b>登记授权回调地址</b><p>在应用的登录配置中登记下面这个完整地址：</p><code class="meta-callback">{{ meta.redirect_uri }}</code><button type="button" class="link" data-copy="{{ meta.redirect_uri }}">复制回调地址</button><p>正式后台使用 HTTPS 公网回调；复制上方地址到 Meta 的有效 OAuth 重定向 URI 中。若在本机演练，请始终使用同一个主机名。</p></li>
+<li><b>保存配置并连接</b><p>右侧密钥仅加密保存在当前后台的私有目录，不显示在页面中。连接后选择 {{ site_name }} 主页和关联的 Instagram，再同步数据。</p></li>
+</ol></div><form method="post" action="/social/meta/client" class="social-form"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label for="meta-app-id">应用 ID（App ID）<input id="meta-app-id" name="app_id" inputmode="numeric" value="{{ meta.app_id }}" required pattern="[0-9]{5,30}" autocomplete="off"></label>
+<label for="meta-app-secret">应用密钥（App Secret）<input id="meta-app-secret" name="app_secret" type="password" autocomplete="new-password" placeholder="{{ '已加密保存，未更换应用可留空' if meta.configured else '仅在此密码框填写，不要发送到聊天中' }}" {{ 'required' if not meta.configured }}></label>
+<label for="meta-redirect-uri">回调地址<input id="meta-redirect-uri" name="redirect_uri" type="url" value="{{ meta.redirect_uri }}" required spellcheck="false"></label>
+<label for="meta-api-version">Graph API 版本<input id="meta-api-version" name="graph_version" value="{{ meta.graph_version }}" required pattern="v[0-9]{2}\.[0-9]" spellcheck="false"></label>
+<label for="meta-config-id">Business Login 配置 ID（如 Meta 要求）<input id="meta-config-id" name="config_id" value="{{ meta.config_id }}" inputmode="numeric" autocomplete="off"><small>使用 Facebook Login for Business 配置时填写；配置中只勾选本页需要的读取权限。</small></label>
+<button type="submit" class="primary">保存应用配置</button></form></div>
+<p class="foot">所需读取权限：pages_show_list、pages_read_engagement、instagram_basic、instagram_manage_insights。最终可用权限与应用审核要求以 Meta 后台为准。</p>
+</details>
+{% if meta.authorized %}<form method="post" action="/social/meta/disconnect" class="meta-disconnect"><input type="hidden" name="csrf" value="{{ csrf }}"><button type="submit">断开后台 Meta 连接</button><span class="foot">保留历史数据快照；不会撤销 Meta 侧的商业集成。</span></form>{% endif %}
+<p id="social-copy-status" class="social-copy-status" role="status" aria-live="polite"></p>
+{% endblock %}

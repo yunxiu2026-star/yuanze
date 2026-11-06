@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% from "_macros.html" import yes_no %}
+{% block title %}{{ r.question_id }} · {{ r.engine|engine }}{% endblock %}
+{% block content %}
+<nav class="crumbs">{% if growth %}<a href="/ai">AI 推荐监测</a> / {{ r.question_id }}{% else %}<a href="/results?run={{ r.run_id }}">检测明细</a> / <a href="/questions/{{ r.question_id }}">{{ r.question_id }}</a>{% endif %} / {{ r.engine|engine }}</nav>
+<header class="page-head">
+  <div>
+    <h1 class="prompt-title" dir="auto">{{ r.prompt }}</h1>
+    <p class="muted">{{ r.engine|engine }}{% if r.model %}（{{ r.model }}）{% endif %} · {{ r.checked_at|local }} · {{ r.language }} · {{ r.market }} · {{ r.category }} · {{ r.priority }}</p>
+  </div>
+</header>
+{% if not r.error %}<div class="flow-callout"><div><b>根据这次检测准备页面内容</b><p class="foot">保留本条回答、检索词与建议页面作为依据；模拟结果只用于演练。</p></div><a class="button" href="/optimize?run={{ r.run_id }}&amp;result_id={{ r.id }}#generator">准备内容草稿</a></div>{% endif %}
+
+<section class="kpis small">
+  <article class="kpi"><h2>结果</h2><p class="num">{{ yes_no(r) }}</p></article>
+  <article class="kpi"><h2>排名</h2><p class="num">{{ r.rank or '—' }}</p><p class="sub">在被引用的供应商网站中</p></article>
+  <article class="kpi"><h2>带链接引用</h2><p class="num">{{ '是' if r.cited else '否' }}</p><p class="sub">正文提到品牌名：{{ '是' if r.brand_in_text else '否' }}</p></article>
+  <article class="kpi"><h2>期望页面</h2><p class="num">{% if r.cited %}{{ '命中' if r.expected_hit else '未命中' }}{% else %}—{% endif %}</p>
+    <p class="sub path">{{ (r.expected_url or '')|replace('https://' ~ site, '') }}</p></article>
+</section>
+
+{% if r.error %}
+<section class="card"><h2>错误信息</h2><pre class="answer">{{ r.error }}</pre></section>
+{% endif %}
+
+<div class="grid-2 wide-left">
+  <section class="card">
+    <h2>AI 的回答</h2>
+    <div class="answer">{{ r.answer_text or '（无回答）' }}</div>
+  </section>
+  <div class="stack">
+    <section class="card">
+      <h2>引用来源（按出现顺序）</h2>
+      {% if r.cited_domains %}
+      <ol class="source-list">
+        {% for d in r.cited_domains %}<li class="{{ 'me' if d == site or d.endswith('.' ~ site) }}">{{ d }}</li>{% endfor %}
+      </ol>
+      {% else %}<p class="muted">没有引用来源</p>{% endif %}
+      {% if r.target_urls %}
+      <h3>本站被引用的页面</h3>
+      <ul class="plain">{% for u in r.target_urls %}<li><a href="{{ u }}" target="_blank" rel="noopener noreferrer">{{ u }}</a></li>{% endfor %}</ul>
+      {% endif %}
+    </section>
+    {% if r.search_queries %}
+    <section class="card">
+      <h2>AI 实际搜索的关键词</h2>
+      <ul class="tags">{% for q in r.search_queries %}<li>{{ q }}</li>{% endfor %}</ul>
+      <p class="foot">{{ '这些词来自模拟检测，可用于演练编辑流程。' if preview or r.engine == 'mock' else '这些是该次 API 检测返回的检索词，可以作为页面关键词的参考，并非访客的原始提问。' }}</p>
+      <p><a href="/optimize?run={{ r.run_id }}&amp;result_id={{ r.id }}#generator">根据这条依据优化标题与词语</a></p>
+    </section>
+    {% endif %}
+    <section class="card">
+      <h2>用量</h2>
+      <p class="muted">输入 {{ r.input_tokens or 0 }} tokens · 输出 {{ r.output_tokens or 0 }} tokens · 搜索 {{ r.search_calls or 0 }} 次</p>
+    </section>
+  </div>
+</div>
+{% endblock %}

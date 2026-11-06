@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% from "_macros.html" import run_picker, yes_no, empty_state %}
+{% block title %}检测明细{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>检测明细</h1>
+    {% if run %}<p class="muted">第 {{ run.id }} 次检测 · 匹配 {{ matched }} / {{ total }} 条 · 每页 25 条</p>{% endif %}
+  </div>
+  {{ run_picker(run, runs, "/results", f) }}
+</header>
+
+{% if not run %}
+  {{ empty_state("还没有检测数据", "完成第一次检测后，这里会列出每个问题在每个引擎上的结果。") }}
+{% else %}
+<form method="get" action="/results" class="filters">
+  <input type="hidden" name="run" value="{{ run.id }}">
+  <label class="grow"><span>搜索</span><input type="search" name="q" value="{{ f.q }}" placeholder="问题内容或 ID"></label>
+  <label><span>引擎</span>
+    <select name="engine" data-autosubmit><option value="">全部</option>
+      {% for e in engines %}<option value="{{ e }}" {{ 'selected' if f.engine == e }}>{{ e|engine }}</option>{% endfor %}
+    </select></label>
+  <label><span>语言</span>
+    <select name="lang" data-autosubmit><option value="">全部</option>
+      {% for l in languages %}<option {{ 'selected' if f.lang == l }}>{{ l }}</option>{% endfor %}
+    </select></label>
+  <label><span>优先级</span>
+    <select name="priority" data-autosubmit><option value="">全部</option>
+      {% for p in ['P1','P2','P3'] %}<option {{ 'selected' if f.priority == p }}>{{ p }}</option>{% endfor %}
+    </select></label>
+  <label><span>结果</span>
+    <select name="status" data-autosubmit>
+      <option value="">全部</option>
+      <option value="yes" {{ 'selected' if f.status == 'yes' }}>提及本站</option>
+      <option value="no" {{ 'selected' if f.status == 'no' }}>未提及</option>
+      <option value="error" {{ 'selected' if f.status == 'error' }}>出错</option>
+    </select></label>
+  <button type="submit">筛选</button>
+  {% if f.q or f.engine or f.lang or f.priority or f.status %}<a class="link" href="/results?run={{ run.id }}">清除</a>{% endif %}
+</form>
+<div class="results-toolbar"><span class="muted">点击问题查看完整回答与引用来源</span><a class="button" href="/results/export.csv?{{ page_base }}">导出筛选结果 CSV</a></div>
+
+<div class="card flush">
+<div class="table-wrap">
+<table class="results">
+  <thead><tr>
+    <th>ID</th><th>引擎</th><th>问题</th><th class="hide-m">语言</th><th>结果</th><th class="r">排名</th><th class="hide-m">本站被引用页面</th><th class="hide-m">同时推荐</th>
+  </tr></thead>
+  <tbody>
+  {% for r in rows %}
+    <tr>
+      <td class="nowrap"><a href="/questions/{{ r.question_id }}">{{ r.question_id }}</a> <span class="pri {{ r.priority|lower }}">{{ r.priority }}</span></td>
+      <td class="nowrap">{{ r.engine|engine }}</td>
+      <td class="prompt" dir="auto"><a href="/results/{{ r.id }}">{{ r.prompt }}</a></td>
+      <td class="nowrap muted hide-m">{{ r.language }}</td>
+      <td class="nowrap">{{ yes_no(r) }}</td>
+      <td class="r">{{ r.rank or '—' }}</td>
+      <td class="urls hide-m">{% for u in r.target_urls %}<span class="path">{{ u|replace('https://' ~ site, '')|replace('https://www.' ~ site, '') }}</span>{% else %}<span class="muted">—</span>{% endfor %}</td>
+      <td class="comp muted hide-m">{{ (r.competitors or [])[:3]|join(', ') or '—' }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="8" class="muted center">没有符合条件的结果</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+<nav class="pagination" aria-label="结果分页"><span>第 {{ page }} / {{ pages }} 页 · 共 {{ matched }} 条</span><div class="row">{% if page > 1 %}<a class="button" href="/results?{{ page_base }}&page={{ page-1 }}">上一页</a>{% endif %}{% if page < pages %}<a class="button" href="/results?{{ page_base }}&page={{ page+1 }}">下一页</a>{% endif %}</div></nav>
+{% endif %}
+{% endblock %}

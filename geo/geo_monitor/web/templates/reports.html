@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_macros.html" import empty_state %}
+{% block title %}周报下载{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>周报下载</h1>
+    <p class="muted">每次检测完成后自动生成 Excel 周报，内容与网页一致，方便转发或存档。</p>
+  </div>
+</header>
+{% if not items %}
+  {{ empty_state("还没有周报", "完成第一次检测后会出现在这里。") }}
+{% else %}
+<div class="card flush">
+<div class="table-wrap"><table>
+  <thead><tr><th>文件</th><th>生成时间</th><th class="r">大小</th></tr></thead>
+  <tbody>{% for f in items %}
+    <tr><td><a href="/reports/{{ f.name|urlencode }}">{{ f.name }}</a></td>
+      <td class="nowrap muted">{{ f.mtime|local }}</td><td class="r muted">{{ (f.size / 1024)|round|int }} KB</td></tr>
+  {% endfor %}</tbody>
+</table></div>
+</div>
+{% endif %}
+{% endblock %}

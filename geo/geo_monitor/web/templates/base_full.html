@@ -1,0 +1,110 @@
+{% from "_icons.html" import icon %}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f5f1e8">
+<title>{% block title %}AI 推荐监测{% endblock %} · {{ site_name }}</title>
+<link rel="icon" type="image/svg+xml" href="/static/brand-icon.svg">
+<link rel="stylesheet" href="/static/app.css?v=5">
+<link rel="stylesheet" href="/static/workspace.css?v=1">
+{% block styles %}{% endblock %}
+<link rel="stylesheet" href="/static/analytics.css?v=2">
+<link rel="stylesheet" href="/static/readability.css?v=3">
+<link rel="stylesheet" href="/static/official-brand.css?v=1">
+<link rel="stylesheet" href="/static/growth-workspace.css?v=1">
+{% if growth %}<link rel="stylesheet" href="/static/restored-workspace.css?v=1">{% endif %}
+<script src="/static/app.js?v=7" defer></script>
+<script src="/static/workspace.js?v=password1" defer></script>
+{% block scripts %}{% endblock %}
+</head>
+<body data-workspace-profile="{{ 'growth' if growth else 'full' }}">
+{% if csrf %}
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="analytics-header">
+  <button class="menu-toggle icon-button" type="button" aria-label="展开完整导航" aria-controls="workspace-sidebar" aria-expanded="false">{{ icon('menu') }}</button>
+  <a class="analytics-brand" href="/" aria-label="{{ site_name }}增长观察首页"><img class="brand-symbol brand-official" src="/static/brand-logo.svg" width="94" height="60" alt="{{ site_name }}"><span class="brand-workspace-label">增长观察</span></a>
+  <div class="analytics-property"><small>当前网站</small><span>{{ site_name }} 官网</span><span class="sr-only">{{ site }}</span></div>
+  <form class="workspace-search" role="search" action="{{ '/ai' if growth else '/results' }}" method="get" autocomplete="off">
+    {{ icon('search',18) }}<label class="sr-only" for="workspace-search">搜索功能或检测问题</label><input id="workspace-search" name="q" type="search" placeholder="搜索报告、功能或检测问题…" maxlength="200" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="workspace-search-results"><kbd aria-hidden="true">Ctrl K</kbd>
+    <div class="workspace-search-results" id="workspace-search-results" role="listbox" aria-label="搜索建议" hidden></div>
+  </form>
+  <div class="analytics-tools"><span class="mode-badge">{{ '本机预览' if preview else '监测后台' }}</span><button type="button" class="theme-toggle" aria-label="切换深色模式" aria-pressed="false">深色模式</button><details class="workspace-account"><summary aria-label="工作台菜单"><span aria-hidden="true">D</span></summary><div class="workspace-account-panel"><b>{{ site_name }} · 增长观察</b><small translate="no">{{ site }}</small><a href="/settings">设置</a><a href="/settings/password">修改密码</a><a href="/google">Google 连接设置</a><a href="/social/meta">Meta 连接设置</a><form method="post" action="/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button type="submit">退出登录</button></form></div></details></div>
+</header>
+<div class="shell">
+{% if growth %}
+  <nav class="analytics-rail" aria-label="快捷导航">
+    {% for href,label,key,ico in [('/','首页','overview','home'),('/inquiries','GA4 询盘事件','inquiries','inbox'),('/indexing','核心页面收录','indexing','check'),('/analytics?source=api','网站流量 GA4','analytics','chart'),('/search-console?source=api','Google 搜索表现','search','target'),('/ai','AI 推荐监测','ai','report'),('/optimize','标题与词语优化','optimize','spark'),('/social','社交媒体','social','social')] %}<a href="{{ href }}" class="{{ 'on' if workspace_nav==key }}" aria-label="{{ label }}">{{ icon(ico) }}<span class="rail-label">{{ label }}</span></a>{% endfor %}
+    <div class="rail-spacer"></div><a href="/ai#history" aria-label="AI 检测记录">{{ icon('clock') }}<span class="rail-label">AI 检测记录</span></a>
+    <button type="button" class="rail-all" aria-label="打开全部功能" aria-controls="workspace-sidebar" aria-expanded="false">{{ icon('menu') }}<span class="rail-label">全部功能</span></button>
+    <a href="/settings" class="{{ 'on' if workspace_nav=='account_settings' }}" aria-label="设置">{{ icon('settings') }}<span class="rail-label">设置</span></a>
+  </nav>
+  {% else %}  <nav class="analytics-rail" aria-label="快捷导航">
+    <a href="/" class="{{ 'on' if nav=='overview' }}" aria-label="首页">{{ icon('home') }}<span class="rail-label">首页</span></a>
+    <a href="/inquiries" class="{{ 'on' if nav=='inquiries' }}" aria-label="询盘统计">{{ icon('inbox') }}<span class="rail-label">询盘统计</span></a>
+    <a href="/indexing" class="{{ 'on' if nav in ['indexing','indexing_detail'] }}" aria-label="核心页面收录">{{ icon('check') }}<span class="rail-label">核心页面收录</span></a>
+    <a href="/analytics" class="{{ 'on' if nav=='google_dashboard' and kind=='analytics' }}" aria-label="网站流量 GA4">{{ icon('chart') }}<span class="rail-label">网站流量 · GA4</span></a>
+    <a href="/search-console" class="{{ 'on' if nav=='google_dashboard' and kind=='search' }}" aria-label="Google 搜索表现">{{ icon('target') }}<span class="rail-label">Google 搜索表现</span></a>
+    <a href="/ai-overview" class="{{ 'on' if nav in ['ai_overview','results','result_detail','gaps','competitors'] }}" aria-label="AI 检测报告">{{ icon('report') }}<span class="rail-label">AI 检测报告</span></a>
+    <a href="/optimize" class="{{ 'on' if nav=='content_optimization' }}" aria-label="标题与词语优化">{{ icon('spark') }}<span class="rail-label">标题与词语优化</span></a>
+    <a href="/social" class="{{ 'on' if nav in ['social','meta_dashboard'] }}" aria-label="社交媒体">{{ icon('social') }}<span class="rail-label">社交媒体</span></a>
+    <div class="rail-spacer"></div>
+    <a href="/runs" class="{{ 'on' if nav=='runs' }}" aria-label="检测任务">{{ icon('clock') }}<span class="rail-label">检测任务</span></a>
+    <button type="button" class="rail-all" aria-label="打开全部功能" aria-controls="workspace-sidebar" aria-expanded="false">{{ icon('menu') }}<span class="rail-label">全部功能</span></button>
+    <a href="/google" class="{{ 'on' if nav in ['google_settings','google_imports'] }}" aria-label="连接设置">{{ icon('settings') }}<span class="rail-label">连接设置</span></a>
+  </nav>
+{% endif %}
+  <aside class="side" id="workspace-sidebar">
+    <div class="navigation-heading"><b>增长工作台</b><button type="button" class="nav-close icon-button" aria-label="收起导航">{{ icon('close',18) }}</button></div>
+    <nav class="nav" aria-label="主导航">{% if growth %}
+      {% for heading,links in [('',[('/','首页总览','overview','home')]),('业务核查',[('/leads','客户询盘与跟进','leads','inbox'),('/inquiries','GA4 询盘事件','inquiries','inbox'),('/indexing','核心页面收录','indexing','check')]),('数据分析',[('/analytics?source=api','网站流量 · GA4','analytics','chart'),('/search-console?source=api','Google 搜索表现','search','target'),('/social','社交媒体中心','social','social'),('/social/meta','Facebook / Instagram 数据','meta','social')]),('内容工作',[('/knowledge','企业知识库','knowledge','book'),('/optimize','标题与词语优化','optimize','spark'),('/ai','AI 推荐监测','ai','report')]),('数据与设置',[('/google/imports','报表导入','imports','download'),('/google','Google 连接设置','settings','settings'),('/settings','设置','account_settings','settings')])] %}
+      {% if heading %}<span class="nav-label">{{ heading }}</span>{% endif %}
+      {% for href,label,key,ico in links %}<a href="{{ href }}" class="{{ 'on' if workspace_nav==key }}">{{ icon(ico,18) }}<span>{{ label }}</span></a>{% endfor %}{% endfor %}
+      <details class="nav-more"><summary>检测记录与导出</summary><a href="/ai#questions">监测提问清单</a><a href="/ai#history">AI 检测记录</a><a href="/ai/export.csv">导出 AI 检测</a><a href="/social/export.csv">导出社媒账号</a><a href="/optimize/export.csv">导出标题草稿</a></details>
+      {% else %}
+      <a href="/" class="{{ 'on' if nav=='overview' }}">{{ icon('home',18) }}<span>首页总览</span></a>
+      <span class="nav-label">业务核查</span>
+      <a href="/inquiries" class="{{ 'on' if nav=='inquiries' }}">{{ icon('inbox',18) }}<span>询盘统计</span></a>
+      <a href="/indexing" class="{{ 'on' if nav in ['indexing','indexing_detail'] }}">{{ icon('check',18) }}<span>核心页面收录</span></a>
+      <span class="nav-label">数据分析</span>
+      <a href="/analytics" class="{{ 'on' if nav=='google_dashboard' and kind=='analytics' }}">{{ icon('chart',18) }}<span>网站流量 · GA4</span></a>
+      <a href="/search-console" class="{{ 'on' if nav=='google_dashboard' and kind=='search' }}">{{ icon('target',18) }}<span>Google 搜索表现</span></a>
+      <a href="/traffic" class="{{ 'on' if nav=='traffic' }}">{{ icon('chart',18) }}<span>AI 来源访问</span></a>
+      <a href="/social" class="{{ 'on' if nav in ['social','meta_dashboard'] }}">{{ icon('social',18) }}<span>社交媒体</span></a>
+      <span class="nav-label">内容工作</span>
+      <a href="/optimize" class="{{ 'on' if nav=='content_optimization' }}">{{ icon('spark',18) }}<span>标题与词语优化</span></a>
+      <a href="/ai-overview" class="{{ 'on' if nav=='ai_overview' }}">{{ icon('report',18) }}<span>AI 推荐概览</span></a>
+      <span class="nav-label">数据与设置</span>
+      <a href="/google/imports" class="{{ 'on' if nav=='google_imports' }}">{{ icon('download',18) }}<span>报表导入</span></a>
+      <a href="/google" class="{{ 'on' if nav=='google_settings' }}">{{ icon('settings',18) }}<span>Google 连接设置</span></a>
+      <details class="nav-more" {{ 'open' if nav in ['results','result_detail','gaps','competitors','questions','question_detail','runs','reports'] }}>
+        <summary>更多报告与管理</summary>
+        <a href="/results" class="{{ 'on' if nav in ['results','result_detail'] }}">检测明细</a>
+        <a href="/gaps" class="{{ 'on' if nav=='gaps' }}">未被推荐 · 内容机会</a>
+        <a href="/competitors" class="{{ 'on' if nav=='competitors' }}">同时被推荐的网站</a>
+        <a href="/social/meta">Facebook / Instagram 数据</a>
+        <a href="/questions" class="{{ 'on' if nav in ['questions','question_detail'] }}">监测提问清单</a>
+        <a href="/runs" class="{{ 'on' if nav=='runs' }}">检测记录与试跑</a>
+        <a href="/reports" class="{{ 'on' if nav=='reports' }}">周报下载</a>
+      </details>
+{% endif %}
+    </nav>
+    <div class="navigation-footer">{{ site_name }}增长观察 <small translate="no">{{ site }}</small></div>
+  </aside>
+  <button type="button" class="workspace-scrim" aria-label="关闭导航" tabindex="-1" hidden></button>
+  <div class="workspace-body">
+  <main class="main" id="main-content" tabindex="-1">
+    {% if growth and rehearsal %}<div class="preview-note" role="note">本机验证环境 · 使用数据副本</div>{% endif %}
+    {% if preview and nav != 'overview' %}<div class="preview-note" role="note">{{ icon('info',16) }}<span>本机预览 · AI 检测为模拟数据</span><a href="/#data-status">查看数据状态</a></div>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="workspace-footer">{{ site_name }}增长观察 <span>AI 推荐 · 网站流量 · 搜索表现 · 社交媒体</span></footer>
+  </div>
+</div>
+{% else %}
+<main class="bare">{% block bare %}{% endblock %}</main>
+{% endif %}
+</body>
+</html>

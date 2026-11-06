@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}设置{% endblock %}
+{% block styles %}<link rel="stylesheet" href="/static/password-settings.css?v=1">{% endblock %}
+{% block content %}
+<header class="page-head"><div><p class="password-eyebrow">工作台管理</p><h1>设置</h1><p class="muted">管理登录安全与现有数据连接。</p></div></header>
+<section class="card security-setting" aria-labelledby="security-title"><div><span class="password-kicker">账号与安全</span><h2 id="security-title">修改密码</h2><p>验证旧密码后设置新密码。修改立即生效，所有设备需要重新登录。</p><p class="foot">{% if changed_at %}最近更新：{{ changed_at|local }}{% else %}尚未通过工作台更新密码。{% endif %}</p></div><a class="button primary" href="/settings/password">修改密码 →</a></section>
+<section class="card"><h2>数据连接</h2><p class="muted">继续使用原有连接设置与授权管理。</p><div class="password-connection-links"><a href="/google">Google 连接设置 →</a><a href="/social/meta">Facebook / Instagram 连接 →</a></div></section>
+{% endblock %}

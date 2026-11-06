@@ -1,0 +1,1 @@
+{"domain": "history.invalid", "checked_date": "2000-01-01", "resource": "", "source": "No imported client history", "pages": [], "test": {"date": "2000-01-01", "request_id": "", "accepted_test_inquiries": 0, "ga4_test_event": "generate_lead", "ga4_test_event_count": 0, "normal_test_http_status": 0, "error_code": "", "evidence": "No history loaded", "release_state": "empty"}}

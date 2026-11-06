@@ -1,0 +1,14 @@
+{% macro fields(v,evidence,today) %}
+<div class="lead-form-grid">
+{% for key,label,required in [('received_at','收到日期',true),('name','联系人',false),('email','邮箱',false),('company','公司',false),('country','国家 / 地区',false),('phone','电话 / WhatsApp',false),('product','关注产品 / 产品系列',false),('form_type','表单类型 / 接收入口',false)] %}
+<label>{{ label }}{% if required %} *{% endif %}<input name="{{ key }}" value="{{ v.get(key,'') }}" type="{{ 'date' if key=='received_at' else 'email' if key=='email' else 'text' }}" maxlength="{{ 254 if key=='email' else 200 }}" {% if required %}required max="{{ today }}"{% endif %}></label>{% endfor %}
+<label class="lead-wide">客户需求<textarea name="requirements" rows="4" maxlength="4000">{{ v.get('requirements','') }}</textarea></label>
+</div>
+<details class="lead-source-fields" {{ 'open' if v.get('evidence','unknown')!='unknown' }}><summary>补充来源归因（可选）</summary><p class="foot">可留空，届时显示来源未知。只记录已有依据，不自动推断来源。utm_term 是匹配关键词，不保证等于客户的实际搜索词。</p>
+<div class="lead-form-grid">
+<label>来源依据<select name="evidence">{% for k,label in evidence.items() %}<option value="{{ k }}" {{ 'selected' if v.get('evidence','unknown')==k }}>{{ label }}</option>{% endfor %}</select></label>
+{% for key,label in [('source','来源 source（如 google / facebook）'),('medium','媒介 medium（如 cpc / organic）'),('campaign','推广活动 campaign'),('term','匹配关键词 utm_term'),('content','素材标识 content'),('first_landing_page','首次落地页'),('submit_page','提交页'),('referrer','来源网站域名'),('gclid','Google 点击标识 gclid'),('gbraid','gbraid'),('wbraid','wbraid')] %}
+<label>{{ label }}<input name="{{ key }}" value="{{ v.get(key,'') }}" maxlength="{{ 500 if key in ['first_landing_page','submit_page'] else 200 }}"></label>{% endfor %}
+<label class="lead-wide">来源依据说明<textarea name="source_note" rows="2" maxlength="1000">{{ v.get('source_note','') }}</textarea></label>
+</div><p class="foot">落地页 / 提交页仅保存本站路径，网址中的查询参数会移除；来源网站仅保存域名。邮箱和电话放在客户专用字段。</p></details>
+{% endmacro %}

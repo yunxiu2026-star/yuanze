@@ -1,0 +1,38 @@
+{% macro run_picker(run, runs, action, extra={}) -%}
+{% if runs %}
+<form method="get" action="{{ action }}" class="run-picker">
+  {% for k, v in extra.items() %}{% if v %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endif %}{% endfor %}
+  <label for="run-select">检测批次</label>
+  <select id="run-select" name="run" data-autosubmit>
+    {% for x in runs %}
+    <option value="{{ x.id }}" {{ 'selected' if run and x.id == run.id }}>
+      第 {{ x.id }} 次 · {{ x.started_at|local('%Y-%m-%d') }} · {{ x.question_count }} 题
+    </option>
+    {% endfor %}
+  </select>
+  <noscript><button type="submit">查看</button></noscript>
+</form>
+{% endif %}
+{%- endmacro %}
+
+{% macro yes_no(r) -%}
+{% if r.error %}<span class="pill err" title="{{ r.error }}">出错</span>
+{% elif r.mentioned %}<span class="pill yes">✓ 提及</span>
+{% else %}<span class="pill no">未提及</span>{% endif %}
+{%- endmacro %}
+
+{% macro delta_badge(v) -%}
+{% if v is not none %}
+  {% set pts = v * 100 %}
+  {% if pts >= 0.5 %}<span class="delta up">▲ {{ v|delta }}</span>
+  {% elif pts <= -0.5 %}<span class="delta down">▼ {{ v|delta }}</span>
+  {% else %}<span class="delta flat">与上次持平</span>{% endif %}
+{% endif %}
+{%- endmacro %}
+
+{% macro empty_state(title, body) -%}
+<div class="empty">
+  <p class="empty-title">{{ title }}</p>
+  <p>{{ body }}</p>
+</div>
+{%- endmacro %}

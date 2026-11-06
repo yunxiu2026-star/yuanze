@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% from "_macros.html" import empty_state %}
+{% block title %}AI 来源访问{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>AI 带来的访问</h1>
+    <p class="muted">来自 Nginx 访问日志 · {{ t.start }} 至 {{ t.end }}{% if t.latest_day %} · 日志最新日期 {{ t.latest_day }}{% endif %}</p>
+  </div>
+  <nav class="seg" aria-label="时间范围">
+    {% for d in [7, 30, 90] %}<a href="/traffic?days={{ d }}" class="{{ 'on' if t.days == d }}">近 {{ d }} 天</a>{% endfor %}
+  </nav>
+</header>
+<div class="notice"><p>来源日志能显示访问平台与落地页，无法还原访客在 AI 中输入的完整问题。可结合检测返回的检索词和 Google 搜索词，准备页面优化草稿。</p><a href="/optimize">打开标题与词语优化</a></div>
+
+{% if not t.latest_day %}
+  {{ empty_state("还没有日志数据", "程序每天读取一次 Nginx 日志。如果一直为空，请检查 .env 里的 NGINX_LOG_DIR 和日志格式（见 README 第 3 步）。") }}
+{% else %}
+<section class="kpis small">
+  <article class="kpi hero"><h2>AI 来源访问</h2><p class="big-num">{{ t.total }}</p>
+    <p class="sub">前一个 {{ t.days }} 天：{{ t.total_prev }}</p></article>
+  {% for s in t.sources[:3] %}
+  <article class="kpi"><h2>{{ s.source }}</h2><p class="num">{{ s.hits }}</p><p class="sub">前一周期 {{ s.prev }}</p></article>
+  {% endfor %}
+</section>
+
+<div class="grid-2">
+  <section class="card">
+    <h2>按来源</h2>
+    {% if t.sources %}
+    <div class="table-wrap"><table>
+      <thead><tr><th>来源</th><th class="r">本期</th><th class="r">上期</th><th class="r">变化</th></tr></thead>
+      <tbody>{% for s in t.sources %}
+        <tr><td>{{ s.source }}</td><td class="r">{{ s.hits }}</td><td class="r muted">{{ s.prev }}</td>
+          <td class="r {{ 'up' if s.hits > s.prev else ('down' if s.hits < s.prev else 'muted') }}">{{ '%+d'|format(s.hits - s.prev) }}</td></tr>
+      {% endfor %}</tbody>
+    </table></div>
+    {% else %}<p class="muted">这段时间没有来自 AI 的访问。</p>{% endif %}
+  </section>
+
+  <section class="card">
+    <h2>AI 爬虫抓取</h2>
+    {% if t.bots %}
+    <div class="table-wrap"><table>
+      <thead><tr><th>爬虫</th><th class="r">本期</th><th class="r">上期</th></tr></thead>
+      <tbody>{% for b in t.bots %}
+        <tr><td>{{ b.bot }}</td><td class="r">{{ b.hits }}</td><td class="r muted">{{ b.prev }}</td></tr>
+      {% endfor %}</tbody>
+    </table></div>
+    <p class="foot">「用户提问时实时访问」类说明有人在 AI 里问到了相关问题，AI 正在读取本站页面。</p>
+    {% else %}<p class="muted">这段时间没有 AI 爬虫记录。</p>{% endif %}
+  </section>
+</div>
+
+<section class="card">
+  <h2>AI 访客的落地页</h2>
+  {% if t.pages %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>页面</th><th>来源</th><th class="r">访问</th></tr></thead>
+    <tbody>{% for p in t.pages %}
+      <tr><td class="path"><a href="https://{{ site }}{{ p.path }}" target="_blank" rel="noopener noreferrer">{{ p.path }}</a></td><td>{{ p.source }}</td><td class="r">{{ p.hits }}</td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}<p class="muted">暂无</p>{% endif %}
+</section>
+<p class="foot">Google AI 概览 / AI 模式带来的点击在日志里显示为普通 Google 搜索，无法单独区分。</p>
+{% endif %}
+{% endblock %}

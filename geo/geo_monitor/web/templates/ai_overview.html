@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% from "_macros.html" import run_picker, delta_badge, empty_state %}
+{% from "_icons.html" import icon %}
+{% block title %}AI 推荐概览{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>AI 推荐概览</h1>
+    {% if run %}
+    <p class="muted">第 {{ run.id }} 次检测 · {{ run.started_at|local }} · {{ run.question_count }} 个问题 · 优先级 {{ run.priorities }}
+      {% if prev %} · 对比第 {{ prev.id }} 次（{{ prev.started_at|local('%m-%d') }}）{% endif %}</p>
+    {% endif %}
+  </div>
+  {{ run_picker(run, runs, "/ai-overview") }}
+</header>
+
+{% if pending %}<p class="notice">有 {{ pending }} 个检测正在排队或进行中，<a href="/runs">查看进度</a>。</p>{% endif %}
+
+{% if not run %}
+  {{ empty_state("还没有检测数据", "到「检测记录」页面提交一次检测，或等待每周定时检测完成后再来看。") }}
+{% else %}
+
+<section class="card home-summary"><div class="home-summary-head">{{ icon('spark',18) }}<h2>本次检测摘要</h2></div><p>在 {{ total.valid }} 次有效回答中，{{ total.mentioned }} 次提及本站，{{ total.cited }} 次带有本站链接。{% if not total.valid %}本次没有可分析的有效回答，请检查调用错误后重试。{% elif gap_count %}有 {{ gap_count }} 个问题尚未被任何引擎推荐，可从这些问题开始核对网站内容。{% else %}本次有效检测覆盖的问题均至少获得过一个引擎的推荐。{% endif %}</p><div class="home-summary-actions"><a href="/results?run={{ run.id }}">查看完整检测</a><a href="/optimize?run={{ run.id }}">准备标题与内容草稿</a></div></section>
+
+<div class="home-report-grid">
+<section class="card report-chart-panel">
+<div class="kpis small">
+  <article class="kpi hero">
+    <h2>总提及率</h2>
+    <p class="big-num">{{ total.rate|pct }}</p>
+    <p class="sub">{{ total.mentioned }} / {{ total.valid }} 次回答提到本站</p>
+    {{ delta_badge(total.delta) }}
+  </article>
+  <article class="kpi">
+    <h2>有效回答</h2><p class="num">{{ total.valid }}</p><p class="sub">出错 {{ total.errors }} 次</p>
+  </article>
+  <article class="kpi"><h2>带链接引用</h2><p class="num">{{ total.cited }}</p><p class="sub">AI 回答引用本站</p></article>
+  <article class="kpi"><h2>平均推荐位置</h2><p class="num">{{ '%.1f'|format(total.avg_rank) if total.avg_rank else '—' }}</p><p class="sub">被推荐时的平均位置</p></article>
+</div>
+
+<div class="report-chart-body">
+  <div class="card-head">
+    <h2 id="trend-title">提及率趋势</h2>
+    {% if trend.series|length > 1 %}
+    <ul class="legend" aria-label="图例">
+      {% for s in trend.series %}<li><i class="swatch s{{ loop.index }}" aria-hidden="true"></i>{{ s.label }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  {% if trend_svg and trend.runs|length > 1 %}
+    <div class="chart-wrap" data-chart>
+      {{ trend_svg|safe }}
+      <div class="tooltip" role="status" hidden></div>
+    </div>
+    <p class="foot">每个点是一次检测里该引擎提到本站的比例；少于 10 个问题的试跑不计入趋势。</p>
+  {% else %}
+    <p class="muted">至少两次完整检测后显示趋势（每周一次，下周就能看到第一条线）。</p>
+  {% endif %}
+</div>
+<div class="report-chart-footer"><span class="muted">按已完成的检测批次</span><a href="/results?run={{ run.id }}">查看检测报告 {{ icon('arrow',14) }}</a></div>
+</section>
+<aside class="card report-status"><h2>本次需要补充内容的问题</h2><p class="status-number">{{ gap_count }}</p><p class="foot">所有引擎均未提及本站的监测问题</p><dl><dt>检测批次</dt><dd>#{{ run.id }}</dd><dt>问题数量</dt><dd>{{ run.question_count }}</dd><dt>优先级</dt><dd>{{ run.priorities }}</dd><dt>完成时间</dt><dd>{{ run.finished_at|local('%m-%d %H:%M') }}</dd></dl><span class="status-chip">{{ icon('info',15) }}{{ '模拟检测结果' if preview else '来自 API 检测' }}</span><a href="/gaps?run={{ run.id }}">查看内容机会 {{ icon('arrow',14) }}</a></aside>
+</div>
+
+<h2 class="quick-report-heading">常用报告</h2>
+<nav class="quick-reports" aria-label="常用报告"><a href="/analytics">{{ icon('chart') }}<span>网站流量<small>GA4 访问与转化</small></span></a><a href="/search-console">{{ icon('target') }}<span>Google 搜索<small>关键词与页面表现</small></span></a><a href="/optimize">{{ icon('spark') }}<span>标题与词语优化<small>从检索词准备内容</small></span></a><a href="/social/meta">{{ icon('social') }}<span>社交媒体数据<small>Facebook / Instagram</small></span></a></nav>
+
+<section class="card"><h2>各引擎表现</h2><div class="table-wrap"><table><thead><tr><th>引擎</th><th class="r">提及率</th><th class="r">提及 / 有效</th><th class="r">链接引用</th><th class="r">平均位置</th><th class="r">调用错误</th></tr></thead><tbody>{% for e in engines %}<tr><td><i class="swatch s{{ loop.index }}" aria-hidden="true"></i>{{ e.label }}</td><td class="r">{{ e.rate|pct }}</td><td class="r">{{ e.mentioned }} / {{ e.valid }}</td><td class="r">{{ e.cited }}</td><td class="r">{{ '%.1f'|format(e.avg_rank) if e.avg_rank else '—' }}</td><td class="r">{{ e.errors }}</td></tr>{% endfor %}</tbody></table></div></section>
+
+<div class="grid-2">
+  <section class="card">
+    <h2>按语言</h2>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>语言</th><th class="r">提及率</th><th class="r">提及/有效</th><th class="r">变化 <small>百分点</small></th></tr></thead>
+      <tbody>
+      {% for l in languages %}
+        <tr>
+          <td class="nowrap"><a href="/results?run={{ run.id }}&lang={{ l.name|urlencode }}">{{ l.label }}</a></td>
+          <td class="r">
+            <span class="bar-cell"><span class="bar" style="--w: {{ ((l.rate or 0) * 100)|round(1) }}%"></span>{{ l.rate|pct }}</span>
+          </td>
+          <td class="r muted">{{ l.mentioned }}/{{ l.valid }}</td>
+          <td class="r">{% if l.delta is not none %}<span class="nowrap {{ 'up' if l.delta > 0.004 else ('down' if l.delta < -0.004 else 'muted') }}">{{ '%+.0f'|format(l.delta * 100) }}</span>{% else %}<span class="muted">—</span>{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>与上次相比</h2>
+    {% if not prev %}
+      <p class="muted">这是第一次检测，下次检测后会显示新增和丢失的推荐。</p>
+    {% elif not gained and not lost %}
+      <p class="muted">没有变化。</p>
+    {% else %}
+      {% if gained %}
+      <h3 class="up">新增推荐 {{ gained|length }}</h3>
+      <ul class="change-list">
+        {% for r in gained %}<li><a href="/results/{{ r.id }}"><b>{{ r.engine|engine }}</b> · {{ r.prompt }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+      {% if lost %}
+      <h3 class="down">丢失推荐 {{ lost|length }}</h3>
+      <ul class="change-list">
+        {% for r in lost %}<li><a href="/results/{{ r.id }}"><b>{{ r.engine|engine }}</b> · {{ r.prompt }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+    {% endif %}
+  </section>
+</div>
+
+<div class="grid-3">
+  <a class="card link-card" href="/gaps?run={{ run.id }}">
+    <h2>未被任何 AI 推荐</h2>
+    <p class="num">{{ gap_count }} <small>个问题</small></p>
+    <p class="sub">优先为这些问题补充网站内容 →</p>
+  </a>
+  <a class="card link-card" href="/competitors?run={{ run.id }}">
+    <h2>出现最多的竞品</h2>
+    {% if top_comp %}
+    <ol class="mini-list">{% for c in top_comp %}<li><span>{{ c.domain }}</span><span class="muted">{{ c.questions }} 题</span></li>{% endfor %}</ol>
+    {% else %}<p class="muted">暂无</p>{% endif %}
+  </a>
+  <a class="card link-card" href="/traffic">
+    <h2>近 7 天 AI 带来的访问</h2>
+    <p class="num">{% if traffic.latest_day %}{{ traffic.total }} <small>次</small>{% else %}—{% endif %}</p>
+    <p class="sub">
+      {% if traffic.sources %}{% for s in traffic.sources[:3] %}{{ s.source }} {{ s.hits }}{{ ' · ' if not loop.last }}{% endfor %}
+      {% elif traffic.latest_day %}最近一周没有来自 AI 的访问
+      {% else %}Nginx 日志尚未接入{% endif %}
+    </p>
+  </a>
+</div>
+
+<p class="foot">结果来自 API 模拟提问，与用户在 ChatGPT App、Google AI 概览中看到的答案可能不同，适合看趋势和对比。</p>
+{% endif %}
+{% endblock %}

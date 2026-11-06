@@ -1,104 +1,77 @@
-# 云岫建站模版
+# B2B 建站母版
 
-以 [yuanzebeauty.com](https://yuanzebeauty.com) 为第一个实例的企业官网模版。**每个客户站点只是一份配置文件 + 一个素材文件夹**，页面结构、样式和交互由模版统一提供，构建出纯静态 HTML，可以部署到任何静态托管（GitHub Pages、Cloudflare Pages、Netlify、阿里云 OSS、宝塔等）。
+独立、可运行的 B2B 品牌官网 + 询盘 API + GEO 增长工作台。以 2026-11-05 只读导出的正式应用代码为基础整理；原官网的客户内容改成配置驱动模板，后台业务模块和接收内核保留。生产站没有被修改。
 
-- 零依赖：只需要 Node.js 18 以上，不用 `npm install`
-- 多站点：`sites/` 下一个文件夹就是一个站
-- 换品牌只改配置：名称、文案、颜色、字体、联系方式、导航、页面区块全部在 `site.config.json`
+包含 EN / AR 两套桌面和手机页面、产品筛选/计数/搜索、语言切换状态保留、系列悬停切图、七阶段滚动展示、采购指南表格、申样胶囊、报价表单、UTM/GCLID 归因、真实回执、成功页 WhatsApp 与指南入口，以及 GEO 询盘跟进、收录监控、CSV 导出、知识库、AEO 草稿导出和改密功能。
 
-## 目录结构
+## 先启动本地版
 
-```
-sites/
-  yuanze/                 元泽官网（第一个实例，可作为同行业客户的起点）
-    site.config.json
-    assets/               该站的 Logo、图片、favicon
-  _starter/               空白起步模版，所有待填内容标注为【请填写：…】
-src/
-  layout.mjs              页面骨架：<head>/SEO、页眉导航、页脚
-  sections/               页面区块，每种 type 一个文件
-  assets/site.css         公共样式（颜色/字体/圆角全部用 CSS 变量）
-  assets/site.js          移动端菜单、暂停动效
-scripts/
-  build.mjs               构建 sites/<名>/ → dist/<名>/
-  serve.mjs               本地预览（刷新即重新构建）
-  new-site.mjs            新建站点
+需要 Python 3.12 和 Git。Windows PowerShell，在本仓库根目录执行：
+
+```powershell
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements-lock.txt
+.venv/Scripts/python.exe scripts/init.py
+.venv/Scripts/python.exe scripts/start.py --seed-demo
 ```
 
-## 新建一个客户站点
+macOS / Linux 使用 `.venv/bin/python` 替代 `.venv/Scripts/python.exe`。
 
-```bash
-# 1. 从空白模版复制（或 --from yuanze 基于元泽站改写，适合同行业客户）
-npm run new -- acme
-npm run new -- acme --from yuanze
+- 官网：<http://127.0.0.1:9320/>，阿语：<http://127.0.0.1:9320/ar/>
+- GEO：<http://127.0.0.1:9322/>；初始随机密码见本机 `.local/access.txt`。
+- API：<http://127.0.0.1:9321/api/v1/readiness>。仅监听本机。
+- 停止：在启动终端按 `Ctrl+C`，父进程会关闭四个子进程。
 
-# 2. 编辑 sites/acme/site.config.json，把 Logo、图片放进 sites/acme/assets/
+`init.py` 不覆盖已有凭据。`--seed-demo` 只增量添加虚构示例：2 条测试询盘、2 篇待审核草稿、带 `is_test=true` 的 GA4 示例事件，以及没有授权令牌的假资源号 `000000000`。不会调用 Google 或付费 AI。首次使用后，默认首页询盘列表筛选为客户；切换到“测试”可看到示例。正式项目不要使用 `--seed-demo`。
 
-# 3. 本地预览 http://localhost:4321
-npm run dev -- acme
+本地接收层使用真实 SQLite 事务。成功回执是 `201 + RECEIVED + record_id`，不是假成功 UI；每 60 秒从接收库只读同步到 GEO。生产配置使用 PostgreSQL 18，GEO 仍保留 9 个独立 SQLite 数据库。
 
-# 4. 构建并检查是否还有【请填写】未替换，有则报错列出
-npm run build -- acme --check
+## 换一个品牌
+
+1. 编辑 `config/site.json`：名称、域名、联系方式、配色、Logo、合作伙伴、申样选项和统计配置。
+2. 编辑 `config/catalog.json`：系列、产品、分类、描述、规格、标签、是否进入 Ready stock，以及图片路径。
+3. 将新图片放入 `site/static/`，JSON 中使用 `/assets/文件名`；母版图片为原创 SVG 占位图。
+4. 编辑 `config/pages.json` 和 `config/guides.json`：首页、流程、能力、FAQ、4 篇采购指南及 HTML 表格。
+5. 运行 `python scripts/build_site.py`，重启 `scripts/start.py`。内容会生成到 `dist/`，不会写往其他网站。
+
+默认示例为 3 个系列、6 个产品、4 篇指南，共 44 个 EN/AR 路由。没有把原客户的 488 页内容、照片、证书、品牌墙、出货量或采购方资料复制进来。保留的是可复用的页面类型、业务逻辑和后台模块。添加产品/指南会自动生成详情、语言链接、canonical 和 Sitemap；移除产品后会清理上次构建的旧 HTML。
+
+默认 `demo=true`、`indexing_enabled=false`，HTML、HTTP 头和 robots 均阻止索引。正式换成真实域名、核准内容并设置 `demo=false` 后，才能显式开启索引。详情见 [定制说明](docs/CUSTOMIZATION.md)。
+
+## 文件目录
+
+| 目录 | 作用 |
+|---|---|
+| `site/` | Jinja2 模板、通用 CSS / JS、示例图形 |
+| `config/` | 品牌、产品、指南、页面及精确重定向配置 |
+| `backend/` | 正式询盘接收内核、校验/幂等/审计/通知队列、3 份 SQL 迁移 |
+| `geo/geo_monitor/` | FastAPI + Jinja2 工作台、询盘/收录/知识库/内容/数据连接等模块 |
+| `examples/` | 纯虚构询盘、草稿、GA4 CSV、知识库文件 |
+| `scripts/` | 初始化、构建、启动、同步、备份、数据库准备、部署配置生成 |
+| `deploy/` | Nginx 模板及按品牌生成的配置 |
+| `tests/` | 真实 HTTP / 数据库 / 浏览器 / 配置替换验证 |
+| `docs/` | 定制、部署、模块清单及源码来源记录 |
+| `reports/` | 本次验收结果；截图可在交付压缩包和本机报告中查看 |
+| `.local/` | **私有运行数据**：密码、数据库、授权令牌、上传文件、日志、备份；不进入 Git / 压缩包 |
+
+## 验证与备份
+
+保持本地服务运行，另开终端：
+
+```powershell
+.venv/Scripts/python.exe tests/integration.py
+.venv/Scripts/python.exe tests/configuration.py
+.venv/Scripts/python.exe scripts/backup.py
 ```
 
-`dist/acme/` 就是完整的网站，直接上传到托管服务即可。如果配置了 `site.domain`，会自动生成 `CNAME`；配置了 `site.baseUrl` 会生成 `sitemap.xml` 和 `robots.txt`。
+浏览器验证需额外安装：`pip install -r requirements-dev.txt`、`python -m playwright install chromium`，然后执行 `python tests/browser.py`。可用 `B2B_BROWSER` 指定已安装的 Chromium / Chrome。
 
-构建所有站点：`npm run build -- --all`（跳过 `_` 开头的模版目录）。
+SQLite 备份采用在线 backup API 并做完整性检查，位于 `.local/backups/`。每个数据库内部一致；多数据库备份不声称跨库同一时点事务。跨库恢复时先停接收/同步，备份原目录，再将快照恢复到全新的数据目录。PostgreSQL 另用 `pg_dump`，见部署说明。
 
-## 配置说明（site.config.json）
+## 部署与外部服务
 
-| 字段 | 作用 |
-| --- | --- |
-| `site` | 域名、网址、语言、SEO 标题/描述、分享图、favicon、语言切换列表 |
-| `brand` | 品牌名、公司全称、标语、Logo（留空则显示文字 Logo）、版权署名 |
-| `theme.colors` | 主色 `primary`、主色上的文字色、点缀色 `accent`、正文色、次要文字色、背景、浅底、边框 |
-| `theme.fonts` | 标题字体、正文字体、Google Fonts 链接（国内站建议留空，用系统字体） |
-| `contact` | 邮箱、电话、WhatsApp、微信、地址、营业时间；`*Label` 字段可改显示名 |
-| `social` | 社交媒体链接 |
-| `nav` / `navCta` | 顶部导航（支持一级下拉 `children`）和右上角按钮 |
-| `footer` | 页脚链接分组、法律链接、底部说明 |
-| `analytics.gaId` | Google Analytics ID，留空不加载 |
-| `pages` | 页面列表；每页 `path` + 可选 `title`/`description` + `sections` 区块数组 |
+Docker / Compose、PostgreSQL 18 权限分离、Nginx HTTPS / 精确 301 的步骤见 [部署说明](docs/DEPLOYMENT.md)。本次电脑没有 Docker 和 Nginx，**容器启动、PostgreSQL 迁移和 `nginx -t` 尚未在本机执行**，需要在新项目的隔离环境验收后发布。原生本地版本已实际启动并验证。
 
-### 可用区块（sections 的 type）
+Google / Meta 授权、真实 GA4、AI 联网检测、Webhook、SMTP 都保留配置入口，默认没有客户密钥、授权令牌或自动付费任务。Google 收录状态与 HTTP 可访问性分别记录；不会把“HTTP 200”当成“Google 已收录”。AEO 导出只允许已审核草稿，生成 HTML + FAQ Schema 片段，不会直接修改主站文件。
 
-每个区块都可以加 `id`（用于导航锚点）、`eyebrow`（小标题）、`title`、`intro`、`background`（`"alt"` 浅底 / `"dark"` 主色底）。
-
-| type | 用途 | 主要字段 |
-| --- | --- | --- |
-| `hero` | 首屏 | `title` `subtitle` `image` `buttons[]` `badges[]` |
-| `facts` | 卖点卡片 / 数字统计 | `items[{value,label,text}]`，`variant: "stats"` 为大数字条 |
-| `categories` | 产品系列与品类 | `groups[{title,subtitle,image,items[]}]` |
-| `split` | 图文分栏 | `text` `bullets[]` `image` `reverse` `buttons[]` |
-| `logos` | 客户/供应商 Logo 滚动墙 | `items[{name,image}]`，无图时显示名称 |
-| `markets` | 市场与资质 | `items[{name,tags[]}]` `image` |
-| `gallery` | 图片卡片墙 | `items[{title,text,image}]` `note` |
-| `steps` | 流程步骤（自动编号） | `items[{title,text,image}]` |
-| `cards` | 通用卡片（服务模式等） | `items[{eyebrow,title,text,href}]` |
-| `faq` | 常见问题折叠 | `items[{q,a}]` |
-| `cta` | 收尾号召条 | `title` `text` `buttons[]` |
-| `contact` | 联系方式 + 询盘表单 | `form.action`（表单服务地址，留空则用邮件发送）`form.fields[]` |
-| `richtext` | 隐私政策等纯文字页 | `html` |
-
-区块可以任意增删、调整顺序、重复使用。图片字段留空时会显示带说明文字的占位块，方便先搭结构后补图。
-
-### 询盘表单
-
-`form.action` 留空时，表单通过访客的邮件客户端发到 `contact.email`。正式上线建议接入表单服务（如 Formspree、Getform，或自己的接口），把地址填入 `form.action`。
-
-## 扩展模版
-
-- **新增区块类型**：在 `src/sections/` 写一个 `export default function (section, site) { return html }`，在 `src/sections/index.mjs` 登记。所有配置文本输出前用 `esc()` 转义。
-- **改全局样式**：改 `src/assets/site.css`，所有站点同时生效；只想改某个站，用该站的 `theme`。
-- **多语言**：每种语言建一个站点目录（如 `yuanze-es`），在各自 `site.languages` 里互相链接，部署到子目录或子域名。
-
-## 元泽站（sites/yuanze）待补内容
-
-模版里的元泽配置根据线上页面结构整理，以下内容需要从原站素材补齐：
-
-- Logo、首屏图、各区块配图、资质徽章图片、客户/供应商 Logo（放入 `sites/yuanze/assets/` 并填写路径）
-- 品牌主色、点缀色（目前为暂定的墨绿 + 金色，需要按原站确认）
-- LinkedIn / Instagram / Facebook 主页链接（填入 `social`）
-- 完整的客户品牌列表（线上约 36 个，配置中列了 6 个）和供应商列表（线上约 24 个）
-- 其余 9 种语言版本
-- 隐私政策、使用条款正文
+本仓库未推送到任何远程 Git 服务，也不会自动连接或发布至原客户服务器。用 `git remote add origin <你的新仓库地址>` 绑定新项目。源码包内另附 `git-history.bundle`，可用 `git clone git-history.bundle 新目录` 恢复完整 Git 历史；直接解压源码使用时可自行 `git init -b main`。

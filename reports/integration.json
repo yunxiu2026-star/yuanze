@@ -1,0 +1,342 @@
+[
+  {
+    "name": "44 EN/AR static routes return 200",
+    "passed": true,
+    "detail": "44"
+  },
+  {
+    "name": "Demo routes excluded from indexing",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Slash redirect preserves query",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Legacy resources redirect preserves query",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Private API not exposed through site",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Sample intake durable receipt",
+    "passed": true,
+    "detail": "201 RECEIVED"
+  },
+  {
+    "name": "Idempotent retry stores one receipt",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Missing consent rejected without write",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Untrusted browser origin rejected",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Website receipt automatically arrives in GEO",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "GEO authentication required",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Generated local administrator login",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /leads",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /leads?kind=test",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /leads/22",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /indexing",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /inquiries",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /inquiries/export.csv",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /optimize",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /optimize?draft_id=1",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /knowledge",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /knowledge/new",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /social",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /social/meta",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /ai",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /analytics",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /search-console",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /google",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /google/imports",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /settings",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Authenticated GEO /settings/password",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Brief, guide and advertising badges parsed",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Repeated sync does not duplicate leads",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Sitemap POST incrementally syncs real local site",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "All 44 sitemap routes monitored",
+    "passed": true,
+    "detail": "44"
+  },
+  {
+    "name": "Repeated sitemap sync adds zero",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Local HTTP/robots/canonical technical check",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Technical check records demo noindex truthfully",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Unreviewed AEO draft export blocked 1",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "AEO draft explicit review 1",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Reviewed EN/AR AEO 1 html",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "AEO sample hook routes to usable quote form 1",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Reviewed EN/AR AEO 1 json",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Unreviewed AEO draft export blocked 2",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "AEO draft explicit review 2",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Reviewed EN/AR AEO 2 html",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "AEO sample hook routes to usable quote form 2",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Reviewed EN/AR AEO 2 json",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Password CSRF enforced",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Wrong old password rejected",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Eight-character replacement accepted",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Old sessions revoked",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Old password no longer authenticates",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "New password authenticates",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Test password restored through verified workflow",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Nine GEO databases initialized",
+    "passed": true,
+    "detail": "9"
+  },
+  {
+    "name": "SQLite integrity geo/demo.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "SQLite integrity geo/web-preview.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "SQLite integrity geo/ai-monitor/monitor.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "SQLite integrity geo/content-optimization/drafts.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "SQLite integrity geo/customer-inquiries/leads.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "SQLite integrity geo/google-imports/imports.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "SQLite integrity geo/knowledge-base/knowledge.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "SQLite integrity geo/site-operations/operations.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "SQLite integrity geo/social-media/social.db",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Business records preserved through password rotation",
+    "passed": true,
+    "detail": ""
+  },
+  {
+    "name": "Unconfigured notification channels silent",
+    "passed": true,
+    "detail": ""
+  }
+]

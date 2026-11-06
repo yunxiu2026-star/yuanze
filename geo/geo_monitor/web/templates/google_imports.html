@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Google 报表导入{% endblock %}
+{% block content %}
+<header class="page-head"><div><h1>Google 报表导入</h1><p class="muted">上传官方 CSV / Excel，无需 Google Cloud 注册。原始文件和历史批次均会保留。</p></div><a href="/google">资源设置</a></header>
+{% if msg %}<p class="notice" role="status">{{ msg }}</p>{% endif %}
+<div class="grid-2">
+{% for kind,title,resource in [('analytics','GA4 网站流量',settings.get('property','')),('search','Search Console 搜索表现',settings.get('site',''))] %}
+{% if not phase1 or growth or kind=='analytics' %}<section class="card"><h2>{{ title }}</h2><p class="muted">资源：{{ resource or '尚未填写，请先到资源设置保存' }}</p>
+<form action="/google/imports" method="post" enctype="multipart/form-data" class="import-form">
+  <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="kind" value="{{ kind }}">
+  <div class="row"><label>报表开始日期<input type="date" name="start" value="{{ default_start }}" required></label><label>报表结束日期<input type="date" name="end" value="{{ default_end }}" required></label></div>
+  <p class="foot">填写在 Google 导出时选择的范围。GA4 CSV 自带日期时会自动核对；Search Console 的可用数据日期可能少于选择范围。</p>
+  <label for="{{ kind }}-files">选择官方导出文件</label><input id="{{ kind }}-files" type="file" name="files" accept=".csv,.xlsx" multiple required>
+  <p class="foot">每个文件最大 10MB，每次最多 8 个。支持中文和英文表头；同一服务、资源、日期和文件的重复导入不会增加数据。</p>
+  <button class="primary" type="submit" {{ 'disabled' if not resource }}>导入{{ ' GA4' if kind=='analytics' else ' Search Console' }}</button>
+</form></section>
+{% endif %}{% endfor %}
+</div>
+<section class="card"><h2>如何导出</h2><div class="grid-2"><div><h3>GA4</h3><p>打开「报告」中的「流量获取情况」「网页和屏幕」或「人口统计信息详情」，选择日期后点击「共享此报告 → 下载文件 → CSV」。同一资源、同一日期范围的不同报告会组合展示；报告缺少的指标保持空白。</p><p class="foot">流量表的会话数按导入行汇总；分组活跃用户不能相加为去重访客数。</p></div>{% if not phase1 or growth %}<div><h3>Search Console</h3><p>进入「效果」，选择日期和搜索类型，点击「导出 → Excel」。推荐完整 Excel，包含每日、查询、网页、国家和设备；也可逐个上传 CSV 表。</p><p class="foot">总点击和总曝光来自每日表。查询可能匿名化，不能用查询表合计替代总量。当前按 Web 搜索展示，导出时请选择网页搜索。</p></div>{% endif %}</div></section>
+<section class="card"><h2>导入历史</h2><div class="table-wrap"><table><thead><tr><th>批次 / 服务</th><th>文件</th><th>资源</th><th>报表范围</th><th>导入时间</th><th>操作</th></tr></thead><tbody>
+{% for h in history if not phase1 or growth or h.kind=='analytics' %}<tr><td>#{{ h.id }} · {{ 'GA4' if h.kind=='analytics' else 'Search Console' }}</td><td>{{ h.filename }}</td><td style="overflow-wrap:anywhere">{{ h.resource }}</td><td class="nowrap">{{ h.start }} 至 {{ h.end }}</td><td class="nowrap">{{ h.imported_at|local }}</td><td><a href="{{ '/analytics' if h.kind=='analytics' else '/search-console' }}?source=import&amp;batch={{ h.id }}">查看数据</a><br><a href="/google/imports/{{ h.id }}/download">下载原文件</a></td></tr>
+{% else %}<tr><td colspan="6" class="muted">还没有导入记录。上方上传后即可查看真实数据。</td></tr>{% endfor %}
+</tbody></table></div></section>
+<p class="foot">文件只保存到本后台，不会上传至 Google。后续更新请重新导出并导入；无需付费接口，不代表已完成 OAuth 自动同步。</p>
+{% endblock %}

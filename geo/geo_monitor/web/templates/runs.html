@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}检测记录{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>检测记录</h1>
+    <p class="muted">{{ '在本机用模拟引擎检查监测和报告流程。' if preview else '查看历史检测，或手动发起一次监测。' }}</p>
+  </div>
+</header>
+
+{% if msg %}<p class="notice">{{ msg }}</p>{% endif %}
+
+<section class="card">
+  <h2>{{ '模拟试跑' if preview else '立即检测' }}</h2>
+  <form method="post" action="/runs" class="run-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <fieldset>
+      <legend>引擎</legend>
+      {% if preview %}<label class="check"><input type="checkbox" name="engines" value="mock" checked> 模拟引擎（免费）</label>{% else %}
+      {% for e in ['openai', 'gemini', 'perplexity'] %}
+      <label class="check {{ 'off' if not keyed[e] }}">
+        <input type="checkbox" name="engines" value="{{ e }}" {{ 'checked' if keyed[e] }} {{ 'disabled' if not keyed[e] }}>
+        {{ e|engine }}{% if not keyed[e] %} <small>（未配置密钥）</small>{% endif %}
+      </label>
+      {% endfor %}
+      {% endif %}
+    </fieldset>
+    <fieldset>
+      <legend>优先级</legend>
+      {% for p in ['P1', 'P2', 'P3'] %}
+      <label class="check"><input type="checkbox" name="priorities" value="{{ p }}" {{ 'checked' if p in default_pri }}> {{ p }}</label>
+      {% endfor %}
+    </fieldset>
+    <label class="limit"><span>检测数量（留空 = 全部）</span><input type="number" name="limit" min="1" max="500" inputmode="numeric" placeholder="例如 3…" value="3"></label>
+    <button type="submit" class="primary" {{ 'disabled' if not preview and not (keyed.openai or keyed.gemini or keyed.perplexity) }}>{{ '开始模拟试跑' if preview else '开始检测' }}</button>
+  </form>
+  <p class="foot">{{ '模拟请求约 2 秒内开始；完成后会生成演示周报。' if preview else '每个问题每个引擎调用一次接口，会产生费用。先用前 3 个问题试跑；请确保定时服务正在运行。' }}</p>
+</section>
+
+{% if reqs %}
+<section class="card" data-run-queue="{{ 'pending' if reqs|selectattr('status','in',['pending','running'])|list else 'idle' }}">
+  <h2>手动检测请求</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>提交时间</th><th>引擎</th><th>优先级</th><th>数量</th><th>状态</th></tr></thead>
+    <tbody>{% for q in reqs %}
+      <tr><td>{{ q.id }}</td><td class="nowrap">{{ q.requested_at|local }}</td>
+        <td>{% for e in (q.engines or '').split(',') %}{{ e|engine }}{{ '、' if not loop.last }}{% endfor %}</td>
+        <td>{{ q.priorities }}</td><td>{{ q.limit_n or '全部' }}</td>
+        <td>{% if q.status == 'pending' %}<span class="pill wait">排队中</span>
+          {% elif q.status == 'running' %}<span class="pill wait">进行中</span>
+          {% elif q.status == 'done' %}<a class="pill yes" href="/ai-overview?run={{ q.run_id }}">完成 · 查看</a>
+          {% else %}<span class="pill err" title="{{ q.error }}">失败</span> <small class="muted">{{ q.error }}</small>{% endif %}</td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+</section>
+{% endif %}
+
+<section class="card">
+  <h2>全部检测</h2>
+  {% if runs %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>开始</th><th>结束</th><th>引擎</th><th>优先级</th><th class="r">问题数</th><th>来源</th><th>状态</th></tr></thead>
+    <tbody>{% for r in runs %}
+      <tr><td><a href="/ai-overview?run={{ r.id }}">{{ r.id }}</a></td>
+        <td class="nowrap">{{ r.started_at|local }}</td><td class="nowrap muted">{{ r.finished_at|local('%H:%M') }}</td>
+        <td>{% for e in (r.engines or '').split(',') %}{{ e|engine }}{{ '、' if not loop.last }}{% endfor %}</td>
+        <td>{{ r.priorities }}</td><td class="r">{{ r.question_count }}</td>
+        <td class="muted">{{ {'weekly': '定时', 'manual': '命令行'}.get(r.note, '网页' if (r.note or '').startswith('web') else (r.note or '')) }}</td>
+        <td>{% if r.status == 'done' %}<span class="pill yes">完成</span>{% elif r.status == 'running' %}<span class="pill wait">进行中</span>{% else %}<span class="pill err">{{ r.status }}</span>{% endif %}</td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}<p class="muted">还没有检测记录。</p>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,698 @@
+{
+  "checks": [
+    {
+      "name": "desktop en home width",
+      "passed": true
+    },
+    {
+      "name": "desktop en direction",
+      "passed": true
+    },
+    {
+      "name": "desktop en desktop hover image",
+      "passed": true
+    },
+    {
+      "name": "desktop en hover restores cover",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide table 0",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide width 0",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide table 1",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide width 1",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide table 2",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide width 2",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide table 3",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide width 3",
+      "passed": true
+    },
+    {
+      "name": "desktop en guide context",
+      "passed": true
+    },
+    {
+      "name": "desktop en real sample receipt",
+      "passed": true
+    },
+    {
+      "name": "desktop en one conversion event",
+      "passed": true
+    },
+    {
+      "name": "desktop en conversion idempotence",
+      "passed": true
+    },
+    {
+      "name": "desktop en localized guide success link",
+      "passed": true
+    },
+    {
+      "name": "desktop en brand WhatsApp action",
+      "passed": true
+    },
+    {
+      "name": "desktop en search count",
+      "passed": true
+    },
+    {
+      "name": "desktop en search survives language switch",
+      "passed": true
+    },
+    {
+      "name": "desktop en catalog category count",
+      "passed": true
+    },
+    {
+      "name": "desktop en catalog width",
+      "passed": true
+    },
+    {
+      "name": "desktop en exported AEO prefill",
+      "passed": true
+    },
+    {
+      "name": "desktop en contact remembered",
+      "passed": true
+    },
+    {
+      "name": "desktop en quote width",
+      "passed": true
+    },
+    {
+      "name": "desktop en real product brief receipt",
+      "passed": true
+    },
+    {
+      "name": "desktop en failure retains data",
+      "passed": true
+    },
+    {
+      "name": "desktop en failure does not emit lead",
+      "passed": true
+    },
+    {
+      "name": "desktop ar home width",
+      "passed": true
+    },
+    {
+      "name": "desktop ar direction",
+      "passed": true
+    },
+    {
+      "name": "desktop ar desktop hover image",
+      "passed": true
+    },
+    {
+      "name": "desktop ar hover restores cover",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide table 0",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide width 0",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide table 1",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide width 1",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide table 2",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide width 2",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide table 3",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide width 3",
+      "passed": true
+    },
+    {
+      "name": "desktop ar guide context",
+      "passed": true
+    },
+    {
+      "name": "desktop ar real sample receipt",
+      "passed": true
+    },
+    {
+      "name": "desktop ar one conversion event",
+      "passed": true
+    },
+    {
+      "name": "desktop ar conversion idempotence",
+      "passed": true
+    },
+    {
+      "name": "desktop ar localized guide success link",
+      "passed": true
+    },
+    {
+      "name": "desktop ar brand WhatsApp action",
+      "passed": true
+    },
+    {
+      "name": "desktop ar search count",
+      "passed": true
+    },
+    {
+      "name": "desktop ar search survives language switch",
+      "passed": true
+    },
+    {
+      "name": "desktop ar catalog category count",
+      "passed": true
+    },
+    {
+      "name": "desktop ar catalog width",
+      "passed": true
+    },
+    {
+      "name": "desktop ar exported AEO prefill",
+      "passed": true
+    },
+    {
+      "name": "desktop ar contact remembered",
+      "passed": true
+    },
+    {
+      "name": "desktop ar quote width",
+      "passed": true
+    },
+    {
+      "name": "desktop ar real product brief receipt",
+      "passed": true
+    },
+    {
+      "name": "desktop ar failure retains data",
+      "passed": true
+    },
+    {
+      "name": "desktop ar failure does not emit lead",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-leads title",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-leads width",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-indexing title",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-indexing width",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-events title",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-events width",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-aeo title",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-aeo width",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-password title",
+      "passed": true
+    },
+    {
+      "name": "desktop geo-password width",
+      "passed": true
+    },
+    {
+      "name": "desktop no uncaught browser exceptions",
+      "passed": true
+    },
+    {
+      "name": "desktop no external tracking/provider calls",
+      "passed": true
+    },
+    {
+      "name": "mobile en home width",
+      "passed": true
+    },
+    {
+      "name": "mobile en direction",
+      "passed": true
+    },
+    {
+      "name": "mobile en mobile menu opens",
+      "passed": true
+    },
+    {
+      "name": "mobile en menu closes",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide table 0",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide width 0",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide table 1",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide width 1",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide table 2",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide width 2",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide table 3",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide width 3",
+      "passed": true
+    },
+    {
+      "name": "mobile en guide context",
+      "passed": true
+    },
+    {
+      "name": "mobile en real sample receipt",
+      "passed": true
+    },
+    {
+      "name": "mobile en one conversion event",
+      "passed": true
+    },
+    {
+      "name": "mobile en conversion idempotence",
+      "passed": true
+    },
+    {
+      "name": "mobile en localized guide success link",
+      "passed": true
+    },
+    {
+      "name": "mobile en brand WhatsApp action",
+      "passed": true
+    },
+    {
+      "name": "mobile en search count",
+      "passed": true
+    },
+    {
+      "name": "mobile en search survives language switch",
+      "passed": true
+    },
+    {
+      "name": "mobile en catalog category count",
+      "passed": true
+    },
+    {
+      "name": "mobile en catalog width",
+      "passed": true
+    },
+    {
+      "name": "mobile en exported AEO prefill",
+      "passed": true
+    },
+    {
+      "name": "mobile en contact remembered",
+      "passed": true
+    },
+    {
+      "name": "mobile en quote width",
+      "passed": true
+    },
+    {
+      "name": "mobile en real product brief receipt",
+      "passed": true
+    },
+    {
+      "name": "mobile en failure retains data",
+      "passed": true
+    },
+    {
+      "name": "mobile en failure does not emit lead",
+      "passed": true
+    },
+    {
+      "name": "mobile ar home width",
+      "passed": true
+    },
+    {
+      "name": "mobile ar direction",
+      "passed": true
+    },
+    {
+      "name": "mobile ar mobile menu opens",
+      "passed": true
+    },
+    {
+      "name": "mobile ar menu closes",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide table 0",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide width 0",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide table 1",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide width 1",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide table 2",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide width 2",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide table 3",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide width 3",
+      "passed": true
+    },
+    {
+      "name": "mobile ar guide context",
+      "passed": true
+    },
+    {
+      "name": "mobile ar real sample receipt",
+      "passed": true
+    },
+    {
+      "name": "mobile ar one conversion event",
+      "passed": true
+    },
+    {
+      "name": "mobile ar conversion idempotence",
+      "passed": true
+    },
+    {
+      "name": "mobile ar localized guide success link",
+      "passed": true
+    },
+    {
+      "name": "mobile ar brand WhatsApp action",
+      "passed": true
+    },
+    {
+      "name": "mobile ar search count",
+      "passed": true
+    },
+    {
+      "name": "mobile ar search survives language switch",
+      "passed": true
+    },
+    {
+      "name": "mobile ar catalog category count",
+      "passed": true
+    },
+    {
+      "name": "mobile ar catalog width",
+      "passed": true
+    },
+    {
+      "name": "mobile ar exported AEO prefill",
+      "passed": true
+    },
+    {
+      "name": "mobile ar contact remembered",
+      "passed": true
+    },
+    {
+      "name": "mobile ar quote width",
+      "passed": true
+    },
+    {
+      "name": "mobile ar real product brief receipt",
+      "passed": true
+    },
+    {
+      "name": "mobile ar failure retains data",
+      "passed": true
+    },
+    {
+      "name": "mobile ar failure does not emit lead",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-leads title",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-leads width",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-indexing title",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-indexing width",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-events title",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-events width",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-aeo title",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-aeo width",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-password title",
+      "passed": true
+    },
+    {
+      "name": "mobile geo-password width",
+      "passed": true
+    },
+    {
+      "name": "mobile no uncaught browser exceptions",
+      "passed": true
+    },
+    {
+      "name": "mobile no external tracking/provider calls",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion process navigation",
+      "passed": true
+    },
+    {
+      "name": "No-JS quote skeleton and alternative contact",
+      "passed": true
+    },
+    {
+      "name": "No-JS ready stock has static product cards",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "home-en desktop",
+      "path": "screenshots/home-en-desktop.png"
+    },
+    {
+      "name": "guide-en desktop",
+      "path": "screenshots/guide-en-desktop.png"
+    },
+    {
+      "name": "sample-en desktop",
+      "path": "screenshots/sample-en-desktop.png"
+    },
+    {
+      "name": "received-en desktop",
+      "path": "screenshots/received-en-desktop.png"
+    },
+    {
+      "name": "products-en desktop",
+      "path": "screenshots/products-en-desktop.png"
+    },
+    {
+      "name": "quote-en desktop",
+      "path": "screenshots/quote-en-desktop.png"
+    },
+    {
+      "name": "home-ar desktop",
+      "path": "screenshots/home-ar-desktop.png"
+    },
+    {
+      "name": "guide-ar desktop",
+      "path": "screenshots/guide-ar-desktop.png"
+    },
+    {
+      "name": "sample-ar desktop",
+      "path": "screenshots/sample-ar-desktop.png"
+    },
+    {
+      "name": "received-ar desktop",
+      "path": "screenshots/received-ar-desktop.png"
+    },
+    {
+      "name": "products-ar desktop",
+      "path": "screenshots/products-ar-desktop.png"
+    },
+    {
+      "name": "quote-ar desktop",
+      "path": "screenshots/quote-ar-desktop.png"
+    },
+    {
+      "name": "geo-leads desktop",
+      "path": "screenshots/geo-leads-desktop.png"
+    },
+    {
+      "name": "geo-indexing desktop",
+      "path": "screenshots/geo-indexing-desktop.png"
+    },
+    {
+      "name": "geo-events desktop",
+      "path": "screenshots/geo-events-desktop.png"
+    },
+    {
+      "name": "geo-aeo desktop",
+      "path": "screenshots/geo-aeo-desktop.png"
+    },
+    {
+      "name": "geo-password desktop",
+      "path": "screenshots/geo-password-desktop.png"
+    },
+    {
+      "name": "home-en mobile",
+      "path": "screenshots/home-en-mobile.png"
+    },
+    {
+      "name": "guide-en mobile",
+      "path": "screenshots/guide-en-mobile.png"
+    },
+    {
+      "name": "sample-en mobile",
+      "path": "screenshots/sample-en-mobile.png"
+    },
+    {
+      "name": "received-en mobile",
+      "path": "screenshots/received-en-mobile.png"
+    },
+    {
+      "name": "products-en mobile",
+      "path": "screenshots/products-en-mobile.png"
+    },
+    {
+      "name": "quote-en mobile",
+      "path": "screenshots/quote-en-mobile.png"
+    },
+    {
+      "name": "home-ar mobile",
+      "path": "screenshots/home-ar-mobile.png"
+    },
+    {
+      "name": "guide-ar mobile",
+      "path": "screenshots/guide-ar-mobile.png"
+    },
+    {
+      "name": "sample-ar mobile",
+      "path": "screenshots/sample-ar-mobile.png"
+    },
+    {
+      "name": "received-ar mobile",
+      "path": "screenshots/received-ar-mobile.png"
+    },
+    {
+      "name": "products-ar mobile",
+      "path": "screenshots/products-ar-mobile.png"
+    },
+    {
+      "name": "quote-ar mobile",
+      "path": "screenshots/quote-ar-mobile.png"
+    },
+    {
+      "name": "geo-leads mobile",
+      "path": "screenshots/geo-leads-mobile.png"
+    },
+    {
+      "name": "geo-indexing mobile",
+      "path": "screenshots/geo-indexing-mobile.png"
+    },
+    {
+      "name": "geo-events mobile",
+      "path": "screenshots/geo-events-mobile.png"
+    },
+    {
+      "name": "geo-aeo mobile",
+      "path": "screenshots/geo-aeo-mobile.png"
+    },
+    {
+      "name": "geo-password mobile",
+      "path": "screenshots/geo-password-mobile.png"
+    }
+  ]
+}

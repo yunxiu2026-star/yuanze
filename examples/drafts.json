@@ -1,0 +1,42 @@
+[
+  {
+    "keyword": "private label supplier brief",
+    "language": "en",
+    "url": "https://demo.example/resources/supplier-brief/",
+    "title": "How to prepare a private label supplier brief",
+    "variants": [
+      "How to prepare a private label supplier brief"
+    ],
+    "h1": "A supplier brief that supports a useful quotation",
+    "description": "An illustrative purchasing checklist for product, packaging and market requirements.",
+    "secondary": "packaging requirements\nsampling plan",
+    "outline": "Product direction and target market\nPackaging options and assumptions\nDocumentation to confirm\nSampling and quotation checklist",
+    "notes": "FICTIONAL DEMO. Review before export; no automatic main-site publishing.",
+    "basis": {
+      "source": "demo",
+      "original": "Example only"
+    },
+    "checks": [],
+    "faq_text": "Q: Is the example a verified supplier commitment?\nA: No. All commercial details must be confirmed for each project.\nQ: What should a first inquiry include?\nA: Product category, destination market, packaging preference and estimated quantity."
+  },
+  {
+    "keyword": "دليل المشتري",
+    "language": "ar",
+    "url": "https://demo.example/ar/resources/supplier-brief/",
+    "title": "إعداد موجز مشروع للمورد",
+    "variants": [
+      "إعداد موجز مشروع للمورد"
+    ],
+    "h1": "موجز المشروع للمشتري",
+    "description": "مثال توضيحي لمتطلبات المنتج والعبوة والسوق.",
+    "secondary": "العبوة\nالعينات",
+    "outline": "السوق المستهدف\nاختيار العبوة\nتأكيد المستندات\nطلب العينة",
+    "notes": "FICTIONAL DEMO. Manual review required.",
+    "basis": {
+      "source": "demo",
+      "original": "Example only"
+    },
+    "checks": [],
+    "faq_text": "Q: هل هذه مواصفات مؤكدة؟\nA: لا. يجب تأكيد جميع التفاصيل لكل مشروع.\nQ: ما المعلومات المطلوبة؟\nA: الفئة والسوق والعبوة والكمية المتوقعة."
+  }
+]

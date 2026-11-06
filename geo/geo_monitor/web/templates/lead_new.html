@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% from '_lead_fields.html' import fields %}
+{% block title %}录入客户询盘{% endblock %}
+{% block styles %}<link rel="stylesheet" href="/static/leads.css?v=1">{% endblock %}
+{% block content %}<a href="/leads">← 客户询盘与跟进</a><header class="page-head"><div><h1>录入客户询盘</h1><p class="muted">填写实际收到的客户资料；保存后进入待核实。</p></div></header>
+{% if error %}<p class="notice" role="alert">{{ error }}</p>{% endif %}
+<form method="post" action="/leads/new" class="card"><input type="hidden" name="csrf" value="{{ csrf }}"><div class="lead-form-grid"><label>唯一编号 *<input name="external_id" value="{{ values.get('external_id','') }}" maxlength="120" pattern="[a-zA-Z0-9_-]+" required><small>可填表单 request_id；重复提交不会建立第二条。</small></label><label>记录类型<select name="record_type">{% for k,label in kinds.items() %}<option value="{{ k }}" {{ 'selected' if values.get('record_type')==k }}>{{ label }}</option>{% endfor %}</select></label></div>{{ fields(values,evidence,today) }}<div class="lead-actions"><button type="submit">保存为待核实询盘</button><a href="/leads">返回清单</a></div></form>{% endblock %}

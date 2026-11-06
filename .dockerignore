@@ -1,0 +1,13 @@
+.git
+.venv
+.local
+.env
+.env.*
+dist
+reports
+**/__pycache__
+**/*.db
+**/*.sqlite*
+**/*.log
+**/*.zip
+**/source-dependencies.json

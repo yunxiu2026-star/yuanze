@@ -1,0 +1,56 @@
+name: b2b-starter
+x-app: &app
+  build: .
+  image: b2b-starter:local
+  restart: unless-stopped
+  read_only: true
+  tmpfs: [/tmp]
+  security_opt: [no-new-privileges:true]
+  env_file:
+    - path: .env.production
+      required: false
+  environment: &environment
+    B2B_MODE: local
+    B2B_DATA_ROOT: /data
+    MAIN_SITE_INTERNAL_ORIGIN: http://site:8080
+    API_INTERNAL_ORIGIN: http://api:8080
+  networks: [app]
+services:
+  site:
+    <<: *app
+    command: [python, scripts/run_service.py, site]
+    ports: ["127.0.0.1:9320:8080"]
+    volumes: ["./.local/runtime.json:/app/.local/runtime.json:ro"]
+    depends_on: {api: {condition: service_healthy}}
+  api:
+    <<: *app
+    command: [python, scripts/run_service.py, api]
+    ports: ["127.0.0.1:9321:8080"]
+    volumes: ["./.local/runtime.json:/app/.local/runtime.json:ro", "api-state:/data/api"]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/v1/readiness')"]
+      interval: 10s
+      timeout: 4s
+      retries: 6
+  geo:
+    <<: *app
+    command: [python, scripts/run_service.py, geo]
+    ports: ["127.0.0.1:9322:8000"]
+    volumes: ["./.local/runtime.json:/app/.local/runtime.json:ro", "geo-state:/data/geo"]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 10s
+      timeout: 4s
+      retries: 6
+  sync:
+    <<: *app
+    command: [python, scripts/run_service.py, sync]
+    volumes: ["./.local/runtime.json:/app/.local/runtime.json:ro", "api-state:/data/api:ro", "geo-state:/data/geo"]
+    depends_on: {api: {condition: service_healthy}, geo: {condition: service_healthy}}
+volumes:
+  api-state:
+  geo-state:
+networks:
+  app:
+    ipam:
+      config: [{subnet: 172.30.73.0/24, gateway: 172.30.73.1}]

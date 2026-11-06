@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "_macros.html" import run_picker, empty_state %}
+{% block title %}未被推荐{% endblock %}
+{% block content %}
+<header class="page-head">
+  <div>
+    <h1>未被任何 AI 推荐的问题</h1>
+    <p class="muted">所有引擎都没有提到本站。按优先级排序，越靠前越值得先补内容。</p>
+  </div>
+  {{ run_picker(run, runs, "/gaps") }}
+</header>
+
+{% if not run %}
+  {{ empty_state("还没有检测数据", "完成第一次检测后显示。") }}
+{% elif not items %}
+  {{ empty_state("没有空白问题", "每个问题至少有一个引擎推荐了本站。") }}
+{% else %}
+<div class="card flush">
+<div class="table-wrap">
+<table>
+  <thead><tr><th>ID</th><th>问题</th><th>语言</th><th>类型</th><th>建议核对的页面</th><th>AI 推荐了谁</th><th>下一步</th></tr></thead>
+  <tbody>
+  {% for r in items %}
+    <tr>
+      <td class="nowrap"><a href="/questions/{{ r.question_id }}">{{ r.question_id }}</a> <span class="pri {{ r.priority|lower }}">{{ r.priority }}</span></td>
+      <td class="prompt" dir="auto">{{ r.prompt }}</td>
+      <td class="nowrap muted">{{ r.language }}</td>
+      <td class="nowrap muted">{{ r.category }}</td>
+      <td class="urls">{% if r.page_link %}<a class="path" href="{{ r.page_link }}" target="_blank" rel="noopener noreferrer">{{ r.page_link|replace('https://' ~ site, '') or '/' }}</a><p class="foot">来自监测配置，需人工核对</p>{% else %}<span class="muted">目标页面待确认</span>{% endif %}</td>
+      <td class="comp">{{ r.top_competitors|join(', ') or '—' }}</td>
+      <td>{% if r.optimization_result %}<a class="button" href="/optimize?run={{ run.id }}&amp;result_id={{ r.optimization_result }}#generator">准备内容草稿</a>{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+<p class="foot">怎么用：先打开建议页面核对正文，再点击该行「准备内容草稿」。工具会保留检测依据和建议目标页；保存草稿不会自动发布。</p>
+{% endif %}
+{% endblock %}

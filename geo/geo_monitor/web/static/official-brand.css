@@ -1,0 +1,68 @@
+/* Values verified against the live Demo Works website; logo assets are unmodified. */
+:root, :root[data-theme="light"] {
+  --bg: #f5f1e8;
+  --surface: #fcfaf4;
+  --surface-2: #e7ede2;
+  --line: #cbd3c8;
+  --line-strong: #a9b8ac;
+  --text: #10231f;
+  --text-2: #3f534e;
+  --text-3: #53675f;
+  --brand: #0b4a40;
+  --brand-ink: #fcfaf4;
+  --brand-soft: #e7ede2;
+  --accent: #0b4a40;
+  --bar: #cbd9cc;
+  --brand-gold: #c6ad72;
+  --series-1: #0b4a40;
+  --series-2: #94753f;
+  --series-3: #657f6b;
+  --series-4: #867758;
+}
+:root[data-theme="dark"] {
+  --bg: #071d1a;
+  --surface: #102f27;
+  --surface-2: #183c33;
+  --line: #36544b;
+  --line-strong: #668074;
+  --text: #f7f4ec;
+  --text-2: #d0d7cd;
+  --text-3: #bdcbbc;
+  --brand: #e6dcc2;
+  --brand-ink: #071d1a;
+  --brand-soft: #244438;
+  --accent: #d9c494;
+  --bar: #35594a;
+  --series-1: #b6cdb9;
+  --series-2: #d9c494;
+  --series-3: #9bab91;
+  --series-4: #c7bfa5;
+}
+.analytics-header { background: var(--bg); border-bottom-color: var(--line); }
+.analytics-brand { gap: 14px; }
+.analytics-brand .brand-official { width: 94px; height: 60px; object-fit: contain; flex-shrink: 0; }
+.analytics-brand .brand-workspace-label { font-size: 16px; color: var(--text-2); line-height: 1.5; letter-spacing: .06em; }
+.analytics-property { border-left-color: var(--line); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+summary:focus-visible, textarea:focus-visible, [tabindex]:focus-visible { outline-color: var(--brand); }
+.analytics-rail { background: var(--bg); }
+.analytics-rail>a.on { background: var(--brand); color: var(--brand-ink); }
+.workspace-account summary { background: var(--brand); color: var(--brand-ink); }
+.main .kpi:first-child::before { background: var(--brand-gold); }
+.main .google-chart polyline { stroke: var(--brand); }
+.main input[type=checkbox], .main input[type=radio] { accent-color: var(--brand); }
+.main .opt-form textarea:focus-visible, .main .social-form textarea:focus-visible,
+.main .social-link-result textarea:focus-visible { outline-color: var(--brand); }
+.login-card { border-top-color: var(--brand); }
+.login-brand { flex-direction: column; align-items: center; gap: 12px; }
+.login-brand .brand-official { width: 142px; height: 90px; object-fit: contain; }
+.login-brand .brand-workspace-label { font-size: 16px; color: var(--text-2); letter-spacing: .08em; }
+:root[data-theme="dark"] .brand-official { background: #f5f1e8; border-radius: 4px; }
+@media (max-width: 640px) {
+  .analytics-brand { gap: 10px; }
+  .analytics-brand .brand-official { width: 72px; height: 46px; }
+  .analytics-brand .brand-workspace-label { font-size: 14px; letter-spacing: 0; }
+}
+@media (max-width: 360px) {
+  .analytics-brand .brand-workspace-label { display: none; }
+}

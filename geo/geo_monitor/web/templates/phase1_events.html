@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}GA4 询盘事件{% endblock %}
+{% block styles %}<link rel="stylesheet" href="/static/operations.css?v=1">{% endblock %}
+{% block content %}
+<header class="page-head"><div><h1>GA4 询盘事件</h1><p class="muted">观察询盘相关行为，核对上报是否完整。</p></div><a href="/analytics?source=api">查看网站流量 →</a></header>
+{% if msg %}<p class="notice" role="status">{{ msg }}</p>{% endif %}{% if error %}<p class="notice" role="alert">{{ error }}</p>{% endif %}
+<p class="notice">这里展示事件次数，可能包含测试与重复上报。generate_lead 不等于已接收客户数。{% if growth %}<a href="/leads">客户询盘与跟进</a>单独保存人工录入和导入的客户记录。{% else %}客户接收记录保留在原数据库，首版不开放该模块。{% endif %}</p>
+<form class="filters" method="get"><label>开始日期<input name="start" type="date" value="{{ info.start }}" required></label><label>结束日期<input name="end" type="date" value="{{ info.end }}" required></label><button type="submit">查看统计</button></form>
+<section class="card" aria-labelledby="ga4-inquiry-heading"><div class="ops-section-head"><div><h2 id="ga4-inquiry-heading">GA4 询盘相关事件</h2>{% if info.ga_selected and info.compatible %}<a class="button" href="/inquiries/export.csv?start={{ info.start }}&amp;end={{ info.end }}&amp;batch={{ info.ga_selected.id }}">导出当前 GA4 事件 CSV</a>{% endif %}<p class="foot">事件次数与客户接收记录分别统计；联系方式点击代表联系意向。日期以 GA4 资源时区的报表日期为准。</p></div>{% if not connected %}<a href="/google">查看 Google 连接设置</a>{% endif %}</div>
+{% if info.ga_batches %}<form method="get" class="ops-filters"><input type="hidden" name="start" value="{{ info.start }}"><input type="hidden" name="end" value="{{ info.end }}"><input type="hidden" name="record_type" value="{{ record_type }}"><label>事件快照<select name="batch">{% for b in info.ga_batches %}<option value="{{ b.id }}" {{ 'selected' if info.ga_selected.id==b.id }}>#{{ b.id }} · {{ b.start }} 至 {{ b.end }} · {{ b.filename }}</option>{% endfor %}</select></label><button type="submit">查看快照</button></form><p class="foot">资源 {{ resource }} · {{ info.ga_selected.start }} 至 {{ info.ga_selected.end }} · {{ 'CSV / Excel 导入' if info.ga_selected.payload.source=='file' else 'Google API 快照' }} · {{ info.ga_test_status }}。仅使用所选快照，不累加重复或重叠批次。</p>{% endif %}
+{% if not info.compatible %}<p class="notice">所选日期无法完整覆盖这份汇总报表，请调整日期；此处不拆分或估算汇总值。</p>{% endif %}
+<div class="ops-event-list">{% for key,name in events.items() %}<article><h3>{{ name }}</h3><span>{{ info.ga_totals[key] if info.ga_totals[key] is not none else '—' }}</span><code>{{ key }}</code></article>{% endfor %}</div>
+{% if not info.ga_selected %}<p class="ops-empty">尚无 GA4 事件报表。现有网站流量报表的「关键事件总计」不会被当作询盘成功数。</p>{% endif %}
+{% if connected %}<form method="post" action="/inquiries/sync" class="ops-inline"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="start" value="{{ info.start }}"><input type="hidden" name="end" value="{{ info.end }}"><button type="submit">读取 GA4 事件快照</button><span class="foot">只读，截至昨日，单次最多 90 天；不修改网站埋点。</span></form>{% endif %}
+</section>
+<details class="card"><summary>通过 CSV / Excel 补充 GA4 事件</summary><p>单文件最多 5 MB，支持事件名称与事件数。历史批次保留，相同文件不重复导入。</p><a href="/inquiries/template/ga4.csv">下载事件模板</a><form method="post" action="/inquiries/import" enctype="multipart/form-data" class="ops-form"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="kind" value="ga4"><div class="ops-form-row"><label>开始日期<input name="start" type="date" value="{{ info.start }}" required></label><label>结束日期<input name="end" type="date" value="{{ info.end }}" required></label></div><label>GA4 事件文件<input type="file" name="file" accept=".csv,.xlsx" required></label><button type="submit" {{ 'disabled' if not resource }}>导入事件报表</button></form></details>
+{% include "_inquiry_realtime.html" %}
+{% endblock %}
